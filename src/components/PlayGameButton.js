@@ -3,7 +3,7 @@
  */
 import styled from 'styled-components';
 
-export default styled.button`
+export default styled.div`
   height: 0.6rem;
   width: 1.4rem;
   border: 0.01rem solid #83b233;
@@ -13,7 +13,8 @@ export default styled.button`
   background-color: #fff;
   border-radius: 0.3rem;
   color: #83b233;
-  align-self: center;
+  margin-top: 0.3rem;
   position: absolute;
   right:0.24rem;
+  font-size: 0.24rem;
   `;

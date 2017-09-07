@@ -22,7 +22,7 @@ const Text = styled.p`
   margin: 0;
   margin-top: 0.12rem;
 `;
-const ErrButton = styled.button`
+const ErrButton = styled.div`
   height: 0.6rem;
   width: 1.4rem;
   background-color: #83b233;

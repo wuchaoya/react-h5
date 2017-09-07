@@ -37,7 +37,7 @@ class PlayGameContainer extends Component {
             <HeadContainer>
               <HeadImg uri={item.icon} />
               <HeadLeftContainer>
-                <HeadTitle>{item.category}</HeadTitle>
+                <HeadTitle>{item.name}</HeadTitle>
                 <HeadLeftBottomContainer>
                   {item.label.map((item, index) => {
                     return (<GameClass key={index} name={item} />);
