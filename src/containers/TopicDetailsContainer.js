@@ -47,7 +47,10 @@ class PlayGameContainer extends Component {
               </HeadLeftContainer>
               <PlayGameButton>立即玩</PlayGameButton>
             </HeadContainer>
-            <GameDetaillImg width='100%' height='100%' src={item.cover} />
+            <GameDetaillImg width='100%' height='100%' src={item.cover}
+                            onClick={() => {
+                              console.log(this.props.history.push(item.gid))
+                            }}/>
             <GameIntro>{item.game_summary}</GameIntro>
           </TopicContainer>
         );

@@ -25,4 +25,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static getGameDetailsData (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/game/game_detail', parameter,
+        (response) => {
+          if (response.state === 200 && response.data) {
+            callbackSuccess(response.data);
+          } else {
+            callbackError(response.state);
+          }
+        },
+        (error) => {
+          callbackError(error);
+        });
+  }
 };
