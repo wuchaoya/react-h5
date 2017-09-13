@@ -37,5 +37,5 @@
     "eslint-plugin-standard": "^2.0.0"
   },
   "homepage": "./",
-  "proxy": "http://pcloud.haimawan.com"
+  "proxy": "http://pcloud.haimawan.com/v2"
 }
