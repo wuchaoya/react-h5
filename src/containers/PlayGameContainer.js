@@ -25,6 +25,7 @@ export default class PlayGameContainer extends Component {
       onSceneChanged: function (sceneId, extraInfo) {
         console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
+
       MessageHandler: function (message) {
         console.log(message);
       }
