@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import HttpRequest from '../utils/HttpRequest';
 import GameTopImg from '../components/GameTopImg';
-import LoadingContainer from './LoadingContainer';
 import Container from './Container';
 import GameInfoContail from './GameInfoContailer';
 import GameInfoTopContainer from './GameInfoTopContainer';
@@ -28,7 +27,7 @@ export default class LogdingContainer extends Component {
     };
   }
   render () {
-    return this.state.data === null ? <LoadingContainer /> : <Container>
+    return this.state.data === null ? null : <Container>
       <GameTopImg uri={this.state.data.cover} />
       <GameInfoContail>
         <GameInfoTopContainer>

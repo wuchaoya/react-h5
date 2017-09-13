@@ -1,3 +1,6 @@
+/*
+  游戏专题
+ */
 import React, { Component } from 'react';
 
 import Container from './Container';
@@ -27,7 +30,7 @@ class PlayGameContainer extends Component {
     };
   }
   render () {
-    return this.state.data === null ? <LoadingContainer clickButton={() => this.getData()} err={this.state.err} /> : <Container>
+    return this.state.data === null ? <LoadingContainer name='游戏专题' clickButton={() => this.getData()} err={this.state.err} /> : <Container>
       {/* <HeadNav opacity={1}>{this.state.data.title}</HeadNav> */}
       <TopIme uri={this.state.data.cover} />
       <TopIntro>{this.state.data.summary}</TopIntro>
@@ -45,11 +48,13 @@ class PlayGameContainer extends Component {
                   <Star index={item.pkg} key={item.pkg} length={item.score} />
                 </HeadLeftBottomContainer>
               </HeadLeftContainer>
-              <PlayGameButton>立即玩</PlayGameButton>
+              <PlayGameButton onClick={() => {
+                this.props.history.push('playgame');
+              }}>立即玩</PlayGameButton>
             </HeadContainer>
             <GameDetaillImg width='100%' height='100%' src={item.cover}
                             onClick={() => {
-                              console.log(this.props.history.push(item.gid))
+                              this.props.history.push(item.gid);
                             }}/>
             <GameIntro>{item.game_summary}</GameIntro>
           </TopicContainer>

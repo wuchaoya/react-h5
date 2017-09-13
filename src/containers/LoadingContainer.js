@@ -61,7 +61,7 @@ export default class LogdingContainer extends Component {
     return (
       <Container height={this.state.height}>
         {this.props.err ? null : <Img src={loadingGif} />}
-        {this.props.err ? null : <Text>加载中</Text>}
+        {this.props.err ? null : <Text>加载中{this.props.name}</Text>}
         {this.props.err ? <ErrImg src={errPng} /> : null}
         {this.props.err ? <ErrText>连接失败</ErrText> : null}
         {this.props.err ? <ErrButton onClick={this.props.clickButton}>重试</ErrButton> : null}
