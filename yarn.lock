@@ -956,7 +956,7 @@ babel-register@^6.24.1, babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -2005,6 +2005,10 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
+dom-helpers@^3.2.1:
+  version "3.2.1"
+  resolved "http://registry.npm.taobao.org/dom-helpers/download/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
+
 dom-serializer@0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/dom-serializer/download/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
@@ -2698,7 +2702,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.5, fbjs@^0.8.9:
+fbjs@^0.8.14, fbjs@^0.8.4, fbjs@^0.8.5, fbjs@^0.8.9:
   version "0.8.14"
   resolved "http://registry.npm.taobao.org/fbjs/download/fbjs-0.8.14.tgz#d1dbe2be254c35a91e09f31f9cd50a40b2a0ed1c"
   dependencies:
@@ -4113,6 +4117,10 @@ jsx-ast-utils@^2.0.0:
   dependencies:
     array-includes "^3.0.3"
 
+keycode@^2.1.7:
+  version "2.1.9"
+  resolved "http://registry.npm.taobao.org/keycode/download/keycode-2.1.9.tgz#964a23c54e4889405b4861a5c9f0480d45141dfa"
+
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "http://registry.npm.taobao.org/kind-of/download/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -5498,6 +5506,15 @@ react-error-overlay@^2.0.0:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-event-listener@^0.5.0:
+  version "0.5.0"
+  resolved "http://registry.npm.taobao.org/react-event-listener/download/react-event-listener-0.5.0.tgz#d82105135573e187e3d900d18150a5882304b8d1"
+  dependencies:
+    babel-runtime "^6.26.0"
+    fbjs "^0.8.14"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
+
 react-icon-base@2.0.7:
   version "2.0.7"
   resolved "http://registry.npm.taobao.org/react-icon-base/download/react-icon-base-2.0.7.tgz#0bd18736bd6ce79ca6d69ce8387a07fb8d4ceffe"
@@ -5578,6 +5595,35 @@ react-scripts@1.0.12:
     whatwg-fetch "2.0.3"
   optionalDependencies:
     fsevents "1.1.2"
+
+react-swipeable-views-core@^0.12.8:
+  version "0.12.8"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views-core/download/react-swipeable-views-core-0.12.8.tgz#99460621e5a6da07fb482a25b151905ae7a797a9"
+  dependencies:
+    babel-runtime "^6.23.0"
+    warning "^3.0.0"
+
+react-swipeable-views-utils@^0.12.8:
+  version "0.12.8"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views-utils/download/react-swipeable-views-utils-0.12.8.tgz#9483fc7dd370032f2f93ac44f2a2913d7c52aa41"
+  dependencies:
+    babel-runtime "^6.23.0"
+    fbjs "^0.8.4"
+    keycode "^2.1.7"
+    prop-types "^15.5.4"
+    react-event-listener "^0.5.0"
+    react-swipeable-views-core "^0.12.8"
+
+react-swipeable-views@^0.12.8:
+  version "0.12.8"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views/download/react-swipeable-views-0.12.8.tgz#8541daab5881067e58281d1e6ff13815ae94ebf5"
+  dependencies:
+    babel-runtime "^6.23.0"
+    dom-helpers "^3.2.1"
+    prop-types "^15.5.4"
+    react-swipeable-views-core "^0.12.8"
+    react-swipeable-views-utils "^0.12.8"
+    warning "^3.0.0"
 
 "react@^15 || ^16", react@^15.6.1:
   version "15.6.1"

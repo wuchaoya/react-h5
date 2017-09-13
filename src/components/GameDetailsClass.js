@@ -1,5 +1,5 @@
 /**
- * Created by chao on 2017/9/6.
+ * Created by chao on 2017/9/12.
  */
 
 import styled from 'styled-components';
@@ -22,13 +22,22 @@ const GameClassContainer = styled.div`
  display: flex;
  justify-content: center;
 `;
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
-export default class GameClass extends Component {
+export default class GameDetailsClass extends Component {
   render () {
     return (
-      <GameClassContainer>
-        <GameClassText>{this.props.name}</GameClassText>
-      </GameClassContainer>
+      <Container>
+        {this.props.data.map((item, index) => {
+          return <GameClassContainer key={index}>
+            <GameClassText>{item}</GameClassText>
+          </GameClassContainer>;
+        })}
+      </Container>
     );
   }
 };

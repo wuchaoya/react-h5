@@ -11,6 +11,14 @@ import GameInfoTopContainer from './GameInfoTopContainer';
 import GameDetailsIcon from '../components/GameDetailsIcon';
 import GameDetailsTopTextContainer from './GameInfoTopTextContainer';
 import GameDetailsName from '../components/GameDetailsName';
+import GameSize from '../components/GameSize';
+import GameDetailsClass from '../components/GameDetailsClass';
+import GameDetailsButton from '../components/GameDetailsButton';
+import GameInfoStartContainer from './GameInfoStartContainer';
+import GameDetailsStartText from '../components/GameDetailsStartText';
+import AverageScore from '../components/AverageScore';
+import ScrollView from '../components/ScrollView';
+
 export default class LogdingContainer extends Component {
   constructor (props) {
     super(props);
@@ -27,9 +35,17 @@ export default class LogdingContainer extends Component {
           <GameDetailsIcon src={this.state.data.icon} />
           <GameDetailsTopTextContainer>
             <GameDetailsName>{this.state.data.name}</GameDetailsName>
+            <GameSize size={this.state.data.size} />
+            <GameDetailsClass data={this.state.data.label} />
           </GameDetailsTopTextContainer>
+          <GameDetailsButton />
         </GameInfoTopContainer>
+        <GameInfoStartContainer>
+          <GameDetailsStartText />
+          <AverageScore score={this.state.data.score} />
+        </GameInfoStartContainer>
       </GameInfoContail>
+      <ScrollView data={this.state.data.images} />
     </Container>;
   }
   getGameDetailsData (gid) {
