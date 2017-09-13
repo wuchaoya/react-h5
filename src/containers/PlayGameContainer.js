@@ -18,10 +18,10 @@ export default class PlayGameContainer extends Component {
   }
   componentDidMount () {
     window.Cloudplay.initSDK({
-      accessKeyID: '8F3BB845AD4',
-      accesskey:'abe93395b59a25b9c220e19807b8377a',
+      accessKeyID: '9599e53c',
+      accesskey:'0ce9fabd44f7c819001f17f1b788f6bd',
       channelId: 100000,
-      pkg_name: 'com.happyelements.AndroidAnimal',
+      pkg_name: 'com.monstronauts.potionpunch',
       onSceneChanged: function (sceneId, extraInfo) {
         console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
@@ -37,7 +37,7 @@ export default class PlayGameContainer extends Component {
       },
       priority: 0,
       extraId: 'miguh5',
-      pkg_name: 'com.happyelements.AndroidAnimal',
+      pkg_name: 'com.monstronauts.potionpunch',
       playingtime: 600000,
       configinfo: 'miguh5',
       c_token: 'abcd',
