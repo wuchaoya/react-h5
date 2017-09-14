@@ -108,7 +108,7 @@ export default class Pull extends Component{
       hasMore: true,
       data: null,
       action: STATS.init,
-      index: loadMoreLimitNum
+      index: 0
     };
   }
   handleAction = (action) => {
@@ -118,32 +118,44 @@ export default class Pull extends Component{
       return false;
     }
 
-    if (action === STATS.refreshing){//刷新
-      setTimeout(() => {
-        this.setState({
-          dataImg: cData,
-          hasMore: true,
-          action: STATS.refreshed,
-          index: loadMoreLimitNum
+    if (action === STATS.refreshing) {
+      this.setState({
+        index: 0
+      }, () => {
+        HttpRequest.getGameListData({ page: this.state.index }, (res) => {
+          this.setState({
+            data: res,
+            action: STATS.refreshed,
+            hasMore: true
+          });
+        }, (err) => {
+          this.setState({
+            data: null,
+            action: STATS.refreshed,
+            hasMore: true
+          });
         });
-      }, 3000);
-    } else if (action === STATS.loading && this.state.hasMore){//加载更多
-      setTimeout(() => {
-        if (this.state.index === 0) {
+      });
+    } else if (action === STATS.loading && this.state.hasMore) {
+      this.setState({
+        index: this.state.index + 1
+      }, () => {
+        HttpRequest.getGameListData({ page: this.state.index }, (res) => {
+          let arr = this.state.data;
+          arr = arr.concat(res);
+          this.setState({
+            data: arr,
+            action: STATS.reset,
+            hasMore: res.length === 10
+          });
+        }, (err) => {
           this.setState({
             action: STATS.reset,
             hasMore: false
           });
-        } else {
-          this.setState({
-            data: [...this.state.data, cData[0], cData[0]],
-            action: STATS.reset,
-            index: this.state.index - 1
-          });
-        }
-      }, 3000);
+        });
+      });
     }
-
     if (action === STATS.loading && !this.state.hasMore) {
       return;
     }
@@ -153,7 +165,6 @@ export default class Pull extends Component{
   }
   render () {
     const {
-      dataImg,
       hasMore
     } = this.state;
     return (
@@ -170,14 +181,21 @@ export default class Pull extends Component{
           distanceBottom={1000}>
           {
             this.state.data == null ? null : this.state.data.map((item, index) => {
-              return <GameListItem key={index}>
+              return <GameListItem key={index} onClick={() => {
+                this.props.history.push('gamedetails' + item.gid);
+              }}>
                 <GameListIcon src={item.icon} />
                 <GameListItemInfoContainer>
                   <GameListItemName>{item.name}</GameListItemName>
                   <Start marginBottom={0.24} length={item.score} />
                   <GameClass data={item.label = ['好玩', '不错']} />
                 </GameListItemInfoContainer>
-                <GameListButton />
+                <GameListButton onClick={(e) => {
+                  console.log(e.nativeEvent)
+                  e.stopPropagation();
+                  this.props.history.push('playgame');
+                }
+                } />
               </GameListItem>;
             })
             }
@@ -189,7 +207,7 @@ export default class Pull extends Component{
     this.setState({
       err: false
     });
-    HttpRequest.getGameListData({ page: 0 }, (res) => {
+    HttpRequest.getGameListData({ page: this.state.index }, (res) => {
      console.log(res);
       this.setState({
         data: res
