@@ -5527,6 +5527,10 @@ react-icons@^2.2.5:
   dependencies:
     react-icon-base "2.0.7"
 
+react-pullload@^1.0.7:
+  version "1.0.7"
+  resolved "http://registry.npm.taobao.org/react-pullload/download/react-pullload-1.0.7.tgz#5b9dc0a9184bad099000aa7717084ec4b455fb8b"
+
 react-pure-render@^1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/react-pure-render/download/react-pure-render-1.0.2.tgz#9d8a928c7f2c37513c2d064e57b3e3c356e9fabb"

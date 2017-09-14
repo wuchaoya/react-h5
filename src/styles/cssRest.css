@@ -15,6 +15,7 @@ blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 a img { border: none; }
 input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
+
 .a{
     border-radius: inherit;
     display: flex;
@@ -33,4 +34,5 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     border-top: 0.01rem solid #ededed;
     background: url('../assets/game_grade_icon.png') no-repeat 0.7rem 0.7rem;
     width: auto;
+    border-bottom: 0.01rem solid #e5e5e5;
 }

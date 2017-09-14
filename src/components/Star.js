@@ -11,6 +11,7 @@ const Container = styled.div`
  display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: ${(props) => props.marginBottom}rem;
 `;
 const TextNumber = styled.span`
  color: #666;
@@ -35,7 +36,7 @@ export default class Star extends Component {
   }
   render () {
     const { length } = this.props;
-    return <Container>
+    return <Container marginBottom={this.props.marginBottom}>
       {this._renderStar(parseInt(length / 2, 0), true)}
       {this._renderStar(parseInt(length, 0) % 2, false)}
       {parseInt(length, 0) === 0 ? null : <TextNumber>{parseInt(length, 0)}</TextNumber>}

@@ -30,7 +30,8 @@ class PlayGameContainer extends Component {
     };
   }
   render () {
-    return this.state.data === null ? <LoadingContainer name='游戏专题' clickButton={() => this.getData()} err={this.state.err} /> : <Container>
+    return this.state.data === null ? <LoadingContainer name='游戏专题'clickButton={() => this.getData()} err={this.state.err} /> : <Container
+      marginBottom={0.24}>
       {/* <HeadNav opacity={1}>{this.state.data.title}</HeadNav> */}
       <TopIme uri={this.state.data.cover} />
       <TopIntro>{this.state.data.summary}</TopIntro>
@@ -49,12 +50,12 @@ class PlayGameContainer extends Component {
                 </HeadLeftBottomContainer>
               </HeadLeftContainer>
               <PlayGameButton onClick={() => {
-                this.props.history.push('playgame' + Date.parse(new Date()));
+                this.props.history.push('playgame');
               }}>立即玩</PlayGameButton>
             </HeadContainer>
             <GameDetaillImg width='100%' height='100%' src={item.cover}
                             onClick={() => {
-                              this.props.history.push(item.gid);
+                              this.props.history.push('gamedetails' + item.gid);
                             }}/>
             <GameIntro>{item.game_summary}</GameIntro>
           </TopicContainer>
