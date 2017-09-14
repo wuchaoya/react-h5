@@ -49,7 +49,7 @@ class PlayGameContainer extends Component {
                 </HeadLeftBottomContainer>
               </HeadLeftContainer>
               <PlayGameButton onClick={() => {
-                this.props.history.push('playgame');
+                this.props.history.push('playgame' + Date.parse(new Date()));
               }}>立即玩</PlayGameButton>
             </HeadContainer>
             <GameDetaillImg width='100%' height='100%' src={item.cover}

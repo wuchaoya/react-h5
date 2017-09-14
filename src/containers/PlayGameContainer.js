@@ -54,6 +54,7 @@ export default class PlayGameContainer extends Component {
     window.Cloudplay.startSDK(gameOptions);
   }
   componentWillUnmount () {
+    window.location.reload();
     window.Cloudplay.stopSDK();
   }
 };

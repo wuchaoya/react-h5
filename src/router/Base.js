@@ -11,7 +11,7 @@ const Base = () => (
     <div>
       <Route exact path='/' component={TopicDetailsContainer} />
       <Route exact path='/:gid' component={GameDetails} />
-      <Route exact path='/playgame' component={PlayGame} />
+      <Route exact path='/playgame:time' component={PlayGame} />
     </div>
   </Router>
 );
