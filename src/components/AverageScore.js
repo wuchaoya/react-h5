@@ -27,7 +27,7 @@ export default class GameClass extends Component {
   render () {
     return (
       <Container>
-        <Text>{this.props.score}</Text>
+        <Text>{parseInt(this.props.score, 0)}</Text>
       </Container>
     );
   }

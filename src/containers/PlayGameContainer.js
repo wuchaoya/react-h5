@@ -2,6 +2,11 @@
  * Created by chao on 2017/9/13.
  */
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+const Box = styled.div`
+  height: ${(props) => props.h / 100}rem;
+`;
 
 export default class PlayGameContainer extends Component {
   constructor (props) {
@@ -12,8 +17,10 @@ export default class PlayGameContainer extends Component {
     };
   }
   render () {
+    let height = document.getElementsByTagName('html')[0].clientHeight;
+    console.log(height);
     return (
-      <div id='playGameBox' />
+      <Box id='playGameBox' h={height} />
     );
   }
   componentDidMount () {
@@ -45,6 +52,9 @@ export default class PlayGameContainer extends Component {
       isPortrait: false
     };
     window.Cloudplay.startSDK(gameOptions);
+  }
+  componentWillUnmount () {
+    window.Cloudplay.stopSDK();
   }
 };
 
