@@ -2,7 +2,7 @@
  * Created by chao on 2017/9/14.
  */
 
-import React, { Component, PureComponent, PropTypes } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactPullLoad, { STATS } from 'react-pullload';
 import GameListHead from '../components/GameListHead';
 import HttpRequest from '../utils/HttpRequest';
@@ -22,15 +22,6 @@ const defaultStyle = {
   lineHeight: '1.5'
 };
 class HeadNode extends PureComponent{
-
-  static propTypes = {
-    loaderState: PropTypes.string.isRequired
-  };
-
-  static defaultProps = {
-    loaderState: STATS.init
-  };
-
   render () {
     const { loaderState } = this.props;
     let content = '';
@@ -52,22 +43,8 @@ class HeadNode extends PureComponent{
 }
 
 class FooterNode extends PureComponent{
-
-  static propTypes = {
-    loaderState: PropTypes.string.isRequired,
-    hasMore: PropTypes.bool.isRequired
-  };
-
-  static defaultProps = {
-    loaderState: STATS.init,
-    hasMore: true
-  };
-
   render () {
-    const {
-      loaderState,
-      hasMore
-    } = this.props;
+    const { loaderState, hasMore } = this.props;
 
     let content = '';
     // if(hasMore === false){
@@ -89,18 +66,6 @@ class FooterNode extends PureComponent{
   }
 }
 
-const loadMoreLimitNum = 2;
-
-const cData = [
-  "http://img1.gtimg.com/15/1580/158031/15803178_1200x1000_0.jpg",
-  "http://img1.gtimg.com/15/1580/158031/15803179_1200x1000_0.jpg",
-  "http://img1.gtimg.com/15/1580/158031/15803181_1200x1000_0.jpg",
-  "http://img1.gtimg.com/15/1580/158031/15803182_1200x1000_0.jpg",
-  "http://img1.gtimg.com/15/1580/158031/15803183_1200x1000_0.jpg",
-  // "http://img1.gtimg.com/15/1580/158031/15803184_1200x1000_0.jpg",
-  // "http://img1.gtimg.com/15/1580/158031/15803186_1200x1000_0.jpg"
-]
-
 export default class Pull extends Component{
   constructor () {
     super();
@@ -112,9 +77,8 @@ export default class Pull extends Component{
     };
   }
   handleAction = (action) => {
-    if (action === this.state.action ||
-      action === STATS.refreshing && this.state.action === STATS.loading ||
-      action === STATS.loading && this.state.action === STATS.refreshing) {
+    // eslint-disable-next-line
+    if (action === this.state.action || action === STATS.refreshing && this.state.action === STATS.loading || action === STATS.loading && this.state.action === STATS.refreshing) {
       return false;
     }
 
@@ -191,7 +155,7 @@ export default class Pull extends Component{
                   <GameClass data={item.label = ['好玩', '不错']} />
                 </GameListItemInfoContainer>
                 <GameListButton onClick={(e) => {
-                  console.log(e.nativeEvent)
+                  console.log(e.nativeEvent);
                   e.stopPropagation();
                   this.props.history.push('playgame');
                 }

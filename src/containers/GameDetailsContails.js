@@ -22,6 +22,7 @@ import GameDetailSummaryTitle from '../components/GameDetailsSummaryTitle';
 import GameDetailsText from '../components/GameDetailsText';
 import GameDetailsOtherContainer from './GameDetailsOtherContainer';
 import GameDetailsOtherInfo from '../components/GameDetailsOtherInfo';
+import MyModal from '../components/Modal';
 
 export default class LogdingContainer extends Component {
   constructor (props) {
@@ -33,6 +34,7 @@ export default class LogdingContainer extends Component {
   }
   render () {
     return this.state.data === null ? null : <Container marginBottom={0}>
+      <MyModal />
       <GameTopImg uri={this.state.data.cover} />
       <GameInfoContail>
         <GameInfoTopContainer>
@@ -63,6 +65,7 @@ export default class LogdingContainer extends Component {
         <GameDetailsOtherInfo name='更新日期' text={this.state.data.update_time} />
         <GameDetailsOtherInfo name='版本' text={this.state.data.version} />
       </GameDetailsOtherContainer>
+
     </Container>;
   };
   getGameDetailsData (gid) {

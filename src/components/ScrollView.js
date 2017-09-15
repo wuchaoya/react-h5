@@ -2,95 +2,70 @@
  * Created by chao on 2017/9/12.
  */
 import React, { Component } from 'react';
-import SwipeableViews from 'react-swipeable-views';
-const styles = {
-  root: {
-    padding: '0.18rem',
-    backgroundColor: '#fff',
-    marginTop: '0.12rem'
-  },
-  slideContainer: {
-    marginRight: '0.18rem',
-  },
-  slide: {
-    padding: 15,
-    color: '#fff',
-  },
-  slide1: {
-    backgroundColor: '#FEA900'
-  },
-  slide2: {
-    backgroundColor: '#B3DC4A'
-  },
-  slide3: {
-    backgroundColor: '#6AC0FF'
-  },
-  imgStyle: {
-    height: '2.32rem'
+import styled from 'styled-components';
+import ReactScrollbar from 'react-scrollbar-js';
+import '../styles/cssStyle.css';
 
-  },
-  container: {
-    width: 'auto'
-  }
-};
-// 720 1280   880 495
+const Contaner = styled.div`
+  height: 3.6rem;
+  width: ${(props) => props.w}rem;
+  margin: 0;
+  padding: 0;
+  padding-left: 0.08rem;
+  overflow: hidden;
+`;
+const Img = styled.img`
+  width: ${(props) => props.w}rem;
+  height: ${(props) => props.h}rem;
+  margin-right: 0.18rem;
+`;
 export default class ScrollView extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      img: null,
-      imgx:{
-        height: '2.32rem',
-        width: 880 / (495 / 2.32) + 'rem'
-      },
-      imgy: {
-        height: '2.32rem',
-        width: 720 / (720 / 2.32) + 'rem'
-      }
+      width: 0,
+      height: 0
     };
+    this.getImgHeightWidth = this.getImgHeightWidth.bind(this);
   }
   render () {
-    console.log(this.state.img ? this.state.imgy.width : this.state.imgx.width);
+    console.log(this.props.data.length)
     return (
-      <SwipeableViews
-        containerStyle={{ height:'2.32rem', backgroundColor:'red', width:this.state.img ? this.state.imgy.width : this.state.imgx.width }}
-        enableMouseEvents={true}
-        style={styles.root}
-        slideStyle={styles.slideContainer}>
-        {this.props.data.map((item, index) => {
-          return (
-            <img
-              ref='img'
-              key={index}
-              alt=''
-              height={'100%'}
-              width={'100%'}
-              style={this.state.img == null ? null : (this.state.img === true ? this.state.imgy : this.state.imgx)}
-              src={item} />
-          );
-        })}
-      </SwipeableViews>
+      <ReactScrollbar
+        ref={(c) => {
+          console.log(c)
+          this.scroll = c; }}
+        style={{height:'3.6rem', width: '7.2rem', backgroundColor: '#fff'}}>
+        <Contaner w={this.props.data.length * (this.state.width + 18) / 100}>
+          {this.props.data.map((src, index) => {
+            return <Img height={'100%'} width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={src} />;
+          })}
+        </Contaner>
+      </ReactScrollbar>
     );
   }
-  getImgNaturalDimensions (src) {
+  getImgHeightWidth (url) {
+    let img = new Image();
+    img.src = url;
+    let set = setInterval(() => {
+      if (img.width > 0 || img.height > 0) {
+        this.setState({
+          height: img.height,
+          width: img.width
+        }, () => {
+          this.getWidth(this.state.width, this.state.height);
+        });
+        clearInterval(set);
+      }
+    }, 40);
+  }
+  getWidth (width, height) {
+    this.setState({
+      width: parseInt(width / (height / 360), 0),
+      height: 360
+    });
   }
   componentDidMount () {
-    console.log(this.refs.img.height);
-    console.log(this.refs.img.width);
-    setTimeout(() => {
-      if (this.refs.img.height > this.refs.img.width) {
-        this.setState({
-          img: true
-        }, () => {
-          console.log(this.state);
-        });
-      } else {
-        this.setState({
-          img: false
-        }, () => {
-          console.log(this.state.img);
-        });
-      }
-      }, 100);
+    (this.getImgHeightWidth(this.props.data[0]));
   }
-}
+};

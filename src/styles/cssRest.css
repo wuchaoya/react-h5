@@ -7,7 +7,7 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td { background: transparent; border: 0; margin: 0; padding: 0; vertical-align: baseline; font-size: 100%; font: inherit; -webkit-text-size-adjust: none; }
-body { line-height: 1; }
+body { line-height: 1;}
 table { border-collapse: collapse; border-spacing: 0; }
 object, :focus { outline: none; }
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section /* HTML 5 */ { display: block; }
@@ -35,4 +35,12 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     background: url('../assets/game_grade_icon.png') no-repeat 0.7rem 0.7rem;
     width: auto;
     border-bottom: 0.01rem solid #e5e5e5;
+}
+.area {
+    width: 400px;
+
+}
+.container {
+    width: 1200px;
+    background-color: rgba(0,0,0,0.7);
 }

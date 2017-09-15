@@ -21,3 +21,26 @@ npm start 或者 yarn start
 npm run build 或者 yarn run build
 
 ```
+### 其他
+
+在游戏详情 游戏图片滑动时候 chrome 监听touch类事件报错
+
+```
+Unable to preventDefault inside passive event listener due to target being treated as passive. See https://www.chromestatus.com/...
+```
+event.cancelable 浏览器默认行为是否可以被禁用
+event.defaultPrevented 浏览器默认行为是否已经被禁用
+好像mdn上的event.preventDefault()方法还没更新到最新
+
+修改了   react-dom/lib/SyntheticEvent.js  113行左右
+
+``` js
+if (event.preventDefault) {
+      if (event.cancelable) {
+        // 判断默认行为是否已经被禁用
+        if (!event.defaultPrevented) {
+          event.preventDefault();
+        }
+      }
+}
+```
