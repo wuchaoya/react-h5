@@ -32,13 +32,10 @@ export default class ScrollView extends Component {
     console.log(this.props.data.length)
     return (
       <ReactScrollbar
-        ref={(c) => {
-          console.log(c)
-          this.scroll = c; }}
         style={{height:'3.6rem', width: '7.2rem', backgroundColor: '#fff'}}>
         <Contaner w={this.props.data.length * (this.state.width + 18) / 100}>
           {this.props.data.map((src, index) => {
-            return <Img height={'100%'} width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={src} />;
+            return <Img onClick={this.props.click}  height={'100%'} width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={src} />;
           })}
         </Contaner>
       </ReactScrollbar>

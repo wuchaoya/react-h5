@@ -15,6 +15,11 @@ const Container = styled.div`
  height: 12.8rem;
  background-color: #fff;
  overflow: hidden;
+ display: ${(props) => props.disable ? 'none' : 'block'}
+`;
+
+const Img = styled.img`
+  
 `;
 
 export default class Modal extends Component {
@@ -34,14 +39,11 @@ export default class Modal extends Component {
       slidesToScroll: 1
     };
     return (
-      <Container h={this.state.height} w={this.state.width}>
+      <Container disable={this.props.disabled} h={this.state.height} w={this.state.width}>
         <Slider {...settings}>
-          <div><h3>1</h3></div>
-          <div><h3>2</h3></div>
-          <div><h3>3</h3></div>
-          <div><h3>4</h3></div>
-          <div><h3>5</h3></div>
-          <div><h3>6</h3></div>
+          {this.props.data.map((url, index) => {
+            return <Img onClick={this.props.click} key={index} height='100%' width='100%' src={url} />;
+          })}
         </Slider>
       </Container>
     );

@@ -44,3 +44,6 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     width: 1200px;
     background-color: rgba(0,0,0,0.7);
 }
+.a{
+    display: block;
+}
