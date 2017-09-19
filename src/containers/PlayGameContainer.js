@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import HttpRequest from '../utils/HttpRequest';
+import Transition from '../utils/Transition';
 
 const Box = styled.div`
   height: ${(props) => props.h / 100}rem;
@@ -28,6 +29,12 @@ export default class PlayGameContainer extends Component {
     }
 
     componentDidMount() {
+      console.log(Transition.JsonToXml({
+        root: {
+          battle: 5543,
+          user_id: 0
+        }
+    }))
         this.getRoomId()
         window.Cloudplay.initSDK({
             accessKeyID: 'D4F92FE4CFC',
@@ -74,7 +81,11 @@ export default class PlayGameContainer extends Component {
             console.log('++++++++++++roomId:  ' + res.resultData.battleCode)
             this.setState({
                 roomId: window.btoa(res.resultData.battleCode)
+            },() => {
+                console.log(this.state.roomId)
+                console.log(window.atob(this.state.roomId))
             });
+
         }, (err) => {
             this.setState({
                 roomId: null
