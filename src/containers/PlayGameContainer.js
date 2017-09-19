@@ -1,61 +1,84 @@
 /**
  * Created by chao on 2017/9/13.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
+import HttpRequest from '../utils/HttpRequest';
 
 const Box = styled.div`
   height: ${(props) => props.h / 100}rem;
 `;
 
 export default class PlayGameContainer extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      data: null,
-      err: false
-    };
-  }
-  render () {
-    let height = document.getElementsByTagName('html')[0].clientHeight;
-    console.log(height);
-    return (
-      <Box id='playGameBox' h={height} />
-    );
-  }
-  componentDidMount () {
-    // window.Cloudplay.initSDK({
-    //   accessKeyID: '9599e53c',
-    //   accesskey:'0ce9fabd44f7c819001f17f1b788f6bd',
-    //   channelId: 100000,
-    //   pkg_name: 'com.monstronauts.potionpunch',
-    //   onSceneChanged: function (sceneId, extraInfo) {
-    //     console.log('sceneId & extraInfo', sceneId, extraInfo);
-    //   },
-    //
-    //   MessageHandler: function (message) {
-    //     console.log(message);
-    //   }
-    // });
-    // let gameOptions = {
-    //   appid: 0,
-    //   userinfo: {
-    //     uId: '123',
-    //     utoken: '123456'
-    //   },
-    //   priority: 0,
-    //   extraId: 'miguh5',
-    //   pkg_name: 'com.monstronauts.potionpunch',
-    //   playingtime: 600000,
-    //   configinfo: 'miguh5',
-    //   c_token: 'abcd',
-    //   isPortrait: false
-    // };
-    // window.Cloudplay.startSDK(gameOptions);
-  }
-  componentWillUnmount () {
-    // window.location.reload();
-    // window.Cloudplay.stopSDK();
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: null,
+            err: false,
+            roomId: null
+        };
+    }
+
+    render() {
+        let height = document.getElementsByTagName('html')[0].clientHeight;
+        console.log(height);
+        return (
+            <Box id='playGameBox' h={height}/>
+        );
+    }
+
+    componentDidMount() {
+        this.getRoomId()
+        window.Cloudplay.initSDK({
+            accessKeyID: 'D4F92FE4CFC',
+            accesskey: '625a706566676a397432573238557444',
+            channelId: 100001,
+            pkg_name: 'com.migu.game.ddzzr',
+            onSceneChanged: function (sceneId, extraInfo) {
+                console.log('sceneId & extraInfo', sceneId, extraInfo);
+            },
+
+            MessageHandler: function (message) {
+                console.log(message);
+            }
+        });
+        let gameOptions = {
+            appid: 123,
+            userinfo: {
+                uId: '1234',
+                utoken: '12345678'
+            },
+            priority: 0,
+            extraId: 'miguh5',
+            pkg_name: 'com.migu.game.ddzzr',
+            playingtime: 600000,
+            configinfo: 'miguh5',
+            c_token: 'abcd',
+            isPortrait: false
+        };
+        window.Cloudplay.startSDK(gameOptions);
+    }
+
+    componentWillUnmount() {
+        window.location.reload();
+        window.Cloudplay.stopSDK();
+    }
+
+    /**
+     * 获取房间号,只针对咪咕棋牌游戏有效
+     */
+    getRoomId() {
+        HttpRequest.getRoomId({}, (res) => {
+            console.log(res);
+            console.log('++++++++++++roomId:  ' + res.resultData.battleCode)
+            this.setState({
+                roomId: res.resultData.battleCode
+            });
+        }, (err) => {
+            this.setState({
+                roomId: null
+            });
+        });
+    }
 };
 
