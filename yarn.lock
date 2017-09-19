@@ -5697,6 +5697,10 @@ react-swipeable-views@^0.12.8:
     react-swipeable-views-utils "^0.12.8"
     warning "^3.0.0"
 
+react-tappable@^1.0.2:
+  version "1.0.2"
+  resolved "http://registry.npm.taobao.org/react-tappable/download/react-tappable-1.0.2.tgz#bda67f4e3f0e74bf416a4ec8a5885888482e27d4"
+
 "react@^15 || ^16", react@^15.6.1:
   version "15.6.1"
   resolved "http://registry.npm.taobao.org/react/download/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"

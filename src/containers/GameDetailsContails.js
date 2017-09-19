@@ -30,19 +30,19 @@ export default class LogdingContainer extends Component {
     this.state = {
       data: null,
       err: false,
-      imgdisable:true
+      imgdisable:true,
+      index:0
     };
-    this.showImgs = this.showImgs.bind(this);
   }
   render () {
     return this.state.data === null ? null : <Container marginBottom={0}>
-      <MyModal click={() => {
+      {this.state.imgdisable ? null : <MyModal index={this.state.index} click={() => {
         this.setState(
           {
             imgdisable:true
           });
       }
-      } disabled={this.state.imgdisable} data={this.state.data.images} />
+      } disabled={this.state.imgdisable} data={this.state.data.images} />}
       <GameTopImg uri={this.state.data.cover} />
       <GameInfoContail>
         <GameInfoTopContainer>
@@ -62,15 +62,18 @@ export default class LogdingContainer extends Component {
           <AverageScore score={this.state.data.score} />
         </GameInfoStartContainer>
       </GameInfoContail>
-      <ScrollView click={() => {
-        console.log('bbbb');
+      <ScrollView click={(index) => {
         this.setState({
-          imgdisable:false
+          index:index
+        }, () => {
+          this.setState({
+            imgdisable:false
+          });
         });
       }} data={this.state.data.images} />
       <GameDetailSummary>
         <GameDetailSummaryTitle>游戏简介</GameDetailSummaryTitle>
-        <GameDetailsText>{this.state.data.content}</GameDetailsText>
+        <GameDetailsText ref='infoText' data={this.state.data.content} />
       </GameDetailSummary>
       <GameDetailsOtherContainer>
         <GameDetailSummaryTitle>其他信息</GameDetailSummaryTitle>
@@ -81,12 +84,6 @@ export default class LogdingContainer extends Component {
 
     </Container>;
   };
-  showImgs () {
-    console.log('bb');
-    this.setState({
-      imgdisable:false
-    });
-  }
   getGameDetailsData (gid) {
     this.setState({
       err: false
@@ -105,8 +102,11 @@ export default class LogdingContainer extends Component {
       });
     });
   }
+  getTextHeight () {
+  }
   componentDidMount () {
     this.getGameDetailsData(this.props.match.params.gid);
+    this.getTextHeight();
   }
 };
 

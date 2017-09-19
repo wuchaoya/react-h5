@@ -7,22 +7,32 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import PropTypes from 'prop-types';
 const Container = styled.div`
- position: absolute;
+ position: fixed;
  top: 0;
  z-index: 999;
  width: 7.2rem;
  height: 12.8rem;
- background-color: #fff;
+ background-color: rgba(0,0,0,0.7);
  overflow: hidden;
- display: ${(props) => props.disable ? 'none' : 'block'}
+ align-items: center;
+ display: flex;
 `;
 
 const Img = styled.img`
   
 `;
 
-export default class Modal extends Component {
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
+
+class Modal extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -31,16 +41,10 @@ export default class Modal extends Component {
     };
   }
   render () {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
     return (
       <Container disable={this.props.disabled} h={this.state.height} w={this.state.width}>
-        <Slider {...settings}>
+
+        <Slider initialSlide={this.props.index} {...settings}>
           {this.props.data.map((url, index) => {
             return <Img onClick={this.props.click} key={index} height='100%' width='100%' src={url} />;
           })}
@@ -50,6 +54,17 @@ export default class Modal extends Component {
   }
   defaultEvent (event) {
     event.preventDefault();
+  }
+  componentWillReceiveProps () {
+    if (this.props.disabled) {
+      document.addEventListener('touchmove', this.defaultEvent, false);
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.removeEventListener('touchmove', this.defaultEvent, false);
+      document.documentElement.style.overflow = 'scroll';
+      document.body.style.overflow = 'scroll';
+    }
   }
   componentDidMount () {
     document.addEventListener('touchmove', this.defaultEvent, false);
@@ -63,6 +78,15 @@ export default class Modal extends Component {
 
   componentWillUnmount () {
     document.removeEventListener('touchmove', this.defaultEvent, false);
+    document.documentElement.style.overflow = 'scroll';
+    document.body.style.overflow = 'scroll';
   }
 };
+Modal.PropTypes = {
+  data: PropTypes.array,
+  index: PropTypes.number,
+  disabled: PropTypes.bool,
+  click: PropTypes.func
+};
 
+export default Modal;

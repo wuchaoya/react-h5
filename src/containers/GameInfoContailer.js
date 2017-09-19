@@ -12,4 +12,6 @@ export default styled.div`
   padding-left: 0.18rem;
   padding-right: 0.18rem;
   padding-top: 0.18rem;
+  margin-bottom: 0.12rem;
+
 `;

@@ -14,7 +14,6 @@ import Start from '../components/Star';
 import GameClass from '../components/GameDetailsClass';
 import GameListButton from '../components/GamelistButton';
 
-import './css.css';
 const defaultStyle = {
   width: '100%',
   textAlign: 'center',

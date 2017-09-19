@@ -5,14 +5,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import ReactScrollbar from 'react-scrollbar-js';
 import '../styles/cssStyle.css';
-
+import Tappable from 'react-tappable/lib/Tappable';
 const Contaner = styled.div`
   height: 3.6rem;
   width: ${(props) => props.w}rem;
   margin: 0;
-  padding: 0;
-  padding-left: 0.08rem;
+  padding: 0.18rem;
   overflow: hidden;
+  border-bottom: 0.01rem solid #e5e5e5;
 `;
 const Img = styled.img`
   width: ${(props) => props.w}rem;
@@ -29,13 +29,18 @@ export default class ScrollView extends Component {
     this.getImgHeightWidth = this.getImgHeightWidth.bind(this);
   }
   render () {
-    console.log(this.props.data.length)
     return (
       <ReactScrollbar
-        style={{height:'3.6rem', width: '7.2rem', backgroundColor: '#fff'}}>
+        stopScrollPropagation={true}
+        vertical={false}
+        style={{height:'3.96rem', width: '7.2rem', backgroundColor: '#fff'}}>
         <Contaner w={this.props.data.length * (this.state.width + 18) / 100}>
           {this.props.data.map((src, index) => {
-            return <Img onClick={this.props.click}  height={'100%'} width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={src} />;
+            return (
+              <Tappable key={index} onTap={() => this.props.click(index)}>
+                <Img height={'100%'} width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={src} />
+              </Tappable>
+            );
           })}
         </Contaner>
       </ReactScrollbar>

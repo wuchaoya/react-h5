@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-icons": "^2.2.5",
@@ -17,6 +18,7 @@
     "react-scrollbar-js": "^1.0.1",
     "react-slick": "^0.15.4",
     "react-swipeable-views": "^0.12.8",
+    "react-tappable": "^1.0.2",
     "serve": "^6.0.6",
     "slick-carousel": "^1.7.1",
     "styled-components": "^2.1.2"
