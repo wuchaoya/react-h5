@@ -33,7 +33,8 @@ const resIconStyle = {
   height: '0.25rem'
 }
 const line = {
-
+  flex: '1',
+  borderTop: '0.01rem solid #e5e5e5'
 }
 const textStyle = {
   marginLeft:'0.1rem',
@@ -64,13 +65,13 @@ class FooterNode extends PureComponent{
     if (loaderState === STATS.loading) {
       return (<div style={defaultStyle}><img style={loadingIconStyle} src={loading} alt=''/><span style={textStyle}>加载中</span></div>)
     } else if (hasMore === false) {
-      return (<div>
-        <div>
+      return (<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{display:'flex',flexDirection:'row', alignItems: 'center',marginTop:'0.56rem',width:'100%'}}>
           <div style={line} />
-          <span>底线都出来了</span>
+          <span style={{marginLeft:'0.18rem', marginRight: '0.18rem'}}>底线都出来了</span>
           <div style={line} />
-          <img src={loadermore} alt=''/>
         </div>
+        <img style={{marginTop:'0.64rem',height:'0.79rem',width:'0.79rem',marginBottom:'0.4rem'}} src={loadermore} alt=''/>
       </div>)
     }
     return <div />
@@ -147,7 +148,7 @@ export default class Pull extends Component{
       hasMore
     } = this.state;
     return (
-      <div>
+      <div style={{backgroundColor:'rgba(237,237,237,1)'}}>
         <GameListHead />
         <ReactPullLoad
           downEnough={100}

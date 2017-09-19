@@ -50,11 +50,12 @@ class PlayGameContainer extends Component {
                 </HeadLeftBottomContainer>
               </HeadLeftContainer>
               <PlayGameButton onClick={() => {
-                this.props.history.push('playgame');
+                this.props.history.push('playgame', { pkg:item.pkg });
               }}>立即玩</PlayGameButton>
             </HeadContainer>
             <GameDetaillImg width='100%' height='100%' src={item.cover}
                             onClick={() => {
+                              console.log(item.pkg)
                               this.props.history.push('gamedetails' + item.gid);
                             }}/>
             <GameIntro>{item.game_summary}</GameIntro>
@@ -78,6 +79,7 @@ class PlayGameContainer extends Component {
     });
     HttpRequest.getGameDissertationData({ did:this.GetQueryString('did') }, (res) => {
       document.title = res.title;
+      console.log(res)
       this.setState({
         data: res
       });
