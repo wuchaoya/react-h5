@@ -13,56 +13,71 @@ import GameListItemName from '../components/GameListItemName';
 import Start from '../components/Star';
 import GameClass from '../components/GameDetailsClass';
 import GameListButton from '../components/GamelistButton';
-import loading from '../assets/loading.gif'
+import loading from '../assets/loading.gif';
+import res from '../assets/emoji_res.png';
+import loadermore from '../assets/emoji_loadermore.png';
 
 const defaultStyle = {
   width: '100%',
   height: '0.86rem',
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
 };
+const loadingIconStyle = {
+  width:0.54 * 0.7 + 'rem',
+  height:0.58 * 0.7 + 'rem'
+}
+const resIconStyle = {
+  width: '1.02rem',
+  height: '0.25rem'
+}
+const line = {
+
+}
+const textStyle = {
+  marginLeft:'0.1rem',
+  fontSize: '0.26rem',
+  color: '#666'
+}
 class HeadNode extends PureComponent{
+  _render (loaderState) {
+    if (loaderState === STATS.pulling) {
+      return (<div style={defaultStyle}><img style={loadingIconStyle} src={loading} alt=''/><span style={textStyle}>使劲拉</span></div>)
+    } else if (loaderState === STATS.enough) {
+      return (<div style={defaultStyle}><img style={loadingIconStyle} src={loading} alt=''/><span style={textStyle}>松手</span></div>)
+    } else if (loaderState === STATS.refreshing) {
+      return (<div style={defaultStyle}><img style={loadingIconStyle} src={loading} alt=''/><span style={textStyle}>刷新中</span></div>)
+    } else if (loaderState === STATS.refreshed) {
+      return (<div style={defaultStyle}><img style={resIconStyle} src={res} alt=''/><span style={textStyle}>刷新成功</span></div>)
+    }
+    return <div />
+  }
   render () {
     const { loaderState } = this.props;
-    let content;
-    if (loaderState === STATS.pulling) {
-      content = '使劲拉';
-    } else if (loaderState === STATS.enough) {
-      content = '';
-    } else if (loaderState === STATS.refreshing) {
-      content = '正在刷新...';
-    } else if (loaderState === STATS.refreshed) {
-      content = '刷新成功';
-    }
-    return (
-      <div style={defaultStyle}>
-        {content}
-      </div>
-    );
+    return this._render(loaderState)
   }
 }
 
 class FooterNode extends PureComponent{
+  _render (loaderState, hasMore) {
+    if (loaderState === STATS.loading) {
+      return (<div style={defaultStyle}><img style={loadingIconStyle} src={loading} alt=''/><span style={textStyle}>加载中</span></div>)
+    } else if (hasMore === false) {
+      return (<div>
+        <div>
+          <div style={line} />
+          <span>底线都出来了</span>
+          <div style={line} />
+          <img src={loadermore} alt=''/>
+        </div>
+      </div>)
+    }
+    return <div />
+  }
   render () {
     const { loaderState, hasMore } = this.props;
-
-    let content = '';
-    // if(hasMore === false){
-    //   content = "没有更多"
-    // } else if(loaderState == STATS.loading && hasMore === true){
-    //   content = "加载中"
-    // }
-    if (loaderState === STATS.loading) {
-      content = '加载中';
-    } else if (hasMore === false) {
-      content = '没有更多';
-    }
-
-    return (
-      <div style={defaultStyle}>
-        {content}
-      </div>
-    );
+    return this._render(loaderState, hasMore)
   }
 }
 
@@ -157,7 +172,7 @@ export default class Pull extends Component{
                 <GameListButton onClick={(e) => {
                   console.log(e.nativeEvent);
                   e.stopPropagation();
-                  this.props.history.push('playgame');
+                  this.props.history.push('playgame',{pkg:item.pkg});
                 }
                 } />
               </GameListItem>;

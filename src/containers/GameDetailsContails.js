@@ -54,7 +54,7 @@ export default class LogdingContainer extends Component {
           </GameDetailsTopTextContainer>
           <GameDetailsButton
             onClick={() => {
-              this.props.history.push('playgame');
+              this.props.history.push('playgame', { pkg:this.state.data.pkg });
             }} />
         </GameInfoTopContainer>
         <GameInfoStartContainer>
