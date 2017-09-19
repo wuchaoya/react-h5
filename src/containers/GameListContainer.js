@@ -13,21 +13,22 @@ import GameListItemName from '../components/GameListItemName';
 import Start from '../components/Star';
 import GameClass from '../components/GameDetailsClass';
 import GameListButton from '../components/GamelistButton';
+import loading from '../assets/loading.gif'
 
 const defaultStyle = {
   width: '100%',
-  textAlign: 'center',
-  fontSize: '20px',
-  lineHeight: '1.5'
+  height: '0.86rem',
+  justifyContent: 'center',
+  alignItems: 'center'
 };
 class HeadNode extends PureComponent{
   render () {
     const { loaderState } = this.props;
-    let content = '';
+    let content;
     if (loaderState === STATS.pulling) {
-      content = '下拉刷新';
+      content = '使劲拉';
     } else if (loaderState === STATS.enough) {
-      content = '松开刷新';
+      content = '';
     } else if (loaderState === STATS.refreshing) {
       content = '正在刷新...';
     } else if (loaderState === STATS.refreshed) {

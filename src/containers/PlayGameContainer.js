@@ -66,13 +66,14 @@ export default class PlayGameContainer extends Component {
 
     /**
      * 获取房间号,只针对咪咕棋牌游戏有效
+     * atob
      */
     getRoomId() {
         HttpRequest.getRoomId({}, (res) => {
             console.log(res);
             console.log('++++++++++++roomId:  ' + res.resultData.battleCode)
             this.setState({
-                roomId: res.resultData.battleCode
+                roomId: window.btoa(res.resultData.battleCode)
             });
         }, (err) => {
             this.setState({
