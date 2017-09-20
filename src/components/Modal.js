@@ -62,8 +62,8 @@ class Modal extends Component {
       document.body.style.overflow = 'hidden';
     } else {
       document.removeEventListener('touchmove', this.defaultEvent, false);
-      document.documentElement.style.overflow = 'scroll';
-      document.body.style.overflow = 'scroll';
+      document.documentElement.style.overflow = 'visible';
+      document.body.style.overflow = 'visible;';
     }
   }
   componentDidMount () {
@@ -78,8 +78,8 @@ class Modal extends Component {
 
   componentWillUnmount () {
     document.removeEventListener('touchmove', this.defaultEvent, false);
-    document.documentElement.style.overflow = 'scroll';
-    document.body.style.overflow = 'scroll';
+    document.documentElement.style.overflow = 'visible';
+    document.body.style.overflow = 'visible';
   }
 };
 Modal.PropTypes = {
