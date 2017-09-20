@@ -8,4 +8,7 @@ export default styled.h3`
   padding: 0;
   color: #000;
   font-size:0.3rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 `;

@@ -48,4 +48,6 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     display: block;
     overflow: scroll;
     overflow: auto;
+    align-self: center;
+    justify-content: space-around;
 }

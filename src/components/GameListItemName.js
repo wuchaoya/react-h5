@@ -10,4 +10,8 @@ export default styled.h3`
   font-size: 0.28rem;
   font-weight: 400;
   color: #000;
+  width: 100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
   `;
