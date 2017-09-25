@@ -31,6 +31,19 @@ export default class PlayGameContainer extends Component {
 
   componentDidMount() {
     console.log(this.props.location.state)
+    window.Cloudplay.initSDK({
+      accessKeyID: 'D4F92FE4CFC',
+      accesskey: '625a706566676a397432573238557444',
+      channelId: 100001,
+      pkg_name: this.props.location.state.pkg,
+      onSceneChanged: function (sceneId, extraInfo) {
+        console.log('sceneId & extraInfo', sceneId, extraInfo);
+      },
+
+      MessageHandler: function (message) {
+        console.log(message);
+      }
+    });
     if (this.props.location.state.pkg == 'com.migu.game.ddzzr') {
       console.log('哈哈++++斗地主游戏-------')
       this.getRoomId();
@@ -52,20 +65,6 @@ export default class PlayGameContainer extends Component {
       };
       window.Cloudplay.startSDK(gameOptions);
     }
-    window.Cloudplay.initSDK({
-      accessKeyID: 'D4F92FE4CFC',
-      accesskey: '625a706566676a397432573238557444',
-      channelId: 100001,
-      pkg_name: this.props.location.state.pkg,
-      onSceneChanged: function (sceneId, extraInfo) {
-        console.log('sceneId & extraInfo', sceneId, extraInfo);
-      },
-
-      MessageHandler: function (message) {
-        console.log(message);
-      }
-    });
-
   }
 
   componentWillUnmount() {
