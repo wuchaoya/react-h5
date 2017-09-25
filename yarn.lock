@@ -5555,6 +5555,10 @@ react-event-listener@^0.5.0:
     prop-types "^15.5.10"
     warning "^3.0.0"
 
+react-html5video@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-html5video/download/react-html5video-2.3.0.tgz#e7de4d40aa1b1b0300b9f79c63b14566796da736"
+
 react-icon-base@2.0.7:
   version "2.0.7"
   resolved "http://registry.npm.taobao.org/react-icon-base/download/react-icon-base-2.0.7.tgz#0bd18736bd6ce79ca6d69ce8387a07fb8d4ceffe"

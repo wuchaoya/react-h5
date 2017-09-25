@@ -27,7 +27,7 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     vertical-align: middle;
     justify-content: flex-end;
     align-items: flex-end;
-    justify-content: space-between;
+    justify-content:space-around;
     position: absolute;
     right:0;
     font-weight: 400;
@@ -35,6 +35,7 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     background: url('../assets/game_grade_icon.png') no-repeat 0.7rem 0.7rem;
     width: auto;
     border-bottom: 0.01rem solid #e5e5e5;
+
 }
 .area {
     width: 400px;

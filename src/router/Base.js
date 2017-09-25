@@ -7,6 +7,7 @@ import TopicDetailsContainer from '../containers/TopicDetailsContainer';
 import GameDetails from '../containers/GameDetailsContails';
 import PlayGame from '../containers/PlayGameContainer';
 import Pull from '../containers/GameListContainer';
+import Home from '../containers/HomeContainer';
 const Base = () => (
   <Router>
     <div>
@@ -14,6 +15,7 @@ const Base = () => (
       <Route exact path='/gamedetails:gid' component={GameDetails} />
       <Route exact path='/playgame' component={PlayGame} />
       <Route exact path='/gamelist' component={Pull} />
+      <Route exact path='/home' component={Home} />
     </div>
   </Router>
 );

@@ -20,6 +20,8 @@ const Container = styled.div`
  background-image: url("${icon}");
  background-size: 0.7rem 0.7rem;
  overflow: hidden;
+ position: absolute;
+ right: 0.65rem;
 `;
 
 export default class GameClass extends Component {

@@ -1,9 +1,10 @@
 /**
  * Created by chao on 2017/9/11.
+ * 游戏详情页
  */
 import React, { Component } from 'react';
 import HttpRequest from '../utils/HttpRequest';
-import GameTopImg from '../components/GameTopImg';
+// import GameTopImg from '../components/GameTopImg';
 import Container from './Container';
 import GameInfoContail from './GameInfoContailer';
 import GameInfoTopContainer from './GameInfoTopContainer';
@@ -23,6 +24,8 @@ import GameDetailsText from '../components/GameDetailsText';
 import GameDetailsOtherContainer from './GameDetailsOtherContainer';
 import GameDetailsOtherInfo from '../components/GameDetailsOtherInfo';
 import MyModal from '../components/Modal';
+import MyStart from '../components/MyStart';
+import MyVideo from '../components/Video';
 
 export default class LogdingContainer extends Component {
   constructor (props) {
@@ -43,7 +46,8 @@ export default class LogdingContainer extends Component {
           });
       }
       } disabled={this.state.imgdisable} data={this.state.data.images} />}
-      <GameTopImg uri={this.state.data.cover} />
+      <MyVideo img={this.state.data.cover} video={this.state.data.video_url} />
+      {/* <GameTopImg uri={this.state.data.cover} /> */}
       <GameInfoContail>
         <GameInfoTopContainer>
           <GameDetailsIcon src={this.state.data.icon} />
@@ -59,6 +63,7 @@ export default class LogdingContainer extends Component {
         </GameInfoTopContainer>
         <GameInfoStartContainer>
           <GameDetailsStartText />
+          <MyStart length={1} />
           <AverageScore score={this.state.data.score} />
         </GameInfoStartContainer>
       </GameInfoContail>

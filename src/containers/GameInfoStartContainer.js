@@ -9,5 +9,4 @@ export default styled.div`
    border-top: 0.01rem solid #ededed;
    height: 1.06rem;
    align-items: center;
-   justify-content: space-between;
 `;
