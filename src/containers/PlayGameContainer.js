@@ -1,7 +1,7 @@
 /**
  * Created by chao on 2017/9/13.
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import HttpRequest from '../utils/HttpRequest';
 import Transition from '../utils/Transition';
@@ -12,7 +12,7 @@ const Box = styled.div`
 `;
 
 export default class PlayGameContainer extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       data: null,
@@ -22,52 +22,19 @@ export default class PlayGameContainer extends Component {
     };
   }
 
-  render() {
+  render () {
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
-      <Box id='playGameBox' h={height}/>
+      <Box id='playGameBox' h={height} />
     );
   }
 
-  componentDidMount() {
-    console.log(this.props.location.state)
-    window.Cloudplay.initSDK({
-      accessKeyID: 'D4F92FE4CFC',
-      accesskey: '625a706566676a397432573238557444',
-      channelId: 100001,
-      pkg_name: this.props.location.state.pkg,
-      onSceneChanged: function (sceneId, extraInfo) {
-        console.log('sceneId & extraInfo', sceneId, extraInfo);
-      },
-
-      MessageHandler: function (message) {
-        console.log(message);
-      }
-    });
-    if (this.props.location.state.pkg == 'com.migu.game.ddzzr') {
-      console.log('哈哈++++斗地主游戏-------')
-      this.getRoomId();
-    } else {
-      console.log('哈哈+++++=不是斗地主游戏-------')
-      let gameOptions = {
-        appid: 123,
-        userinfo: {
-          uId: '1234',
-          utoken: '12345678'
-        },
-        priority: 0,
-        extraId: 'miguh5',
-        pkg_name: this.props.location.state.pkg,
-        playingtime: 600000,
-        configinfo: 'miguh5',
-        c_token: 'abcd',
-        isPortrait: false
-      };
-      window.Cloudplay.startSDK(gameOptions);
-    }
+  componentDidMount () {
+    let pkg = this.getPkg();
+    this.init(pkg);
+    this.start(pkg);
   }
-
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.location.reload();
     window.Cloudplay.stopSDK();
   }
@@ -76,10 +43,9 @@ export default class PlayGameContainer extends Component {
    * 获取房间号,只针对咪咕棋牌游戏有效
    * atob
    */
-  getRoomId() {
+  getRoomId (pkg) {
+    console.log(pkg)
     HttpRequest.getRoomId({}, (res) => {
-      console.log(res);
-      console.log('哈哈++++++++++++roomId:  ' + res.resultData.battleCode);
       this.setState({
         roomId: res.resultData.battleCode
       }, () => {
@@ -90,8 +56,6 @@ export default class PlayGameContainer extends Component {
             user_id: 0
           }
         });
-        console.log('加密：' + base64.encode(xml));
-        console.log('解密：' + base64.decode(base64.encode(xml)));
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -100,22 +64,89 @@ export default class PlayGameContainer extends Component {
           },
           priority: 0,
           extraId: 'miguh5',
-          pkg_name: this.props.location.state.pkg,
+          pkg_name: pkg,
           playingtime: 600000,
           configinfo: 'miguh5',
           c_token: 'abcd',
           isPortrait: false,
           payStr: base64.encode(xml)
         };
-        console.log('------------');
-        console.log(gameOptions.payStr);
-        console.log('++++++++++++');
         window.Cloudplay.startSDK(gameOptions);
       });
     }, (err) => {
-      this.setState({
-        roomId: null
-      }, () => {
+      console.log(err);
+    });
+  };
+  getPkg () {
+    let pkg;
+    if (this.props.location.state) {
+      pkg = this.props.location.state.pkg;
+    } else {
+      pkg = this.GetQueryString('pkg');
+    }
+    return pkg;
+  }
+  init (pkg) {
+    console.log(pkg)
+    window.Cloudplay.initSDK({
+      accessKeyID: 'D4F92FE4CFC',
+      accesskey: '625a706566676a397432573238557444',
+      channelId: 100001,
+      pkg_name: pkg,
+      onSceneChanged: function (sceneId, extraInfo) {
+        console.log('sceneId & extraInfo', sceneId, extraInfo);
+      },
+
+      MessageHandler: function (message) {
+        console.log(message);
+      }
+    });
+  };
+  start (pkg) {
+    if (pkg === 'com.migu.game.ddzzr') {
+      if (this.GetQueryString('pkg') === null) {
+        this.getRoomId(pkg);
+      } else {
+        this.checkRoomId(this.GetQueryString('roomId'));
+      }
+    } else {
+      let gameOptions = {
+        appid: 123,
+        userinfo: {
+          uId: '1234',
+          utoken: '12345678'
+        },
+        priority: 0,
+        extraId: 'miguh5',
+        pkg_name: pkg,
+        playingtime: 600000,
+        configinfo: 'miguh5',
+        c_token: 'abcd',
+        isPortrait: false
+      };
+      window.Cloudplay.startSDK(gameOptions);
+    }
+  }
+  GetQueryString (name) {
+    let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+    let r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+      return unescape(r[2]);
+    }
+    return null;
+  }
+  checkRoomId (id) {
+    HttpRequest.checkRoomId({ battleId:id }, (res) => {
+      console.log(res);
+      if (res.returnCode === '003') {
+        this.getRoomId(this.getPkg());
+      } else {
+        let xml = Transition.JsonToXml({
+          root: {
+            battle: this.GetQueryString('roomId'),
+            user_id: 0
+          }
+        });
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -124,15 +155,19 @@ export default class PlayGameContainer extends Component {
           },
           priority: 0,
           extraId: 'miguh5',
-          pkg_name: this.props.location.state.pkg,
+          pkg_name: this.getPkg(),
           playingtime: 600000,
           configinfo: 'miguh5',
           c_token: 'abcd',
-          isPortrait: false
+          isPortrait: false,
+          payStr: base64.encode(xml)
         };
         window.Cloudplay.startSDK(gameOptions);
-      });
-    });
+      }
+    }, (err) => {
+      console.log(err);
+    }
+    );
   }
 };
 

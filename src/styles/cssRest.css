@@ -27,7 +27,7 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     vertical-align: middle;
     justify-content: flex-end;
     align-items: flex-end;
-    justify-content:space-around;
+    justify-content:space-between;
     position: absolute;
     right:0;
     font-weight: 400;
@@ -35,6 +35,7 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     background: url('../assets/game_grade_icon.png') no-repeat 0.7rem 0.7rem;
     width: auto;
     border-bottom: 0.01rem solid #e5e5e5;
+    vertical-align: middle;
 
 }
 .area {
@@ -51,4 +52,5 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     overflow: auto;
     align-self: center;
     justify-content: space-around;
+
 }

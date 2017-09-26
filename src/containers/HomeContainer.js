@@ -12,6 +12,11 @@ import HomeFours from '../components/HomeFours';
 import HomeTopic from './HomeTopic';
 import Title from '../components/Title';
 import ScrollView from '../components/HomeScroll';
+import ChosenGame from './ChosenGameContainer';
+import HomeChosenGameTop from './HomeChosenGameTop';
+import IconRight from '../components/IconRight';
+import HomeChoseGameRight from './HomeChosenGameRight';
+import ChosenGameScroll from '../components/ChosenGameScroll';
 
 class PlayGameContainer extends Component {
   constructor (props) {
@@ -30,6 +35,18 @@ class PlayGameContainer extends Component {
         <Title margin='0.24rem 0 0 0.24rem' color='#999' fontSize='0.24rem'>ACT ACT 我们为你挑好了</Title>
         <ScrollView data={this.state.data.dissertation} />
       </HomeTopic>
+      <ChosenGame>
+        <HomeChosenGameTop>
+          <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏精选</Title>
+          <HomeChoseGameRight>
+            <Title margin='0.24rem 0 0 0.24rem' color='#83b233' fontSize='0.24rem'>
+              更多
+            </Title>
+            <IconRight fontSize='0.3rem' color='#83b233' />
+          </HomeChoseGameRight>
+        </HomeChosenGameTop>
+        <ChosenGameScroll data={this.state.data.gameList} />
+      </ChosenGame>
     </Container>;
   }
   getData () {

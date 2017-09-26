@@ -68,4 +68,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static checkRoomId (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/check_room', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };
