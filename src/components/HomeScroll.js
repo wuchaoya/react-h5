@@ -37,7 +37,7 @@ export default class HomeScroll extends Component {
         <Contaner w={this.props.data.length * (this.state.width + 18) / 100}>
           {this.props.data.map((item, index) => {
             return (
-              <Tappable key={index} onTap>
+              <Tappable key={index} onTap={() => {this.props.click(item.did)}}>
                 <Img height={'100%'} alt='' width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={item.cover} />
               </Tappable>
             );

@@ -193,7 +193,6 @@ export default class Pull extends Component{
         data: res
       });
     }, (err) => {
-      document.title = '专题详情';
       this.setState({
         data: null,
         err: true
@@ -201,6 +200,7 @@ export default class Pull extends Component{
     });
   }
   componentDidMount () {
+    document.title = '游戏列表';
     this.getData();
   }
 }

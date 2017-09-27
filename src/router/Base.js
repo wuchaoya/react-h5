@@ -8,6 +8,7 @@ import GameDetails from '../containers/GameDetailsContails';
 import PlayGame from '../containers/PlayGameContainer';
 import Pull from '../containers/GameListContainer';
 import Home from '../containers/HomeContainer';
+import MGPlay from '../containers/MGPlay';
 const Base = () => (
   <Router>
     <div>
@@ -16,6 +17,7 @@ const Base = () => (
       <Route exact path='/playgame' component={PlayGame} />
       <Route exact path='/gamelist' component={Pull} />
       <Route exact path='/home' component={Home} />
+      <Route exact path='/mg' component={MGPlay} />
     </div>
   </Router>
 );

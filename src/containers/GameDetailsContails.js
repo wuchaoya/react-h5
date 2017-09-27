@@ -82,9 +82,9 @@ export default class LogdingContainer extends Component {
       </GameDetailSummary>
       <GameDetailsOtherContainer>
         <GameDetailSummaryTitle>其他信息</GameDetailSummaryTitle>
-        <GameDetailsOtherInfo name='开发商' text={this.state.data.company} />
-        <GameDetailsOtherInfo name='更新日期' text={this.state.data.update_time} />
-        <GameDetailsOtherInfo name='版本' text={this.state.data.version} />
+        {this.state.data.company ? <GameDetailsOtherInfo name='开发商' text={this.state.data.company} /> : null}
+        {this.state.data.update_time ? <GameDetailsOtherInfo name='更新日期' text={this.state.data.update_time} /> : null}
+        {this.state.data.version ? <GameDetailsOtherInfo name='版本' text={this.state.data.version} /> : null}
       </GameDetailsOtherContainer>
 
     </Container>;
@@ -110,6 +110,7 @@ export default class LogdingContainer extends Component {
   getTextHeight () {
   }
   componentDidMount () {
+    document.title = '游戏详情';
     this.getGameDetailsData(this.props.match.params.gid);
     this.getTextHeight();
   }

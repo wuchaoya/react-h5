@@ -44,8 +44,11 @@ export default class PlayGameContainer extends Component {
    * atob
    */
   getRoomId (pkg) {
+    console.log('包名')
     console.log(pkg)
     HttpRequest.getRoomId({}, (res) => {
+      console.log('获取房间号')
+      console.log(res);
       this.setState({
         roomId: res.resultData.battleCode
       }, () => {
@@ -75,6 +78,7 @@ export default class PlayGameContainer extends Component {
       });
     }, (err) => {
       console.log(err);
+      console.log('请求失败');
     });
   };
   getPkg () {

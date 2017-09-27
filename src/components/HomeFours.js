@@ -23,6 +23,7 @@ export default class HomeFours extends Component {
           // eslint-disable-next-line
           this.props.data[index].cover
         }
+        onClick={() =>{this.props.click(this.props.data[index].gid)}}
         style={styles.slide} key={key} />
     );
   }

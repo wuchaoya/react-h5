@@ -8,11 +8,18 @@ const Container = styled.div`
   font-size: 0.24rem;
   color: #333;
 `;
+const Text = styled.p`
+  margin:0;
+  padding:0;
+`;
 
 export default class GameDetailsStartText extends Component {
   render () {
     return (
-      <Container>我的<br />评分</Container>
+      <Container>
+        <Text>我的</Text>
+        <Text>评分</Text>
+      </Container>
     );
   }
 };

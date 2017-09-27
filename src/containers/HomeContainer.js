@@ -29,23 +29,32 @@ class PlayGameContainer extends Component {
   render () {
     // eslint-disable-next-line
     return this.state.data === null ? <LoadingContainer name='首页'clickButton={() => this.getData()} err={this.state.err} /> : <Container marginBottom={0.24}>
-      <HomeFours data={this.state.data.banner} />
+      <HomeFours click={(gid) => {
+        this.props.history.push('gamedetails' + gid);
+      }} data={this.state.data.banner} />
       <HomeTopic>
         <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏专题</Title>
         <Title margin='0.24rem 0 0 0.24rem' color='#999' fontSize='0.24rem'>ACT ACT 我们为你挑好了</Title>
-        <ScrollView data={this.state.data.dissertation} />
+        <ScrollView click={(did) => {
+          this.props.history.push('/?did=' + did);
+        }} data={this.state.data.dissertation} />
       </HomeTopic>
       <ChosenGame>
         <HomeChosenGameTop>
           <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏精选</Title>
-          <HomeChoseGameRight>
+          <HomeChoseGameRight onClick={() => {
+            this.props.history.push('gamelist');
+          }
+          }>
             <Title margin='0.24rem 0 0 0.24rem' color='#83b233' fontSize='0.24rem'>
               更多
             </Title>
             <IconRight fontSize='0.3rem' color='#83b233' />
           </HomeChoseGameRight>
         </HomeChosenGameTop>
-        <ChosenGameScroll data={this.state.data.gameList} />
+        <ChosenGameScroll click={(gid) => {
+          this.props.history.push('gamedetails' + gid);
+        }} data={this.state.data.gameList} />
       </ChosenGame>
     </Container>;
   }
