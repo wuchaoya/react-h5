@@ -36,6 +36,7 @@ export default class MGPlay extends Component {
     return null;
   }
   checkRoomId (id) {
+    console.log(id)
     HttpRequest.checkRoomId({ battleId:id }, (res) => {
       console.log(res);
     }, (err) => {
@@ -46,11 +47,7 @@ export default class MGPlay extends Component {
 
   getRoomId () {
     HttpRequest.getRoomId({}, (res) => {
-      console.log(res);
-      this.checkRoomId(res.id);
-      this.checkRoomId(res.battleCode);
-      this.checkRoomId(res.battleCode + res.id);
-      this.checkRoomId(res.id + res.battleCode);
+      this.checkRoomId(res.resultData.id);
     }, (err) => {
       console.log(err);
     });

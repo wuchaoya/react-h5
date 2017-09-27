@@ -44,10 +44,10 @@ export default class PlayGameContainer extends Component {
    * atob
    */
   getRoomId (pkg) {
-    console.log('包名')
-    console.log(pkg)
+    console.log('包名');
+    console.log(pkg);
     HttpRequest.getRoomId({}, (res) => {
-      console.log('获取房间号')
+      console.log('获取房间号');
       console.log(res);
       this.setState({
         roomId: res.resultData.battleCode
@@ -56,7 +56,7 @@ export default class PlayGameContainer extends Component {
         let xml = Transition.JsonToXml({
           root: {
             battle: this.state.roomId,
-            user_id: 0
+            user_id: Number(Math.random().toString(10).substring(2))
           }
         });
         let gameOptions = {
@@ -91,7 +91,7 @@ export default class PlayGameContainer extends Component {
     return pkg;
   }
   init (pkg) {
-    console.log(pkg)
+    console.log(pkg);
     window.Cloudplay.initSDK({
       accessKeyID: 'D4F92FE4CFC',
       accesskey: '625a706566676a397432573238557444',
@@ -108,10 +108,10 @@ export default class PlayGameContainer extends Component {
   };
   start (pkg) {
     if (pkg === 'com.migu.game.ddzzr') {
-      if (this.GetQueryString('pkg') === null) {
+      if (this.GetQueryString('roomId') === null) {
         this.getRoomId(pkg);
       } else {
-        this.checkRoomId(this.GetQueryString('roomId'));
+        this.checkRoomId(this.GetQueryString('id'));
       }
     } else {
       let gameOptions = {
@@ -148,7 +148,7 @@ export default class PlayGameContainer extends Component {
         let xml = Transition.JsonToXml({
           root: {
             battle: this.GetQueryString('roomId'),
-            user_id: 0
+            user_id: Number(Math.random().toString(10).substring(2))
           }
         });
         let gameOptions = {
