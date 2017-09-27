@@ -49,6 +49,9 @@ export default class PlayGameContainer extends Component {
     HttpRequest.getRoomId({}, (res) => {
       console.log('获取房间号');
       console.log(res);
+      this.props.history.push(
+        'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
+      );
       this.setState({
         roomId: res.resultData.battleCode
       }, () => {
@@ -142,7 +145,7 @@ export default class PlayGameContainer extends Component {
   checkRoomId (id) {
     HttpRequest.checkRoomId({ battleId:id }, (res) => {
       console.log(res);
-      if (res.returnCode === '003') {
+      if (res.returnCode !== '001') {
         this.getRoomId(this.getPkg());
       } else {
         let xml = Transition.JsonToXml({
