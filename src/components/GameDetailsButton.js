@@ -18,6 +18,8 @@ const Button = styled.div`
   border-radius: 0.3rem;
   position: absolute;
   right: 0.18rem;
+  align-self: flex-start;
+  margin-top:0.32rem
 `;
 const ButtonText = styled.span`
   font-size: 0.24rem;
