@@ -1,9 +1,6 @@
 /**
  * Created by chao on 2017/9/12.
  */
-/**
- * Created by chao on 2017/9/12.
- */
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
