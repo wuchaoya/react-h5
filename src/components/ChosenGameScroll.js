@@ -19,7 +19,7 @@ let textStyle = {
   fontSize: '0.26rem',
   margin:'0',
   padding:'0',
-  marginLeft:'0.24rem',
+  marginLeft:'0.3rem',
   paddingTop:'0.18rem',
   paddingBottom:'0.24rem',
   fontWeight: '400',
@@ -48,7 +48,7 @@ export default class ChosenGameScroll extends Component {
             return (
               <Tappable style={{display: 'flex', flexDirection: 'column',height:'2.6rem'}} key={index} onTap={() => this.props.click(item.gid)}>
                 <ChosenGameItem key={index} src={item.icon} />
-                <div style={textStyle}>{item.name}妈妈把我的游戏藏起来了2 </div>
+                <div style={textStyle}>{item.name}</div>
               </Tappable>
             );
           })}
