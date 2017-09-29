@@ -30,6 +30,7 @@ export default class PlayGameContainer extends Component {
   }
 
   componentDidMount () {
+    document.title = '游戏免下载，点击立即玩';
     let pkg = this.getPkg();
     this.init(pkg);
     this.start(pkg);
@@ -44,22 +45,26 @@ export default class PlayGameContainer extends Component {
    * atob
    */
   getRoomId (pkg) {
-    console.log('包名');
-    console.log(pkg);
     HttpRequest.getRoomId({}, (res) => {
-      console.log('获取房间号');
-      console.log(res);
-      this.props.history.push(
+      console.log(this.props.history)
+      this.props.history.replace(
         'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
       );
       this.setState({
         roomId: res.resultData.battleCode
       }, () => {
-        console.log(this.state.roomId);
+        let userId;
+        if (window.localStorage.getItem('MyuserId')) {
+          userId = window.localStorage.getItem('MyuserId');
+        } else {
+          userId = Number(Math.random().toString(10).substring(2));
+          window.localStorage.setItem('MyuserId', userId);
+        }
+        console.log('userid', userId, window.localStorage.getItem('MyuserId'));
         let xml = Transition.JsonToXml({
           root: {
             battle: this.state.roomId,
-            user_id: Number(Math.random().toString(10).substring(2))
+            user_id: userId
           }
         });
         let gameOptions = {
@@ -91,6 +96,9 @@ export default class PlayGameContainer extends Component {
     } else {
       pkg = this.GetQueryString('pkg');
     }
+    this.props.history.replace(
+      'playgame?pkg=' + pkg
+    );
     return pkg;
   }
   init (pkg) {

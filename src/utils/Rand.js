@@ -1,5 +1,6 @@
 /**
  * Created by chao on 2017/9/27.
+ * 线性同余生成器
  */
 
 const Rand = (() => {
