@@ -65,7 +65,7 @@ export default class PlayGameContainer extends Component {
         let gameOptions = {
           appid: 123,
           userinfo: {
-            uId: '1234',
+            uId: 'user_' + Number(Math.random().toString(10).substring(2)),
             utoken: '12345678'
           },
           priority: 0,
@@ -110,7 +110,7 @@ export default class PlayGameContainer extends Component {
     });
   };
   start (pkg) {
-    if (pkg === 'com.migu.game.ddzzr') {
+    if (pkg === 'com.migu.game.cloudddz') {
       if (this.GetQueryString('roomId') === null) {
         this.getRoomId(pkg);
       } else {
@@ -120,7 +120,7 @@ export default class PlayGameContainer extends Component {
       let gameOptions = {
         appid: 123,
         userinfo: {
-          uId: '1234',
+          uId: 'user_' + Number(Math.random().toString(10).substring(2)),
           utoken: '12345678'
         },
         priority: 0,
@@ -157,7 +157,7 @@ export default class PlayGameContainer extends Component {
         let gameOptions = {
           appid: 123,
           userinfo: {
-            uId: '1234',
+            uId: 'user_' + Number(Math.random().toString(10).substring(2)),
             utoken: '12345678'
           },
           priority: 0,
