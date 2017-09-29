@@ -96,9 +96,6 @@ export default class PlayGameContainer extends Component {
     } else {
       pkg = this.GetQueryString('pkg');
     }
-    this.props.history.replace(
-      'playgame?pkg=' + pkg
-    );
     return pkg;
   }
   init (pkg) {
@@ -120,8 +117,10 @@ export default class PlayGameContainer extends Component {
   start (pkg) {
     if (pkg === 'com.migu.game.cloudddz') {
       if (this.GetQueryString('roomId') === null) {
+        console.log('没');
         this.getRoomId(pkg);
       } else {
+        console.log('有');
         this.checkRoomId(this.GetQueryString('id'));
       }
     } else {
@@ -140,6 +139,9 @@ export default class PlayGameContainer extends Component {
         isPortrait: false
       };
       window.Cloudplay.startSDK(gameOptions);
+      this.props.history.replace(
+        'playgame?pkg=' + this.GetQueryString('pkg')
+      );
     }
   }
   GetQueryString (name) {
