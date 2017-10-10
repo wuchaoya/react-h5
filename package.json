@@ -25,7 +25,8 @@
     "react-tappable": "^1.0.2",
     "serve": "^6.0.6",
     "slick-carousel": "^1.7.1",
-    "styled-components": "^2.1.2"
+    "styled-components": "^2.1.2",
+    "weixin-js-sdk": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

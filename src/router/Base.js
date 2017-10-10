@@ -12,11 +12,11 @@ import MGPlay from '../containers/MGPlay';
 const Base = () => (
   <Router>
     <div>
-      <Route exact path='/' component={TopicDetailsContainer} />
+      <Route exact path='/' component={Home} />
+      <Route exact path='/topic' component={TopicDetailsContainer} />
       <Route exact path='/gamedetails:gid' component={GameDetails} />
       <Route exact path='/playgame' component={PlayGame} />
       <Route exact path='/gamelist' component={Pull} />
-      <Route exact path='/home' component={Home} />
       <Route exact path='/mg' component={MGPlay} />
     </div>
   </Router>
