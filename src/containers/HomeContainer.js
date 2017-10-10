@@ -36,7 +36,8 @@ class PlayGameContainer extends Component {
         <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏专题</Title>
         <Title margin='0.24rem 0 0 0.24rem' color='#999' fontSize='0.24rem'>ACT ACT 我们为你挑好了</Title>
         <ScrollView click={(did) => {
-          this.props.history.push('/?did=' + did);
+          console.log('点击了');
+          this.props.history.push('/topic?did=' + did);
         }} data={this.state.data.dissertation} />
       </HomeTopic>
       <ChosenGame>
