@@ -38,6 +38,7 @@ export default class PlayGameContainer extends Component {
   componentWillUnmount () {
     window.location.reload();
     window.Cloudplay.stopSDK();
+    console.log('清楚sdk');
   }
 
   /**
@@ -46,7 +47,8 @@ export default class PlayGameContainer extends Component {
    */
   getRoomId (pkg) {
     HttpRequest.getRoomId({}, (res) => {
-      console.log(this.props.history)
+      window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
+      window.localStorage.setItem('MyId', res.resultData.id);
       this.props.history.replace(
         'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
       );
@@ -64,9 +66,10 @@ export default class PlayGameContainer extends Component {
         let xml = Transition.JsonToXml({
           root: {
             battle: this.state.roomId,
-            user_id: Number(Math.random().toString(10).substring(2))
+            user_id: userId
           }
         });
+        console.log(xml);
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -118,10 +121,23 @@ export default class PlayGameContainer extends Component {
     if (pkg === 'com.migu.game.cloudddz') {
       if (this.GetQueryString('roomId') === null) {
         console.log('没');
-        this.getRoomId(pkg);
+        if (window.localStorage.getItem('MyRoomId')) {
+          this.setState({
+            roomId: window.localStorage.getItem('MyRoomId')
+          }, () => {
+            console.log(this.state.roomId);
+            this.checkRoomId(window.localStorage.getItem('MyId'), pkg);
+          });
+        } else {
+          this.getRoomId(pkg);
+        }
       } else {
-        console.log('有');
-        this.checkRoomId(this.GetQueryString('id'));
+        this.setState({
+          roomId:this.GetQueryString('roomId')
+        }, () => {
+          console.log(this.state.roomId, 'room');
+          this.checkRoomId(this.GetQueryString('id'), pkg);
+        });
       }
     } else {
       let gameOptions = {
@@ -139,17 +155,17 @@ export default class PlayGameContainer extends Component {
         isPortrait: false
       };
       window.Cloudplay.startSDK(gameOptions);
-      if (this.GetQueryString('uToken') === null){
+      if (this.GetQueryString('uToken') !== null) {
         this.props.history.replace(
-          'playgame?pkg=' + this.GetQueryString('pkg')
+          'playgame?pkg=' + pkg + '&&uToken=' + this.GetQueryString('uToken')
         );
       } else {
         this.props.history.replace(
-          'playgame?pkg=' + this.GetQueryString('pkg') + '&&uToken=' + this.GetQueryString('uToken')
+          'playgame?pkg=' + pkg
         );
       }
     }
-  }
+  };
   GetQueryString (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
     let r = window.location.search.substr(1).match(reg);
@@ -158,26 +174,19 @@ export default class PlayGameContainer extends Component {
     }
     return null;
   }
-  checkRoomId (id) {
+  checkRoomId (id, pkg) {
     HttpRequest.checkRoomId({ battleId:id }, (res) => {
       console.log(res);
       if (res.returnCode !== '001') {
         this.getRoomId(this.getPkg());
       } else {
-        let userId;
-        if (window.localStorage.getItem('MyuserId')) {
-          userId = window.localStorage.getItem('MyuserId');
-        } else {
-          userId = Number(Math.random().toString(10).substring(2));
-          window.localStorage.setItem('MyuserId', userId);
-        }
-        console.log('userid', userId, window.localStorage.getItem('MyuserId'));
         let xml = Transition.JsonToXml({
           root: {
-            battle: this.GetQueryString('roomId'),
-            user_id: Number(Math.random().toString(10).substring(2))
+            battle: this.state.roomId,
+            user_id:window.localStorage.getItem('MyuserId') || Number(Math.random().toString(10).substring(2))
           }
         });
+        console.log(xml);
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -194,6 +203,9 @@ export default class PlayGameContainer extends Component {
           payStr: base64.encode(xml)
         };
         window.Cloudplay.startSDK(gameOptions);
+        this.props.history.replace(
+          'playgame?pkg=' + pkg + '&&roomId=' + window.localStorage.getItem('MyRoomId') + '&&id=' + window.localStorage.getItem('MyId')
+        );
       }
     }, (err) => {
       console.log(err);
@@ -201,4 +213,3 @@ export default class PlayGameContainer extends Component {
     );
   }
 };
-
