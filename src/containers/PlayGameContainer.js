@@ -64,7 +64,7 @@ export default class PlayGameContainer extends Component {
         let xml = Transition.JsonToXml({
           root: {
             battle: this.state.roomId,
-            user_id: userId
+            user_id: Number(Math.random().toString(10).substring(2))
           }
         });
         let gameOptions = {
@@ -139,9 +139,15 @@ export default class PlayGameContainer extends Component {
         isPortrait: false
       };
       window.Cloudplay.startSDK(gameOptions);
-      this.props.history.replace(
-        'playgame?pkg=' + this.GetQueryString('pkg')
-      );
+      if (this.GetQueryString('uToken') === null){
+        this.props.history.replace(
+          'playgame?pkg=' + this.GetQueryString('pkg')
+        );
+      } else {
+        this.props.history.replace(
+          'playgame?pkg=' + this.GetQueryString('pkg') + '&&uToken=' + this.GetQueryString('uToken')
+        );
+      }
     }
   }
   GetQueryString (name) {
@@ -158,6 +164,14 @@ export default class PlayGameContainer extends Component {
       if (res.returnCode !== '001') {
         this.getRoomId(this.getPkg());
       } else {
+        let userId;
+        if (window.localStorage.getItem('MyuserId')) {
+          userId = window.localStorage.getItem('MyuserId');
+        } else {
+          userId = Number(Math.random().toString(10).substring(2));
+          window.localStorage.setItem('MyuserId', userId);
+        }
+        console.log('userid', userId, window.localStorage.getItem('MyuserId'));
         let xml = Transition.JsonToXml({
           root: {
             battle: this.GetQueryString('roomId'),
