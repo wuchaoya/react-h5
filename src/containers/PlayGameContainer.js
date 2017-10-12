@@ -76,7 +76,7 @@ export default class PlayGameContainer extends Component {
           priority: 0,
           extraId: 'miguh5',
           pkg_name: pkg,
-          playingtime: 600000,
+          playingtime: 1000000,
           configinfo: 'miguh5',
           c_token: 'abcd',
           isPortrait: false,
@@ -151,21 +151,6 @@ export default class PlayGameContainer extends Component {
         }
       }
     } else {
-      let gameOptions = {
-        appid: 123,
-        userinfo: {
-          uId: 'user_' + Number(Math.random().toString(10).substring(2)),
-          utoken: '12345678'
-        },
-        priority: 0,
-        extraId: 'miguh5',
-        pkg_name: pkg,
-        playingtime: 600000,
-        configinfo: 'miguh5',
-        c_token: 'abcd',
-        isPortrait: false
-      };
-      window.Cloudplay.startSDK(gameOptions);
       if (this.GetQueryString('uToken') !== null) {
         this.props.history.replace(
           'playgame?pkg=' + pkg + '&&uToken=' + this.GetQueryString('uToken')
@@ -175,6 +160,21 @@ export default class PlayGameContainer extends Component {
           'playgame?pkg=' + pkg
         );
       }
+      let gameOptions = {
+        appid: 123,
+        userinfo: {
+          uId: 'user_' + Number(Math.random().toString(10).substring(2)),
+          utoken: '12345678'
+        },
+        priority: 0,
+        extraId: 'miguh5',
+        pkg_name: pkg,
+        playingtime: 1000000,
+        configinfo: 'miguh5',
+        c_token: 'abcd',
+        isPortrait: false
+      };
+      window.Cloudplay.startSDK(gameOptions);
     }
   };
 
@@ -191,6 +191,7 @@ export default class PlayGameContainer extends Component {
     HttpRequest.checkRoomId({battleId: id}, (res) => {
         console.log(res);
         if (res.returnCode !== '001') {
+          console.log('不可加入约战组!')
           window.localStorage.setItem('MyRoomId', null);
           window.localStorage.setItem('MyId', null);
           window.localStorage.setItem('MyUserId', null);
@@ -212,7 +213,7 @@ export default class PlayGameContainer extends Component {
             priority: 0,
             extraId: 'miguh5',
             pkg_name: this.getPkg(),
-            playingtime: 600000,
+            playingtime: 1000000,
             configinfo: 'miguh5',
             c_token: 'abcd',
             isPortrait: false,
@@ -220,7 +221,7 @@ export default class PlayGameContainer extends Component {
           };
           window.Cloudplay.startSDK(gameOptions);
           this.props.history.replace(
-            'playgame?pkg=' + pkg + '&&roomId=' + window.localStorage.getItem('MyRoomId') + '&&id=' + window.localStorage.getItem('MyId')
+            'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id
           );
         }
       }, (err) => {
