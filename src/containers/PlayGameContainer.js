@@ -56,7 +56,7 @@ export default class PlayGameContainer extends Component {
     );
   }
   componentDidMount () {
-    document.title = '游戏免下载，点击立即玩';
+    document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
     this.start(pkg);

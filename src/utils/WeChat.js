@@ -3,9 +3,9 @@
  */
 
 import wx from 'weixin-js-sdk';
-import icon from '../assets/icon.jpg';
+import icon from '../assets/icon.jpeg';
 import HttpRequest from '../utils/HttpRequest';
-let desc = 'toptop是由海马玩打造的云手游社区，每天向玩家推荐全球精选游戏，同时依托海马云的移动内容云计算能力，在手机客户端和PC官网上都实现了手机游戏的免下载直接玩';
+let desc = '咪咕云游戏是国内首款云游戏平台，用户可在云端畅玩数百款经典游戏，突破手机空间和性能瓶颈，无需下载即点即玩';
 export default class WeChat {
 
   static init (config) {
