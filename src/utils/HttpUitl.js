@@ -19,8 +19,8 @@ export default class HttpUitl {
       callbackError(error);
     });
   }
-  static Get (path, parameter, callbackSuccess, callbackError) {
-    fetch(path + parameter).then((response) => {
+  static Get (path, callbackSuccess, callbackError) {
+    fetch(path).then((response) => {
       return response.json();
     }).then((responseJson) => {
       callbackSuccess(responseJson);

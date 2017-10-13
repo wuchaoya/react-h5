@@ -4,13 +4,31 @@
 
 import wx from 'weixin-js-sdk';
 
+import HttpRequest from '../utils/HttpRequest';
+import img from '../assets/index.png';
+
 export default class WeChat {
 
-  static init () {
-    wx.config(this.getWxConfig());
+  static init (config) {
+    console.log('改变path');
+    wx.config(config);
   }
 
-  static getWxConfig () {}
+  static getWxConfig () {
+    HttpRequest.getWxConfig(
+      {
+        activityCode:'123',
+        url: window.location.href.split('#')[0]
+      },
+      (res) => {
+
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    return {};
+  }
 
   static ready () {
     wx.ready(() => {
@@ -20,7 +38,9 @@ export default class WeChat {
   }
 
   static error () {
-    wx.error(() => {});
+    wx.error(() => {
+      console.log('验证失败');
+    });
   }
 
   /**
@@ -29,14 +49,16 @@ export default class WeChat {
    */
   static MenuShareTimeline () {
     wx.onMenuShareTimeline({
-      title: '', // 分享标题
-      link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: '', // 分享图标
+      title: '我就是测试的', // 分享标题
+      link: encodeURIComponent(window.location.href.split('#')[0]), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: img, // 分享图标
       success: function () {
         // 用户确认分享后执行的回调函数
+        console.log('分享成功');
       },
       cancel: function () {
         // 用户取消分享后执行的回调函数
+        console.log('分享取消');
       }
     });
   }
@@ -118,5 +140,4 @@ export default class WeChat {
       }
     });
   }
-
 };

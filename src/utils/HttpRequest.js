@@ -81,4 +81,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static getWxConfig (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('v2/mpweixin/wechat-share-config', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };
