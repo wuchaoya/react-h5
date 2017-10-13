@@ -1,11 +1,12 @@
 /**
  * Created by chao on 2017/9/13.
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import HttpRequest from '../utils/HttpRequest';
 import Transition from '../utils/Transition';
 import base64 from 'base-64';
+import WeChat from '../utils/WeChat';
 
 const Box = styled.div`
   height: ${(props) => props.h / 100}rem;
@@ -22,21 +23,52 @@ export default class PlayGameContainer extends Component {
     };
   }
 
-  render() {
+  render () {
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
-      <Box id='playGameBox' h={height}/>
+      <Box id='playGameBox' h={height} />
     );
   }
-
-  componentDidMount() {
+  Wxinit () {
+    HttpRequest.getWxConfig(
+      {
+        activityCode:'123',
+        url: window.location.href.split('#')[0]
+      },
+      (res) => {
+        console.log(res);
+        WeChat.init({
+          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: res.appId, // 必填，公众号的唯一标识
+          timestamp: res.timestamp, // 必填，生成签名的时间戳
+          nonceStr: res.nonceStr, // 必填，生成签名的随机串
+          signature: res.signature, // 必填，签名，见附录1
+          jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage'
+          ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  componentDidMount () {
     document.title = '游戏免下载，点击立即玩';
     let pkg = this.getPkg();
     this.init(pkg);
     this.start(pkg);
+    this.props.history.listen((location, action) => {
+      console.log(location);
+      this.Wxinit();
+    });
+    this.Wxinit();
+    WeChat.ready();
+    WeChat.error();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.location.reload();
     window.Cloudplay.stopSDK();
     console.log('清楚sdk');
@@ -46,9 +78,9 @@ export default class PlayGameContainer extends Component {
    * 获取房间号,只针对咪咕棋牌游戏有效
    * atob
    */
-  getRoomId(pkg) {
+  getRoomId (pkg) {
     HttpRequest.getRoomId({}, (res) => {
-      console.log('新申请房间,清空所有浏览器缓存数据')
+      console.log('新申请房间,清空所有浏览器缓存数据');
       window.localStorage.setItem('MyRoomId', null);
       window.localStorage.setItem('MyId', null);
       window.localStorage.setItem('MyUserId', null);
@@ -94,7 +126,7 @@ export default class PlayGameContainer extends Component {
     });
   };
 
-  getPkg() {
+  getPkg () {
     let pkg;
     if (this.props.location.state) {
       pkg = this.props.location.state.pkg;
@@ -104,7 +136,7 @@ export default class PlayGameContainer extends Component {
     return pkg;
   }
 
-  init(pkg) {
+  init (pkg) {
     console.log(pkg);
     window.Cloudplay.initSDK({
       accessKeyID: 'D4F92FE4CFC',
@@ -121,7 +153,7 @@ export default class PlayGameContainer extends Component {
     });
   };
 
-  start(pkg) {
+  start (pkg) {
     if (pkg === 'com.migu.game.cloudddz') {
       if (this.GetQueryString('roomId') === null) {
         console.log('1. 地址中没有roomId场景');
@@ -184,7 +216,7 @@ export default class PlayGameContainer extends Component {
     }
   };
 
-  GetQueryString(name) {
+  GetQueryString (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
     let r = window.location.search.substr(1).match(reg);
     if (r != null) {

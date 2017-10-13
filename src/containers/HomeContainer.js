@@ -18,7 +18,6 @@ import IconRight from '../components/IconRight';
 import HomeChoseGameRight from './HomeChosenGameRight';
 import ChosenGameScroll from '../components/ChosenGameScroll';
 import WeChat from '../utils/WeChat';
-
 class PlayGameContainer extends Component {
   constructor (props) {
     super(props);
@@ -79,10 +78,7 @@ class PlayGameContainer extends Component {
       });
     });
   }
-  componentDidMount () {
-    this.props.history.listen((location, action) => {
-      console.log(location);
-    });
+  init () {
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
@@ -106,6 +102,13 @@ class PlayGameContainer extends Component {
         console.log(err);
       }
     );
+  }
+  componentDidMount () {
+    this.props.history.listen((location, action) => {
+      console.log(location);
+      this.init();
+    });
+    this.init();
     WeChat.ready();
     WeChat.error();
     this.getData();
