@@ -5,8 +5,7 @@
 import wx from 'weixin-js-sdk';
 
 import HttpRequest from '../utils/HttpRequest';
-import img from '../assets/index.png';
-
+let desc = 'toptop是由海马玩打造的云手游社区，每天向玩家推荐全球精选游戏，同时依托海马云的移动内容云计算能力，在集游社的手机客户端和PC官网上都实现了手机游戏的免下载直接玩';
 export default class WeChat {
 
   static init (config) {
@@ -49,9 +48,10 @@ export default class WeChat {
    */
   static MenuShareTimeline () {
     wx.onMenuShareTimeline({
-      title: '我就是测试的', // 分享标题
+      title: document.title, // 分享标题
+      desc: desc,
       link: encodeURIComponent(window.location.href.split('#')[0]), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: img, // 分享图标
+      imgUrl: 'https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=300%EF%BC%8A300%E5%9B%BE%E7%89%87&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=-1&cs=1710122759,2828409116&os=3088705223,3245446613&simid=4253423853,761408430&pn=15&rn=1&di=24329415990&ln=1981&fr=&fmq=1507866555473_R&fm=rs2&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&hs=2&oriquery=300*300&objurl=http%3A%2F%2Fz.shixian.com%2Fassets%2Flogo-300-406cf2a4135690a879d66987aca1ce97c723a4a6103297b858557a4997423ccf.jpg&rpstart=0&rpnum=0&adpicid=0', // 分享图标
       success: function () {
         // 用户确认分享后执行的回调函数
         console.log('分享成功');
@@ -69,11 +69,11 @@ export default class WeChat {
    */
   static MenuShareAppMessage () {
     wx.onMenuShareAppMessage({
-      title: '', // 分享标题
-      desc: '', // 分享描述
-      link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: '', // 分享图标
-      type: '', // 分享类型,music、video或link，不填默认为link
+      title: document.title, // 分享标题
+      desc: desc, // 分享描述
+      link: encodeURIComponent(window.location.href.split('#')[0]), // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=300%EF%BC%8A300%E5%9B%BE%E7%89%87&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=-1&cs=1710122759,2828409116&os=3088705223,3245446613&simid=4253423853,761408430&pn=15&rn=1&di=24329415990&ln=1981&fr=&fmq=1507866555473_R&fm=rs2&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&hs=2&oriquery=300*300&objurl=http%3A%2F%2Fz.shixian.com%2Fassets%2Flogo-300-406cf2a4135690a879d66987aca1ce97c723a4a6103297b858557a4997423ccf.jpg&rpstart=0&rpnum=0&adpicid=0', // 分享图标
+      type: 'link', // 分享类型,music、video或link，不填默认为link
       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
       success: function () {
         // 用户确认分享后执行的回调函数
