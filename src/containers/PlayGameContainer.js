@@ -30,10 +30,11 @@ export default class PlayGameContainer extends Component {
     );
   }
   Wxinit () {
+    console.log('url', encodeURI(window.location.href.split('#')[0]))
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
-        url: window.location.href.split('#')[0]
+        url: encodeURI(window.location.href.split('#')[0])
       },
       (res) => {
         console.log(res);
@@ -87,6 +88,8 @@ export default class PlayGameContainer extends Component {
       this.props.history.replace(
         'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
       );
+      this.Wxinit();
+      WeChat.ready();
       this.setState({
         roomId: res.resultData.battleCode
       }, () => {
@@ -155,6 +158,7 @@ export default class PlayGameContainer extends Component {
 
   start (pkg) {
     if (pkg === 'com.migu.game.cloudddz') {
+      document.title = '咪咕斗地主';
       if (this.GetQueryString('roomId') === null) {
         console.log('1. 地址中没有roomId场景');
         if (window.localStorage.getItem('MyRoomId') &&
@@ -262,6 +266,8 @@ export default class PlayGameContainer extends Component {
           this.props.history.replace(
             'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id
           );
+          this.Wxinit();
+          WeChat.ready();
         }
       }, (err) => {
         console.log(err);
