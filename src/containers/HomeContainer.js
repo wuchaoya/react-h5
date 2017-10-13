@@ -80,6 +80,9 @@ class PlayGameContainer extends Component {
     });
   }
   componentDidMount () {
+    this.props.history.listen((location, action) => {
+      console.log(location);
+    });
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
