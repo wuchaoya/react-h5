@@ -48,8 +48,10 @@ export default class PlayGameContainer extends Component {
    */
   getRoomId(pkg) {
     HttpRequest.getRoomId({}, (res) => {
-      window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
-      window.localStorage.setItem('MyId', res.resultData.id);
+      console.log('新申请房间,清空所有浏览器缓存数据')
+      window.localStorage.setItem('MyRoomId', null);
+      window.localStorage.setItem('MyId', null);
+      window.localStorage.setItem('MyUserId', null);
       this.props.history.replace(
         'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
       );
@@ -58,11 +60,9 @@ export default class PlayGameContainer extends Component {
       }, () => {
         let userId;
         userId = Number(Math.random().toString(10).substring(2));
-        window.localStorage.setItem('MyUserId', userId);
-        console.log('MyUserId: ' + window.localStorage.getItem('MyUserId'));
         let xml = Transition.JsonToXml({
           root: {
-            battle: this.state.roomId,
+            battle: res.resultData.battleCode,
             user_id: userId
           }
         });
@@ -83,6 +83,10 @@ export default class PlayGameContainer extends Component {
           payStr: base64.encode(xml)
         };
         window.Cloudplay.startSDK(gameOptions);
+        console.log('参数：' + gameOptions.payStr);
+        window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
+        window.localStorage.setItem('MyId', res.resultData.id);
+        window.localStorage.setItem('MyUserId', userId);
       });
     }, (err) => {
       console.log(err);
@@ -128,25 +132,27 @@ export default class PlayGameContainer extends Component {
           this.setState({
             roomId: window.localStorage.getItem('MyRoomId')
           }, () => {
-            console.log('MyRoomId: ' + this.state.roomId);
-            console.log('MyId: ' + window.localStorage.getItem('MyId'))
+            console.log('读取浏览器缓存信息 ' + 'MyRoomId: ' + this.state.roomId +
+              ', MyId: ' + window.localStorage.getItem('MyId'));
             this.checkRoomId(window.localStorage.getItem('MyId'), pkg);
           });
         } else {
+          console.log('浏览器中不存在缓存信息');
           this.getRoomId(pkg);
         }
       } else {
-        console.log('1. 地址中含有roomId场景');
+        console.log('2. 地址中含有roomId场景');
         if ('null' !== this.GetQueryString('roomId') &&
           'null' !== this.GetQueryString('id')) {
           this.setState({
             roomId: this.GetQueryString('roomId')
           }, () => {
-            console.log('roomId: ' + this.state.roomId);
-            console.log('id: ' + this.GetQueryString('id'));
+            console.log('读取地址中的房间信息和id信息 ' + 'roomId: ' + this.state.roomId +
+              ', id: ' + this.GetQueryString('id'));
             this.checkRoomId(this.GetQueryString('id'), pkg);
           });
         } else {
+          console.log('地址中不含有roomid或者id，或者是roomid或id为null')
           this.getRoomId(pkg);
         }
       }
@@ -197,6 +203,7 @@ export default class PlayGameContainer extends Component {
           window.localStorage.setItem('MyUserId', null);
           this.getRoomId(this.getPkg());
         } else {
+          console.log('约战组正常可以加入')
           let xml = Transition.JsonToXml({
             root: {
               battle: this.state.roomId,
