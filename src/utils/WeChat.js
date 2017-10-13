@@ -3,7 +3,7 @@
  */
 
 import wx from 'weixin-js-sdk';
-import icon from '../assets/icon.jpeg';
+import icon from '../assets/icon.jpg';
 import HttpRequest from '../utils/HttpRequest';
 let desc = '咪咕云游戏是国内首款云游戏平台，用户可在云端畅玩数百款经典游戏，突破手机空间和性能瓶颈，无需下载即点即玩';
 export default class WeChat {
