@@ -7,11 +7,13 @@ import ReactScrollbar from 'react-scrollbar-js';
 import '../styles/cssStyle.css';
 import Tappable from 'react-tappable/lib/Tappable';
 const Contaner = styled.div`
-  height: 3.6rem;
+  height: 4.6rem;
   width: ${(props) => props.w}rem;
   margin: 0;
   padding: 0.18rem;
   overflow: hidden;
+  display: flex; 
+  flex-direction: row
   border-bottom: 0.01rem solid #e5e5e5;
 `;
 const Img = styled.img`
@@ -19,6 +21,13 @@ const Img = styled.img`
   height: ${(props) => props.h}rem;
   margin-right: 0.18rem;
 `;
+const titleStyle = {
+  height: '1.04rem',
+  display: 'flex',
+  alignItems: 'center',
+  fontSize:'0.3rem',
+  color:'#333'
+};
 export default class HomeScroll extends Component {
   constructor (props) {
     super(props);
@@ -33,13 +42,16 @@ export default class HomeScroll extends Component {
       <ReactScrollbar
         stopScrollPropagation={true}
         vertical={false}
-        style={{height:'3.96rem', width: '7.2rem', backgroundColor: '#fff'}}>
+        style={{height:'4.96rem', width: '7.2rem', backgroundColor: '#fff'}}>
         <Contaner w={this.props.data.length * (this.state.width + 18) / 100}>
           {this.props.data.map((item, index) => {
             return (
-              <Tappable key={index} onTap={() => {this.props.click(item.did)}}>
-                <Img height={'100%'} alt='' width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={item.cover} />
-              </Tappable>
+              <div>
+                <Tappable key={index} onTap={() => {this.props.click(item.did)}}>
+                  <Img height={'3.9rem'} alt='' width={'100%'} w={this.state.width / 100} h={this.state.height / 100} key={index} ref='img' src={item.cover} />
+                  <span style={titleStyle}>{item.title}</span>
+                </Tappable>
+              </div>
             );
           })}
         </Contaner>

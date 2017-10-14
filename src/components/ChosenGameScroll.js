@@ -11,7 +11,6 @@ const Contaner = styled.div`
   width:${(props) => (props.length * 1.84)}rem;
   display: flex; 
   flex-direction: row
-  
 `;
 
 let textStyle = {
@@ -42,7 +41,7 @@ export default class ChosenGameScroll extends Component {
       <ReactScrollbar
         stopScrollPropagation={true}
         vertical={false}
-        style={{height:'4rem', width: '7.2rem', backgroundColor: '#fff'}}>
+        style={{marginBottom:'0.36rem', width: '7.2rem', backgroundColor: '#fff'}}>
         <Contaner length={this.props.data.length+1}>
           {this.props.data.map((item, index) => {
             return (
