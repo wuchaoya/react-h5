@@ -7,4 +7,5 @@ export default styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-top: -0.08rem;
   `;

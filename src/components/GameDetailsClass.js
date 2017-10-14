@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 
 const GameClassText = styled.span`
-  color: #666;
-  font-size: 0.24rem;
+  color: #aaa;
+  font-size: 0.22rem;
   display: flex;
   justify-content: center;
   margin-left: 0.06rem;
@@ -16,9 +16,9 @@ const GameClassText = styled.span`
   `;
 
 const GameClassContainer = styled.div`
- border: 0.01rem solid #ccc;
- border-radius: 0.1rem;
- margin-right: 0.1rem;
+ border: 0.01rem solid #ddd;
+ border-radius: 0.08rem;
+ margin-right: 0.08rem;
  display: flex;
  justify-content: center;
 `;

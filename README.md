@@ -44,3 +44,12 @@ if (event.preventDefault) {
       }
 }
 ```
+
+修改  react-html5video/dist/styles.css 320行
+```css
+ border-radius: 10px
+```
+修改为
+```css
+ border-radius:30px
+```

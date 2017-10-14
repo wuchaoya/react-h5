@@ -42,7 +42,7 @@ class Modal extends Component {
   }
   render () {
     return (
-      <Container disable={this.props.disabled} h={this.state.height} w={this.state.width}>
+      <Container onClick={this.props.click} disable={this.props.disabled} h={this.state.height} w={this.state.width}>
 
         <Slider initialSlide={this.props.index} {...settings}>
           {this.props.data.map((url, index) => {

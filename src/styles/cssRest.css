@@ -15,39 +15,7 @@ blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 a img { border: none; }
 input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
+::-webkit-scrollbar{
+    display: none;
 
-.a{
-    border-radius: inherit;
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    flex-direction: column;
-    border: 1px solid #e5e5e5;
-    text-align: end;
-    vertical-align: middle;
-    justify-content: flex-end;
-    align-items: flex-end;
-    justify-content: space-between;
-    position: absolute;
-    right:0;
-    font-weight: 400;
-    border-top: 0.01rem solid #ededed;
-    background: url('../assets/game_grade_icon.png') no-repeat 0.7rem 0.7rem;
-    width: auto;
-    border-bottom: 0.01rem solid #e5e5e5;
-}
-.area {
-    width: 400px;
-
-}
-.container {
-    width: 1200px;
-    background-color: rgba(0,0,0,0.7);
-}
-.a{
-    display: block;
-    overflow: scroll;
-    overflow: auto;
-    align-self: center;
-    justify-content: space-around;
 }

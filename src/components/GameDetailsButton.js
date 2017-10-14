@@ -1,9 +1,6 @@
 /**
  * Created by chao on 2017/9/12.
  */
-/**
- * Created by chao on 2017/9/12.
- */
 
 import styled from 'styled-components';
 import React, { Component } from 'react';
@@ -17,7 +14,9 @@ const Button = styled.div`
   align-items: center;
   border-radius: 0.3rem;
   position: absolute;
-  right: 0.18rem;
+  right: 0.36rem;
+  align-self: flex-start;
+  margin-top:0.32rem
 `;
 const ButtonText = styled.span`
   font-size: 0.24rem;

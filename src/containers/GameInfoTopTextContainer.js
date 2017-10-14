@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   margin-left: 0.18rem;
-  margin-top: 0.06rem;
+  margin-top: -0.06rem;
   display: flex;
   flex:0.7;
   overflow: hidden;

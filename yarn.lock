@@ -5555,6 +5555,10 @@ react-event-listener@^0.5.0:
     prop-types "^15.5.10"
     warning "^3.0.0"
 
+react-html5video@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-html5video/download/react-html5video-2.3.0.tgz#e7de4d40aa1b1b0300b9f79c63b14566796da736"
+
 react-icon-base@2.0.7:
   version "2.0.7"
   resolved "http://registry.npm.taobao.org/react-icon-base/download/react-icon-base-2.0.7.tgz#0bd18736bd6ce79ca6d69ce8387a07fb8d4ceffe"
@@ -7081,6 +7085,10 @@ websocket-driver@>=0.5.1:
 websocket-extensions@>=0.1.1:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/websocket-extensions/download/websocket-extensions-0.1.1.tgz#76899499c184b6ef754377c2dbb0cd6cb55d29e7"
+
+weixin-js-sdk@^1.2.0:
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/weixin-js-sdk/download/weixin-js-sdk-1.2.0.tgz#5132949eb65b3d4e5f3e052bd3b6b10abdf47d55"
 
 whatwg-encoding@^1.0.1:
   version "1.0.1"

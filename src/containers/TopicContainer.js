@@ -9,4 +9,5 @@ export default styled.div`
   margin-top:0.24rem;
   margin-right:0.12rem;
   background-color:#fff;
+   border-radius: 0.12rem;
   `;

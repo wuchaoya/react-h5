@@ -11,7 +11,9 @@ let textStyle = {
   fontWeight: '400',
   display: '-webkit-box',
   'WebkitBoxOrient': 'vertical',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  lineHeight:'0.40rem',
+  alignSelf:'flex-start'
 };
 let buttonStyle = {
   display: 'flex',
@@ -20,7 +22,8 @@ let buttonStyle = {
   width: '1.6rem',
   height: '0.8rem',
   color: '#83b233',
-  fontSize: '0.24rem'
+  fontSize: '0.24rem',
+  marginBottom: '-0.22rem'
 };
 let center = {
   display: 'flex',

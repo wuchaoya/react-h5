@@ -5,11 +5,11 @@ import styled from 'styled-components';
 
 export default styled.p`
   padding-top: 0.32rem;
-  padding-bottom: 0.46rem;
+  padding-bottom: 0.16rem;
   margin:0;
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   background-color: #ededed;
-  font-size: 0.22rem;
+  font-size: 0.24rem;
   color: #666
 `;

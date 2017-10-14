@@ -14,10 +14,12 @@ import React, { Component } from 'react';
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 0 0 0.1rem 0;
 `;
 const LeftText = styled.span`
   font-size: 0.24rem;
   color: #999;
+  width: 1rem;
 `;
 const RightText = styled.span`
   font-size: 0.24rem;

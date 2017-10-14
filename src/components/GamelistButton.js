@@ -15,7 +15,9 @@ const Button = styled.div`
   border-radius: 0.3rem;
   position: absolute;
   right: 0.24rem;
-  border: 0.01rem solid #83b233;
+  border: 0.01rem solid #b5d185;
+  align-self: flex-start;
+  margin-top: 0.555rem;
 `;
 const ButtonText = styled.span`
   font-size: 0.24rem;
