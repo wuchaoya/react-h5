@@ -168,7 +168,7 @@ export default class Pull extends Component{
                 <GameListIcon src={item.icon} />
                 <GameListItemInfoContainer>
                   <GameListItemName>{item.name}</GameListItemName>
-                  <Start marginBottom={0.24} length={item.score} />
+                  <Start marginBottom={0.14} length={item.score} />
                   <GameClass data={item.label = ['好玩', '不错']} />
                 </GameListItemInfoContainer>
                 <GameListButton onClick={(e) => {

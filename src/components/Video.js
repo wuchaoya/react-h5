@@ -8,7 +8,7 @@ import 'react-html5video/dist/styles.css';
 class MyVideo extends Component {
   render () {
     return (
-      <Video
+      <Video ref='video'
         muted controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
         // eslint-disable-next-line
         poster={this.props.img}
@@ -18,6 +18,8 @@ class MyVideo extends Component {
                // Do stuff
         }} />
     );
+  }
+  componentDidMount () {
   }
 }
 

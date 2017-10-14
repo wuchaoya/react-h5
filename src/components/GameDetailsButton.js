@@ -14,7 +14,7 @@ const Button = styled.div`
   align-items: center;
   border-radius: 0.3rem;
   position: absolute;
-  right: 0.18rem;
+  right: 0.36rem;
   align-self: flex-start;
   margin-top:0.32rem
 `;

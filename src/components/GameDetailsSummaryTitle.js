@@ -8,6 +8,6 @@ export default styled.h3`
   font-size: 0.3rem;
   margin:0;
   padding:0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   font-weight: 400;
   `;

@@ -15,7 +15,8 @@ const Container = styled.div`
 `;
 const TextNumber = styled.span`
  color: #666;
- font-size: 0.2rem;
+ font-size: 0.22rem;
+ padding-top: 0.02rem;
  padding-left: 0.06rem;
 `;
 export default class Star extends Component {
@@ -31,7 +32,7 @@ export default class Star extends Component {
       arr.push(i);
     }
     return arr.map((itme, index) => {
-      return bool ? <FaStar size={14} color='#ff8800' key={'star' + index} /> : <FaStarHalfEmpty size={14} color='#ff8800' key={'starHalfEmpty' + index} />;
+      return bool ? <FaStar size={12} color='#ff8800' key={'star' + index} /> : <FaStarHalfEmpty size={12} color='#ff8800' key={'starHalfEmpty' + index} />;
     });
   }
   render () {

@@ -162,12 +162,12 @@ export default class PlayGameContainer extends Component {
       if (this.GetQueryString('roomId') === null) {
         console.log('1. 地址中没有roomId场景');
         if (window.localStorage.getItem('MyRoomId') &&
-          'null' !== window.localStorage.getItem('MyRoomId') &&
-          window.localStorage.getItem('MyId') &&
-          'null' !== window.localStorage.getItem('MyId')) {
+          // eslint-disable-next-line
+          'null' !== window.localStorage.getItem('MyRoomId') && window.localStorage.getItem('MyId') && 'null' !== window.localStorage.getItem('MyId')) {
           this.setState({
             roomId: window.localStorage.getItem('MyRoomId')
           }, () => {
+            // eslint-disable-next-line
             console.log('读取浏览器缓存信息 ' + 'MyRoomId: ' + this.state.roomId +
               ', MyId: ' + window.localStorage.getItem('MyId'));
             this.checkRoomId(window.localStorage.getItem('MyId'), pkg);
@@ -183,6 +183,7 @@ export default class PlayGameContainer extends Component {
           this.setState({
             roomId: this.GetQueryString('roomId')
           }, () => {
+            // eslint-disable-next-line
             console.log('读取地址中的房间信息和id信息 ' + 'roomId: ' + this.state.roomId +
               ', id: ' + this.GetQueryString('id'));
             this.checkRoomId(this.GetQueryString('id'), pkg);

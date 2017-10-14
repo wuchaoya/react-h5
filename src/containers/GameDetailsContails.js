@@ -28,7 +28,6 @@ import MyStart from '../components/MyStart';
 import MyVideo from '../components/Video';
 import WeChat from '../utils/WeChat';
 
-
 export default class LogdingContainer extends Component {
   constructor (props) {
     super(props);

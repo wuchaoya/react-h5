@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 const Topimg = styled.img`
   display: block
   `;
-
+// eslint-disable-next-line
 const TopDiv = styled.div`
   height: 100%;
   width: 100%;
@@ -27,7 +27,6 @@ export default class TopImg extends Component {
     return (
       <Container>
         <Topimg src={this.props.uri} width='100%' height='100%' />
-        <TopDiv />
       </Container>
     );
   }

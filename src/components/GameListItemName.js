@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export default styled.h3`
-  margin: 0.18rem 0 0.2rem 0;
+  margin: 0rem 0 0.1rem 0;
   padding: 0;
   display: inline-block;
   font-size: 0.28rem;

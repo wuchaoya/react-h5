@@ -7,7 +7,7 @@ export default styled.div`
   background-color: #fff;
   padding: 0.3rem;
   padding-right: 0.24rem;
-  border-bottom: 0.01rem solid #e5e5e5;
+  border-bottom: 0.01rem solid #eee;
   display: flex;
   flex-direction: row;
   align-items: center;

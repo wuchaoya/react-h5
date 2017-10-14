@@ -29,13 +29,13 @@ export default class MyStart extends Component {
     return arr.map((itme, index) => {
       // eslint-disable-next-line
       if (index < number/2) {
-        return <FaStar size={20}color='#ff8800' key={'star' + index} />;
+        return <FaStar style={{marginRight: '0.08rem'}} size={20}color='#ff8800' key={'star' + index} />;
       } else {
         return <FaStar onClick={() => {
           this.setState({
             number:(index + 1) * 2
           });
-        }} size={20}color='#999' key={'star' + index} />;
+        }} size={20}color='#ddd' style={{marginRight: '0.08rem'}} key={'star' + index} />;
       }
     });
   }

@@ -9,7 +9,7 @@ export default styled.div`
   margin-top: 0.12rem;
   margin-left: 0.12rem;
   margin-right: 0.12rem;
-  padding-left: 0.18rem;
+  padding-left: 0.26rem;
   padding-right: 0.18rem;
   padding-top: 0.18rem;
   margin-bottom: 0.12rem;

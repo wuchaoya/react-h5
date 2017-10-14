@@ -8,4 +8,5 @@ export default styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 0.3rem;
+  margin-top: 0.12rem;
 `;
