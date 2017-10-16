@@ -4,3 +4,6 @@
 
 import React, { Component } from 'react';
 
+export default class ScrollView extends Component {
+
+};

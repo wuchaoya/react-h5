@@ -12,6 +12,8 @@ const Contaner = styled.div`
   margin: 0;
   padding: 0.18rem;
   padding-bottom: 0rem;
+  padding-right:0.06rem;
+  padding-left: 0.24rem;
   overflow: hidden;
   display: flex; 
   flex-direction: row

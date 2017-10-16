@@ -10,7 +10,8 @@ import Tappable from 'react-tappable/lib/Tappable';
 const Contaner = styled.div`
   width:${(props) => (props.length * 1.84)}rem;
   display: flex; 
-  flex-direction: row
+  flex-direction: row;
+  padding-right:0.3rem;
 `;
 
 let textStyle = {
