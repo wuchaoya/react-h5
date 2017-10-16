@@ -11,7 +11,6 @@ const Contaner = styled.div`
   width:${(props) => (props.length * 1.84)}rem;
   display: flex; 
   flex-direction: row;
-  padding-right:0.3rem;
 `;
 
 let textStyle = {
@@ -42,13 +41,15 @@ export default class ChosenGameScroll extends Component {
       <ReactScrollbar
         stopScrollPropagation={true}
         vertical={false}
-        style={{marginBottom:'0.36rem', width: '7.2rem', backgroundColor: '#fff'}}>
+        style={{marginBottom:'0.06rem', width: '7.2rem', backgroundColor: '#fff'}}>
         <Contaner length={this.props.data.length+1}>
           {this.props.data.map((item, index) => {
             return (
               <Tappable style={{display: 'flex', flexDirection: 'column'}} key={index} onTap={() => this.props.click(item.gid)}>
                 <ChosenGameItem key={index} src={item.icon} />
-                <div style={textStyle}>{item.name}</div>
+                <div style={{width:'1.72rem'}}>
+                  <div style={textStyle}>{item.name}</div>
+                </div>
               </Tappable>
             );
           })}

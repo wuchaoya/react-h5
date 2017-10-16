@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   background: #fff;
-  margin-top: 0.18rem;
+  margin-top: 0.16rem;
   display: flex;
   flex-direction: column;
 `;

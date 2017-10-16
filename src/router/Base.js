@@ -9,6 +9,7 @@ import PlayGame from '../containers/PlayGameContainer';
 import Pull from '../containers/GameListContainer';
 import Home from '../containers/HomeContainer';
 import MGPlay from '../containers/MGPlay';
+import Test from '../containers/Test';
 export default class Base extends Component {
   render () {
     return (
@@ -20,6 +21,7 @@ export default class Base extends Component {
           <Route exact path='/playgame' component={PlayGame} />
           <Route exact path='/gamelist' component={Pull} />
           <Route exact path='/mg' component={MGPlay} />
+          <Route exact path='/test' component={Test} />
         </div>
       </Router>
     );
