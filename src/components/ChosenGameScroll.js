@@ -45,7 +45,7 @@ export default class ChosenGameScroll extends Component {
         <Contaner length={this.props.data.length+1}>
           {this.props.data.map((item, index) => {
             return (
-              <Tappable style={{display: 'flex', flexDirection: 'column',height:'2.6rem'}} key={index} onTap={() => this.props.click(item.gid)}>
+              <Tappable style={{display: 'flex', flexDirection: 'column'}} key={index} onTap={() => this.props.click(item.gid)}>
                 <ChosenGameItem key={index} src={item.icon} />
                 <div style={textStyle}>{item.name}</div>
               </Tappable>
