@@ -11,6 +11,7 @@ const Contaner = styled.div`
   width: ${(props) => props.w}rem;
   margin: 0;
   padding: 0.18rem;
+  padding-right:0;
   overflow: hidden;
 `;
 const Img = styled.img`

@@ -13,7 +13,7 @@ const Container = styled.div`
  top: 0;
  z-index: 999;
  width: 7.2rem;
- height: 12.8rem;
+ height: 12rem;
  background-color: rgba(0,0,0,0.7);
  overflow: hidden;
  align-items: center;
@@ -46,7 +46,7 @@ class Modal extends Component {
 
         <Slider initialSlide={this.props.index} {...settings}>
           {this.props.data.map((url, index) => {
-            return <Img onClick={this.props.click} key={index} height='100%' width='100%' src={url} />;
+            return <Img onClick={this.props.click} key={index} height='90%' width='90%' src={url} />;
           })}
         </Slider>
       </Container>

@@ -3711,6 +3711,10 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
+iso-8859-15@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/iso-8859-15/download/iso-8859-15-1.0.0.tgz#f9d2f6dbb8585693bd6fb9cfadda411a9569b0cc"
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/isobject/download/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
