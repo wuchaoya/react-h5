@@ -27,6 +27,7 @@ import MyModal from '../components/Modal';
 import MyStart from '../components/MyStart';
 import MyVideo from '../components/Video';
 import WeChat from '../utils/WeChat';
+import Test from './Test';
 
 export default class LogdingContainer extends Component {
   constructor (props) {
@@ -77,6 +78,7 @@ export default class LogdingContainer extends Component {
           });
         });
       }} data={this.state.data.images} />
+      <Test />
       <GameDetailSummary>
         <GameDetailSummaryTitle>游戏简介</GameDetailSummaryTitle>
         <GameDetailsText ref='infoText' data={this.state.data.content} />

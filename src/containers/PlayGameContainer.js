@@ -75,10 +75,6 @@ export default class PlayGameContainer extends Component {
     console.log('清楚sdk');
   }
 
-  /**
-   * 获取房间号,只针对咪咕棋牌游戏有效
-   * atob
-   */
   getRoomId (pkg) {
     HttpRequest.getRoomId({}, (res) => {
       console.log('新申请房间,清空所有浏览器缓存数据');

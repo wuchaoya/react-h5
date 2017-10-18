@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import TopicDetailsContainer from '../containers/TopicDetailsContainer';
 import GameDetails from '../containers/GameDetailsContails';
@@ -10,6 +11,22 @@ import Pull from '../containers/GameListContainer';
 import Home from '../containers/HomeContainer';
 import MGPlay from '../containers/MGPlay';
 import Test from '../containers/Test';
+import WeChatAuthorize from '../containers/WeChatAuthorize';
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+    window.localStorage.getItem('isLogin');
+    if (window.isLogin) {
+      return <Component {...props} />;
+    } else {
+      window.isLogin = true;
+      return <Redirect to={{
+        pathname: '/authorize',
+        state: { from: props.location }
+      }} />;
+    }
+  }
+  } />
+);
 export default class Base extends Component {
   render () {
     return (
@@ -22,6 +39,7 @@ export default class Base extends Component {
           <Route exact path='/gamelist' component={Pull} />
           <Route exact path='/mg' component={MGPlay} />
           <Route exact path='/test' component={Test} />
+          <Route exact path='/authorize' component={WeChatAuthorize} />
         </div>
       </Router>
     );
