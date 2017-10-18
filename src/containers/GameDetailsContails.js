@@ -78,7 +78,6 @@ export default class LogdingContainer extends Component {
           });
         });
       }} data={this.state.data.images} />
-      <Test />
       <GameDetailSummary>
         <GameDetailSummaryTitle>游戏简介</GameDetailSummaryTitle>
         <GameDetailsText ref='infoText' data={this.state.data.content} />
