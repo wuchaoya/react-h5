@@ -7,7 +7,16 @@ import icon from '../assets/icon.jpg';
 import HttpRequest from '../utils/HttpRequest';
 let desc = '咪咕云游戏是国内首款云游戏平台，用户可在云端畅玩数百款经典游戏，突破手机空间和性能瓶颈，无需下载即点即玩';
 export default class WeChat {
-
+  static checkJsApi () {
+    wx.checkJsApi({
+      jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      success: function(res) {
+        console.log(res)
+        // 以键值对的形式返回，可用的api值true，不可用为false
+        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      }
+    });
+  }
   static init (config) {
     wx.config(config);
   }

@@ -94,4 +94,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static getWxUserInfo (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('v2/mpweixin/wx-user-info', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };

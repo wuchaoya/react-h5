@@ -19,7 +19,7 @@ export default class PlayGameContainer extends Component {
       data: null,
       err: false,
       roomId: null,
-      xml: null
+      xml: null,
     };
   }
 
@@ -30,7 +30,7 @@ export default class PlayGameContainer extends Component {
     );
   }
   Wxinit () {
-    console.log('url', encodeURI(window.location.href.split('#')[0]))
+    console.log('url', encodeURI(window.location.href.split('#')[0]));
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
@@ -55,7 +55,12 @@ export default class PlayGameContainer extends Component {
       }
     );
   }
+  componentWillMount () {
+    this.authorize();
+  }
   componentDidMount () {
+    console.log(this.state.code);
+    this.getWxUserInfo(this.GetQueryString('code'));
     document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
@@ -74,6 +79,15 @@ export default class PlayGameContainer extends Component {
     window.Cloudplay.stopSDK();
     console.log('清楚sdk');
   }
+  isWeiXin () {
+    let ua = window.navigator.userAgent.toLowerCase();
+    console.log(ua);
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   getRoomId (pkg) {
     HttpRequest.getRoomId({}, (res) => {
@@ -82,7 +96,7 @@ export default class PlayGameContainer extends Component {
       window.localStorage.setItem('MyId', null);
       window.localStorage.setItem('MyUserId', null);
       this.props.history.replace(
-        'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
+        'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id + '&&code=' + this.GetQueryString('code')
       );
       this.Wxinit();
       WeChat.ready();
@@ -192,11 +206,11 @@ export default class PlayGameContainer extends Component {
     } else {
       if (this.GetQueryString('uToken') !== null) {
         this.props.history.replace(
-          'playgame?pkg=' + pkg + '&&uToken=' + this.GetQueryString('uToken')
+          'playgame?pkg=' + pkg + '&&uToken=' + this.GetQueryString('uToken') + '&&code=' + this.GetQueryString('code')
         );
       } else {
         this.props.history.replace(
-          'playgame?pkg=' + pkg
+          'playgame?pkg=' + pkg + '&&code=' + this.GetQueryString('code')
         );
       }
       let gameOptions = {
@@ -261,12 +275,41 @@ export default class PlayGameContainer extends Component {
           };
           window.Cloudplay.startSDK(gameOptions);
           this.props.history.replace(
-            'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id
+            'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id + '&&code=' + this.GetQueryString('code')
           );
           this.Wxinit();
           WeChat.ready();
         }
       }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+  authorize () {
+    if (this.isWeiXin()) {
+      let pkg = this.getPkg();
+      if (pkg === 'com.migu.game.cloudddz') {
+        if (!this.GetQueryString('code')) {
+          let url = window.location.href;
+          if (this.props.location.state) {
+            if (this.props.location.state.pkg) {
+              url = url + '?pkg=' + this.props.location.state.pkg;
+            }
+          }
+          window.location.href = 'http://migugame.cmgame.com/gulu/' +
+            'wechat/capacity/getWxCodeInfo?redirectUrl=' + url;
+        }
+      }
+    }
+  }
+  getWxUserInfo (code) {
+    HttpRequest.getWxUserInfo(
+      { code: code },
+      (res) => {
+        console.log('微信用户信息');
+        console.log(res);
+      },
+      (err) => {
         console.log(err);
       }
     );

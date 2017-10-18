@@ -9,7 +9,6 @@ export default class WeChatAuthorize extends Component {
     );
   }
   componentWillMount () {
-    window.isLogin = true;
     window.location.href = 'http://migugame.cmgame.com/gulu/' +
       'wechat/capacity/getWxCodeInfo?redirectUrl=' + 'http://localhost:3000/home';
   }
