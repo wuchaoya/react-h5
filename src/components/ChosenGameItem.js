@@ -9,4 +9,5 @@ export default styled.img`
   width: 1.72rem;
   border: 0.01rem solid #e5e5e5;
   border-radius: 0.38rem;
+  overflow: hidden,
 `;

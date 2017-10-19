@@ -15,21 +15,23 @@ const Contaner = styled.div`
   transform:translateX(${(props) => props.translateX}rem) 
 `;
 let textStyle = {
-  color: '#333',
-  fontSize: '0.26rem',
-  margin:'0',
-  padding:'0',
-  paddingTop:'0.18rem',
-  paddingBottom:'0.24rem',
-  fontWeight: '400',
-  height: '0.72rem',
-  overflow: 'hidden',
   width:'1.72rem',
+  color: '#333',
+  marginTop:'0.24rem',
+  fontSize: '0.26rem',
+  fontWeight: '400',
   display: '-webkit-box',
-  WebkitBoxOrient: 'vertical',
+  'WebkitBoxOrient': 'vertical',
+  overflow: 'hidden',
   WebkitLineClamp: '2'
 };
-
+let center = {
+  width:'1.72rem',
+  height: '1.4rem',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+};
 export default class TransformChosenGameScroll extends Component {
   constructor (props) {
     super(props);
@@ -72,8 +74,10 @@ export default class TransformChosenGameScroll extends Component {
                 style={{ display: 'flex', flexDirection: 'column', marginLeft: '0.24rem' }}
                 key={index} onClick={() => this.props.click(item.gid)}>
                 <ChosenGameItem key={index} src={item.icon} />
-                <div style={{ width:'1.72rem' }}>
-                  <p style={textStyle}>{item.name}</p>
+                <div style={center}>
+                  <div style={
+                    Object.assign({}, textStyle, { 'WebkitLineClamp': '2' })
+                  }>{item.name}撒问问我额外哇</div>
                 </div>
               </div>
             );
