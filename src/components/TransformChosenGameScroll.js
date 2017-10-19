@@ -1,5 +1,5 @@
 /**
- * Created by chao on 2017/10/16.
+ * Created by chao on 2017/10/19.
  */
 
 import React, { Component } from 'react';
@@ -10,8 +10,8 @@ import ChosenGameItem from '../components/ChosenGameItem';
 const Contaner = styled.div`
   width: ${(props) => props.w}rem;
   display: flex; 
-  flex-direction: row
-  transition: all 0.3s;
+  flex-direction: row;
+  transition: all 0.5s;
   transform:translateX(${(props) => props.translateX}rem) 
 `;
 let textStyle = {
@@ -30,7 +30,7 @@ let textStyle = {
   WebkitLineClamp: '2'
 };
 
-export default class Test extends Component {
+export default class TransformChosenGameScroll extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -45,7 +45,6 @@ export default class Test extends Component {
         onPanMove={(gestureStatus) => { console.log(gestureStatus,'onPanMove'); }}
         onSwipeLeft={(gestureStatus) => {
           if (!(Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24) * (this.props.data.length - 1))) {
-            console.log('不滑动');
             return;
           }
           if (Math.abs(this.state.translateX) > ((this.state.width / 100 + 0.24) * (this.props.data.length) - 7.2)) {
@@ -58,11 +57,9 @@ export default class Test extends Component {
         }}
         onPress={(gestureStatus) => { console.log(gestureStatus,'onPress'); }}
         onSwipeRight={(gestureStatus) => {
-          console.log(this.state.translateX,(this.state.width / 100 + 0.24) * (this.props.data.length - 1))
           if (Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24)) {
             return;
           }
-          console.log(this.state.width)
           this.setState({
             translateX: this.state.translateX + (this.state.width / 100 + 0.24)
           });

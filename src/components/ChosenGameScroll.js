@@ -23,11 +23,11 @@ let textStyle = {
   paddingBottom:'0.24rem',
   fontWeight: '400',
   height: '0.72rem',
+  overflow: 'hidden',
   width:'1.72rem',
   display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
-  WebkitLineClamp: '2',
-  overflow: 'hidden'
+  WebkitLineClamp: '2'
 };
 
 export default class ChosenGameScroll extends Component {
@@ -38,7 +38,7 @@ export default class ChosenGameScroll extends Component {
   }
   render () {
     return (
-      <ReactScrollbar
+      <div
         stopScrollPropagation={true}
         vertical={false}
         style={{marginBottom:'0.06rem', width: '7.2rem', backgroundColor: '#fff'}}>
@@ -48,13 +48,13 @@ export default class ChosenGameScroll extends Component {
               <Tappable style={{display: 'flex', flexDirection: 'column'}} key={index} onTap={() => this.props.click(item.gid)}>
                 <ChosenGameItem key={index} src={item.icon} />
                 <div style={{width:'1.72rem'}}>
-                  <div style={textStyle}>{item.name}</div>
+                  <p style={textStyle}>{item.name}</p>
                 </div>
               </Tappable>
             );
           })}
         </Contaner>
-      </ReactScrollbar>
+      </div>
     );
   }
   componentDidMount () {

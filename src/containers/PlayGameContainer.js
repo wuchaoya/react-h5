@@ -82,6 +82,7 @@ export default class PlayGameContainer extends Component {
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
     console.log(ua);
+    // eslint-disable-next-line
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return true;
     } else {

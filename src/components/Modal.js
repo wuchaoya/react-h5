@@ -41,6 +41,7 @@ class Modal extends Component {
     };
   }
   render () {
+    console.log(this.props.disabled)
     return (
       <Container onClick={this.props.click} disable={this.props.disabled} h={this.state.height} w={this.state.width}>
 

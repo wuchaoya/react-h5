@@ -17,7 +17,6 @@ import GameDetailsButton from '../components/GameDetailsButton';
 import GameInfoStartContainer from './GameInfoStartContainer';
 import GameDetailsStartText from '../components/GameDetailsStartText';
 import AverageScore from '../components/AverageScore';
-import ScrollView from '../components/ScrollView';
 import GameDetailSummary from './GameDetailSummaryContainer';
 import GameDetailSummaryTitle from '../components/GameDetailsSummaryTitle';
 import GameDetailsText from '../components/GameDetailsText';
@@ -27,7 +26,7 @@ import MyModal from '../components/Modal';
 import MyStart from '../components/MyStart';
 import MyVideo from '../components/Video';
 import WeChat from '../utils/WeChat';
-import Test from './Test';
+import TransformScrollView from '../components/TransformScrollView'
 
 export default class LogdingContainer extends Component {
   constructor (props) {
@@ -69,12 +68,15 @@ export default class LogdingContainer extends Component {
           <AverageScore score={this.state.data.score} />
         </GameInfoStartContainer>
       </GameInfoContail>
-      <ScrollView click={(index) => {
+      <TransformScrollView click={(index) => {
+        console.log('点击了');
         this.setState({
           index:index
         }, () => {
           this.setState({
             imgdisable:false
+          },() => {
+            console.log('执行了', index,this.state.imgdisable)
           });
         });
       }} data={this.state.data.images} />

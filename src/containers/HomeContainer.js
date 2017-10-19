@@ -11,13 +11,13 @@ import LoadingContainer from './LoadingContainer';
 import HomeFours from '../components/HomeFours';
 import HomeTopic from './HomeTopic';
 import Title from '../components/Title';
-import ScrollView from '../components/HomeScroll';
 import ChosenGame from './ChosenGameContainer';
 import HomeChosenGameTop from './HomeChosenGameTop';
 import IconRight from '../components/IconRight';
 import HomeChoseGameRight from './HomeChosenGameRight';
-import ChosenGameScroll from '../components/ChosenGameScroll';
 import WeChat from '../utils/WeChat';
+import TransformHomeScrollView from '../components/TransformHomeScrollView';
+import TransformChosenGameScroll from '../components/TransformChosenGameScroll';
 class PlayGameContainer extends Component {
   constructor (props) {
     super(props);
@@ -35,7 +35,7 @@ class PlayGameContainer extends Component {
       <HomeTopic>
         <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏专题</Title>
         <Title margin='0.08rem 0 0.1rem 0.24rem' color='#999' fontSize='0.26rem'>ACT ACT 我们为你挑好了</Title>
-        <ScrollView click={(did) => {
+        <TransformHomeScrollView click={(did) => {
           console.log('点击了');
           this.props.history.push('/topic?did=' + did);
         }} data={this.state.data.dissertation} />
@@ -53,7 +53,7 @@ class PlayGameContainer extends Component {
             <IconRight fontSize='0.3rem' color='#83b233' />
           </HomeChoseGameRight>
         </HomeChosenGameTop>
-        <ChosenGameScroll click={(gid) => {
+        <TransformChosenGameScroll click={(gid) => {
           this.props.history.push('gamedetails' + gid);
         }} data={this.state.data.gameList} />
       </ChosenGame>
