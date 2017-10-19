@@ -21,6 +21,8 @@ let textStyle = {
   fontSize: '0.26rem',
   fontWeight: '400',
   display: '-webkit-box',
+  textOverflow:'ellipsis',
+  OtextOverflow:'ellipsis',
   'WebkitBoxOrient': 'vertical',
   overflow: 'hidden',
   WebkitLineClamp: '2'
@@ -77,7 +79,7 @@ export default class TransformChosenGameScroll extends Component {
                 <div style={center}>
                   <div style={
                     Object.assign({}, textStyle, { 'WebkitLineClamp': '2' })
-                  }>{item.name}撒问问我额外哇</div>
+                  }>{item.name}</div>
                 </div>
               </div>
             );
