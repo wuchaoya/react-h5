@@ -75,9 +75,9 @@ export default class PlayGameContainer extends Component {
   }
 
   componentWillUnmount () {
-    window.location.reload();
     window.Cloudplay.stopSDK();
     console.log('清楚sdk');
+    window.location.reload();
   }
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
