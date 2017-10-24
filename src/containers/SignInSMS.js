@@ -11,38 +11,18 @@ import GoBack from '../components/GoBack';
 import Input from '../components/Input';
 import '../styles/inputStyle.css';
 import Button from '../components/SignButton';
-import TextButton from '../components/SignTextButton';
-import HttpRequst from '../utils/HttpRequest';
-import { login, loginOut } from '../actions/actions';
+import InputButton from '../components/InputCode';
 
-class SignIn extends Component {
+class SignInSMS extends Component {
   render () {
     return (
       <Container background='#f5f5f5'>
         <GoBack />
-        <Title title='账号登陆' />
+        <Title title='短信登陆' />
         <Input placeholder='请输入手机号' autoFocus type='text' />
-        <Input placeholder='请输入密码' autoFocus={false} type='password' />
-        <Button onClick={() => this.sigin()} disabled />
-        <TextButton >短信登录</TextButton>
+        <InputButton placeholder='验证码' autoFocus={false} type='text' />
+        <Button disabled />
       </Container>
-    );
-  }
-  sigin () {
-    HttpRequst.signin(
-      {
-        phone: '18695912990',
-        password: '123456',
-        ip: '',
-        position:'',
-        DeviceType:''
-      },
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        this.props.history.replace('/user');
-      }
     );
   }
   componentWillMount () {
@@ -55,4 +35,4 @@ const getLogin = state => {
     login: state.update.login
   };
 };
-export default connect(getLogin,{ login, loginOut })(SignIn);
+export default connect(getLogin)(SignInSMS);

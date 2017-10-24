@@ -4,11 +4,13 @@
 
 import React, { Component } from 'react';
 
+import icon from '../assets/back-h5@2x.png';
+
 export default class GoBack extends Component {
   render () {
     return (
-      <div>
-        <div style={styles.iconStyle} />
+      <div style={styles.container}>
+        <img style={styles.iconStyle} src={icon} alt='' />
       </div>
     );
   }
@@ -17,13 +19,14 @@ export default class GoBack extends Component {
 const styles = {
   container:{
     display:'flex',
-    flex:'1'
+    flex:'1',
+    height:'0.88rem',
+    alignItems:'center'
   },
   iconStyle: {
-    width: '0.3rem',
-    height: '0.3rem',
-    borderLeft: '0.01rem solid #000',
-    borderTop: '0.01rem solid #000'
+    width: '0.17rem',
+    height: '0.31rem',
+    padding:'0.4rem'
   }
 };
 

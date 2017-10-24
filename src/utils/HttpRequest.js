@@ -106,5 +106,18 @@ export default class HttpRequest {
       (error) => {
         callbackError(error);
       });
+  };
+  static signin (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/login/password', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
   }
 };

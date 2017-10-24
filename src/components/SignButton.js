@@ -7,8 +7,11 @@ import React, { Component } from 'react';
 export default class SignButton extends Component {
   render () {
     return (
-      <div style={Object.assign(
-        {}, styles.container, this.props.disabled ? styles.disabledTrue : styles.disabledFalse)}>
+      <div
+        style={Object.assign(
+        {}, styles.container, this.props.disabled ? styles.disabledTrue : styles.disabledFalse)}
+        onClick={this.props.onClick}
+      >
         <span style={styles.textStyle}>登陆</span>
       </div>
     );
