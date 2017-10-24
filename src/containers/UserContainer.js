@@ -3,6 +3,7 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Container from './Container';
 import UserTop from './UserTopContainer';
@@ -15,16 +16,20 @@ import EquityItem from '../components/EquityItem';
 import EquityIcon from '../components/EquityIcon';
 import EquityText from '../components/EquityText';
 
-export default class User extends Component {
+import { login, loginOut } from '../actions/actions';
+
+class User extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   render () {
+    const { isLogin, login } = this.props;
+    console.log(this.props)
     return (
-      <Container background='#fff' marginBottom={0.56}>
+      <Container onClick={() => login()} background='#fff' marginBottom={0.56}>
         <UserTop>
-          <UserInfoTop login={true} />
+          <UserInfoTop  login={isLogin} />
         </UserTop>
         <PurchaseContainer>
           <UserTitle margin='0.52rem 0 0.18rem 0.24rem'>会员购买</UserTitle>
@@ -56,3 +61,10 @@ export default class User extends Component {
     );
   }
 };
+const getLogin = state => {
+  return {
+    isLogin: state.update.login
+  };
+};
+
+export default connect(getLogin, { login, loginOut })(User);

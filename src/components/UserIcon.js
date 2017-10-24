@@ -3,17 +3,18 @@
  */
 
 import React, { Component } from 'react';
-
 import icon from '../assets/user.png';
 import loginIcon from '../assets/user_login_icon.png';
 export default class UserIcon extends Component {
   render () {
     return (
-      <img style={Object.assign(
-        {},
-        styles.iconStyle,
-        this.props.login ? styles.loginIcon : {}
-      )} src={!this.props.login ? icon : loginIcon} alt='' />
+      <div onClick={() => this.props.click} >
+        <img style={Object.assign(
+          {},
+          styles.iconStyle,
+          this.props.login ? styles.loginIcon : {}
+        )} src={!this.props.login ? icon : loginIcon} alt='' />
+      </div>
     );
   }
 }

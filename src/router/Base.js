@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import TopicDetailsContainer from '../containers/TopicDetailsContainer';
 import GameDetails from '../containers/GameDetailsContails';
 import PlayGame from '../containers/PlayGameContainer';
@@ -11,7 +13,7 @@ import Home from '../containers/HomeContainer';
 import MGPlay from '../containers/MGPlay';
 import User from '../containers/UserContainer';
 
-export default class Base extends Component {
+class Base extends Component {
   render () {
     return (
       <Router>
@@ -31,3 +33,4 @@ export default class Base extends Component {
     console.log(this);
   }
 }
+export default connect()(Base);

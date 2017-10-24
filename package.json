@@ -9,6 +9,8 @@
     "prop-types": "^15.5.10",
     "rc-gesture": "^0.0.15",
     "react": "^15.6.1",
+    "redux": "^3.2.1",
+    "react-redux": "^4.3.0",
     "react-dom": "^15.6.1",
     "react-html5video": "^2.3.0",
     "react-icons": "^2.2.5",
@@ -28,7 +30,9 @@
     "serve": "^6.0.6",
     "slick-carousel": "^1.7.1",
     "styled-components": "^2.1.2",
-    "weixin-js-sdk": "^1.2.0"
+    "weixin-js-sdk": "^1.2.0",
+    "redux-thunk": "^2.1.0",
+    "redux-logger": "^2.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -49,7 +53,10 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-react": "^7.3.0",
-    "eslint-plugin-standard": "^2.0.0"
+    "eslint-plugin-standard": "^2.0.0",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11"
   },
   "homepage": "./",
   "proxy": "http://pcloud.haimawan.com"

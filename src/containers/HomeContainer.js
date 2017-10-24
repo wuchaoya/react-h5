@@ -4,6 +4,7 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Container from './Container';
 import HttpRequest from '../utils/HttpRequest';
@@ -27,6 +28,7 @@ class PlayGameContainer extends Component {
     };
   }
   render () {
+    console.log(this.props.login);
     // eslint-disable-next-line
     return this.state.data === null ? <LoadingContainer name='首页'clickButton={() => this.getData()} err={this.state.err} /> : <Container marginBottom={0.24}>
       <HomeFours click={(gid) => {
@@ -114,6 +116,11 @@ class PlayGameContainer extends Component {
     this.getData();
   }
 }
+const getLogin = state => {
+  return {
+    login: state.update.login
+  };
+};
 
-export default PlayGameContainer;
+export default connect(getLogin)(PlayGameContainer);
 

@@ -12,7 +12,7 @@ export default class UserInfoTop extends Component {
   render () {
     return (
       <div style={styles.container} >
-        <UserIcon login={this.props.login} />
+        <UserIcon click={this.props.click} login={this.props.login} />
         <UserName login={this.props.login} />
         {this.props.login ? <UserTime login={this.props.login} /> : null}
       </div>
