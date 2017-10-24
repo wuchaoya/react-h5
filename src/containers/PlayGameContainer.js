@@ -75,9 +75,8 @@ export default class PlayGameContainer extends Component {
   }
 
   componentWillUnmount () {
-    window.Cloudplay.stopSDK();
+    window.Cloudplay.stopGame();
     console.log('清楚sdk');
-    window.location.reload();
   }
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
@@ -128,7 +127,7 @@ export default class PlayGameContainer extends Component {
           isPortrait: false,
           payStr: base64.encode(xml)
         };
-        window.Cloudplay.startSDK(gameOptions);
+        window.Cloudplay.startGame(gameOptions);
         console.log('参数：' + gameOptions.payStr);
         window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
         window.localStorage.setItem('MyId', res.resultData.id);
@@ -228,7 +227,7 @@ export default class PlayGameContainer extends Component {
         c_token: 'abcd',
         isPortrait: false
       };
-      window.Cloudplay.startSDK(gameOptions);
+      window.Cloudplay.startGame(gameOptions);
     }
   };
 
@@ -274,7 +273,7 @@ export default class PlayGameContainer extends Component {
             isPortrait: false,
             payStr: base64.encode(xml)
           };
-          window.Cloudplay.startSDK(gameOptions);
+          window.Cloudplay.startGame(gameOptions);
           this.props.history.replace(
             'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id + '&&code=' + this.GetQueryString('code')
           );

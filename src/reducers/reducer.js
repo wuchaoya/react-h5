@@ -13,10 +13,8 @@ export default function update (state = initialState, action) {
   switch (action.type) {
     case LOGIN:
       return Object.assign({}, state, { login: action.state })
-      break
     case LOGINOUT:
       return Object.assign({}, state, { login: action.state })
-      break
     default:
       return state;
   }

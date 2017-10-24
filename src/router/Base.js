@@ -12,6 +12,7 @@ import Pull from '../containers/GameListContainer';
 import Home from '../containers/HomeContainer';
 import MGPlay from '../containers/MGPlay';
 import User from '../containers/UserContainer';
+import Signin from '../containers/SignIn';
 
 class Base extends Component {
   render () {
@@ -25,6 +26,7 @@ class Base extends Component {
           <Route exact path='/gamelist' component={Pull} />
           <Route exact path='/mg' component={MGPlay} />
           <Route exact path='/user' component={User} />
+          <Route exact path='/signin' component={Signin} />
         </div>
       </Router>
     );
