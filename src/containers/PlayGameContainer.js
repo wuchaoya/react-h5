@@ -159,9 +159,8 @@ export default class PlayGameContainer extends Component {
     console.log(pkg);
     window.Cloudplay.initSDK({
       accessKeyID: 'D4F92FE4CFC',
-      accesskey: '625a706566676a397432573238557444',
       channelId: 100001,
-      pkg_name: pkg,
+      dontLoadJQuery: false,
       onSceneChanged: function (sceneId, extraInfo) {
         console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
