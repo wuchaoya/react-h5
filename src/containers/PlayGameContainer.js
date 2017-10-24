@@ -20,6 +20,8 @@ export default class PlayGameContainer extends Component {
       err: false,
       roomId: null,
       xml: null,
+      nickName: null,
+      headUrl: null,
     };
   }
 
@@ -60,11 +62,15 @@ export default class PlayGameContainer extends Component {
   }
   componentDidMount () {
     console.log(this.state.code);
-    this.getWxUserInfo(this.GetQueryString('code'));
+
     document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
-    this.start(pkg);
+    if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz'){
+      this.getWxUserInfo(this.GetQueryString('code'),pkg);
+    }else {
+      this.start(pkg);
+    }
     this.props.history.listen((location, action) => {
       console.log(location);
       this.Wxinit();
@@ -302,12 +308,18 @@ export default class PlayGameContainer extends Component {
       }
     }
   }
-  getWxUserInfo (code) {
+  getWxUserInfo (code,pkg) {
     HttpRequest.getWxUserInfo(
       { code: code },
       (res) => {
         console.log('微信用户信息');
         console.log(res);
+        this.setState({
+          nickName: res.nickname,
+          headUrl: res.headimgurl,
+        }, () => {
+          this.start(pkg)
+        })
       },
       (err) => {
         console.log(err);
