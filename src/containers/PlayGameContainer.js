@@ -114,7 +114,9 @@ export default class PlayGameContainer extends Component {
         let xml = Transition.JsonToXml({
           root: {
             battle: res.resultData.battleCode,
-            user_id: userId
+            user_id: userId,
+            nickName: this.state.nickName,
+            headUrl: this.state.headUrl
           }
         });
         console.log(xml);
@@ -259,7 +261,9 @@ export default class PlayGameContainer extends Component {
           let xml = Transition.JsonToXml({
             root: {
               battle: this.state.roomId,
-              user_id: window.localStorage.getItem('MyUserId') || Number(Math.random().toString(10).substring(2))
+              user_id: window.localStorage.getItem('MyUserId') || Number(Math.random().toString(10).substring(2)),
+              nickName: this.state.nickName,
+              headUrl: this.state.headUrl
             }
           });
           console.log(xml);
