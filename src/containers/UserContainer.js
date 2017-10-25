@@ -15,8 +15,9 @@ import UserEquity from './UserEquity';
 import EquityItem from '../components/EquityItem';
 import EquityIcon from '../components/EquityIcon';
 import EquityText from '../components/EquityText';
+import HttpRequest from '../utils/HttpRequest';
 
-import { login, loginOut } from '../actions/actions';
+import { login, loginOut, getServiceData } from '../actions/actions';
 
 class User extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class User extends Component {
   }
   render () {
     const { isLogin } = this.props;
+    console.log('data')
+    console.log(this.props.data);
     return (
       <Container onClick={() => {
         if (isLogin) {
@@ -66,12 +69,28 @@ class User extends Component {
   }
   componentDidMount () {
     document.title = '我的';
+    this.getData();
+  }
+  getData () {
+    HttpRequest.serviceList(
+      {
+        user_id:''
+      },
+      (res) => {
+        console.log('包月信息');
+        console.log(res);
+        this.props.getServiceData(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 };
 const getLogin = state => {
   return {
-    isLogin: state.update.login
+    data: state.update.data
   };
 };
 
-export default connect(getLogin, { login, loginOut })(User);
+export default connect(getLogin, { login, loginOut, getServiceData })(User);

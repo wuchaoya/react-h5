@@ -159,4 +159,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static serviceList (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/user/service_list', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };
