@@ -5,18 +5,58 @@
 import React, { Component } from 'react';
 
 export default class InputCode extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonText: '获取验证码',
+      disable: this.props.disable,
+      time: 60
+    };
+  }
   render () {
     return (
       <div style={styles.container}>
         <input
-          maxLength={5}
+          ref={this.props.name}
+          maxLength={6}
+          value={this.props.value}
           placeholder={this.props.placeholder}
           autoFocus={this.props.autoFocus}
+          onChange={this.props.onChange}
           style={styles.inputstyle}
           type={this.props.type} />
-        <div style={styles.buttonStyle}>获取验证码</div>
+        <div
+          style={Object.assign({}, styles.buttonStyle, this.props.disable ? styles.disableStyle : {})}
+          onClick={() => {
+            if (this.props.disable) {
+              return;
+            }
+            this.props.getCode();
+            this.props.func(true);
+            this.setState({
+              buttonText:'(' + this.state.time + 'S)重新获取'
+            }, () => this.setTime());
+          }}
+        >{this.state.buttonText}</div>
       </div>
     );
+  }
+  setTime () {
+    let time = setInterval(() => {
+      if (this.state.time !== 1) {
+        this.setState({
+          time: this.state.time - 1,
+          buttonText:'(' + (this.state.time - 1) + 'S)重新获取'
+        });
+      } else {
+        clearInterval(time);
+        this.props.func(false);
+        this.setState({
+          time: 60,
+          buttonText: '重新获取',
+        });
+      }
+    }, 1000);
   }
 };
 
@@ -56,5 +96,9 @@ const styles = {
     display:'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  disableStyle: {
+    backgroundColor:'#ccc',
+    color:'#aaa'
   }
 };

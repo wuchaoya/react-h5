@@ -16,34 +16,87 @@ import HttpRequst from '../utils/HttpRequest';
 import { login, loginOut } from '../actions/actions';
 
 class SignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      phone: '',
+      password:'',
+      disabled:true
+    };
+    this.sigin = this.sigin.bind(this);
+  }
   render () {
+    console.log(this.props)
     return (
       <Container background='#f5f5f5'>
-        <GoBack />
+        <GoBack onClick={() => {
+          this.props.history.goBack();
+        }} />
         <Title title='账号登陆' />
-        <Input placeholder='请输入手机号' autoFocus type='text' />
-        <Input placeholder='请输入密码' autoFocus={false} type='password' />
-        <Button onClick={() => this.sigin()} disabled />
-        <TextButton >短信登录</TextButton>
+        <Input
+          name='phone'
+          ref='phoneInput'
+          value={this.state.phone}
+          placeholder='请输入手机号'
+          autoFocus
+          type='text'phone
+          onChange={() => {
+            this.setState({
+              phone:this.refs.phoneInput.refs.phone.value
+            }, () => {
+              this.checkOnChange();
+              console.log(this.state.phone);
+            });
+          }}
+        />
+        <Input
+          name='password'
+          ref='passwordInput'
+          value={this.state.password}
+          placeholder='请输入密码'
+          autoFocus={false}
+          type='password'
+          onChange={() => {
+            this.setState({
+              password:this.refs.passwordInput.refs.password.value
+            }, () => {
+              this.checkOnChange();
+              console.log(this.state.password);
+            });
+          }}
+        />
+        <Button onClick={this.sigin} disabled={this.state.disabled} />
+        <TextButton onClick={() => {
+          this.props.history.push('/signinsms');
+        }}>短信登录</TextButton>
       </Container>
     );
   }
   sigin () {
     HttpRequst.signin(
       {
-        phone: '18695912990',
-        password: '123456',
+        phone: this.state.phone,
+        password: this.state.password,
         ip: '',
         position:'',
         DeviceType:''
       },
       (res) => {
         console.log(res);
+        if (Number(res.resultCode) === 0) {
+          this.props.login();
+          this.props.history.replace('/user');
+        }
       },
       (err) => {
-        this.props.history.replace('/user');
+
       }
     );
+  }
+  checkOnChange () {
+    this.setState({
+      disabled:!(/^1[34578]\d{9}$/.test(this.state.phone) && this.state.password.length > 5)
+    });
   }
   componentWillMount () {
     document.getElementsByTagName('html')[0].style.background = '#f5f5f5';
@@ -55,4 +108,4 @@ const getLogin = state => {
     login: state.update.login
   };
 };
-export default connect(getLogin,{ login, loginOut })(SignIn);
+export default connect(getLogin, { login, loginOut })(SignIn);

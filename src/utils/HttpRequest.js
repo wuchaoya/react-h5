@@ -120,4 +120,43 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static signinSMS (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/login/sms_code', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+  static getCode (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/login/verity_code', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+  static exitBattleGroup (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/exit-battle-group', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };

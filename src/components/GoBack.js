@@ -10,7 +10,9 @@ export default class GoBack extends Component {
   render () {
     return (
       <div style={styles.container}>
-        <img style={styles.iconStyle} src={icon} alt='' />
+        <div onClick={this.props.onClick}>
+          <img style={styles.iconStyle} src={icon} alt='' />
+        </div>
       </div>
     );
   }

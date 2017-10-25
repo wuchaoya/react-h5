@@ -13,15 +13,17 @@ const Box = styled.div`
 `;
 
 export default class PlayGameContainer extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       data: null,
       err: false,
       roomId: null,
+      id:null,
       xml: null,
       nickName: null,
-      headUrl: null,
+      headUrl: null
     };
   }
 
@@ -31,6 +33,7 @@ export default class PlayGameContainer extends Component {
       <Box id='playGameBox' h={height} />
     );
   }
+
   Wxinit () {
     console.log('url', encodeURI(window.location.href.split('#')[0]));
     HttpRequest.getWxConfig(
@@ -57,18 +60,19 @@ export default class PlayGameContainer extends Component {
       }
     );
   }
+
   componentWillMount () {
     this.authorize();
   }
+
   componentDidMount () {
     console.log(this.state.code);
-
     document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
     if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz'){
       this.getWxUserInfo(this.GetQueryString('code'),pkg);
-    }else {
+    } else {
       this.start(pkg);
     }
     this.props.history.listen((location, action) => {
@@ -83,7 +87,11 @@ export default class PlayGameContainer extends Component {
   componentWillUnmount () {
     window.Cloudplay.stopGame();
     console.log('清楚sdk');
+    console.log(window.location.href)
+    console.log(this.GetQueryString('roomId'));
+    this.exitBattle();
   }
+
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
     console.log(ua);
@@ -107,7 +115,8 @@ export default class PlayGameContainer extends Component {
       this.Wxinit();
       WeChat.ready();
       this.setState({
-        roomId: res.resultData.battleCode
+        roomId: res.resultData.battleCode,
+        id:res.resultData.id
       }, () => {
         let userId;
         userId = Number(Math.random().toString(10).substring(2));
@@ -180,7 +189,8 @@ export default class PlayGameContainer extends Component {
           // eslint-disable-next-line
           'null' !== window.localStorage.getItem('MyRoomId') && window.localStorage.getItem('MyId') && 'null' !== window.localStorage.getItem('MyId')) {
           this.setState({
-            roomId: window.localStorage.getItem('MyRoomId')
+            roomId: window.localStorage.getItem('MyRoomId'),
+            id:window.localStorage.getItem('MyId')
           }, () => {
             // eslint-disable-next-line
             console.log('读取浏览器缓存信息 ' + 'MyRoomId: ' + this.state.roomId +
@@ -196,7 +206,8 @@ export default class PlayGameContainer extends Component {
         if ('null' !== this.GetQueryString('roomId') &&
           'null' !== this.GetQueryString('id')) {
           this.setState({
-            roomId: this.GetQueryString('roomId')
+            roomId: this.GetQueryString('roomId'),
+            id:this.GetQueryString('id')
           }, () => {
             // eslint-disable-next-line
             console.log('读取地址中的房间信息和id信息 ' + 'roomId: ' + this.state.roomId +
@@ -290,6 +301,7 @@ export default class PlayGameContainer extends Component {
       }
     );
   }
+
   authorize () {
     if (this.isWeiXin()) {
       let pkg = this.getPkg();
@@ -307,7 +319,8 @@ export default class PlayGameContainer extends Component {
       }
     }
   }
-  getWxUserInfo (code,pkg) {
+
+  getWxUserInfo (code, pkg) {
     HttpRequest.getWxUserInfo(
       { code: code },
       (res) => {
@@ -319,6 +332,25 @@ export default class PlayGameContainer extends Component {
         }, () => {
           this.start(pkg)
         })
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  exitBattle () {
+    console.log('约站id');
+    console.log(this.GetQueryString('id'));
+    HttpRequest.exitBattleGroup(
+      {
+        appId:1,
+        battleId:Number(this.state.id),
+        roomId:Number(this.state.roomId)
+      },
+      (res) => {
+        console.log('退出约战');
+        console.log(res);
       },
       (err) => {
         console.log(err);

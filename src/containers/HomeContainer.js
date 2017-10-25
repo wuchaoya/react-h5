@@ -19,6 +19,8 @@ import HomeChoseGameRight from './HomeChosenGameRight';
 import WeChat from '../utils/WeChat';
 import TransformHomeScrollView from '../components/TransformHomeScrollView';
 import TransformChosenGameScroll from '../components/TransformChosenGameScroll';
+import UserButton from '../components/UserButton';
+
 class PlayGameContainer extends Component {
   constructor (props) {
     super(props);
@@ -59,6 +61,9 @@ class PlayGameContainer extends Component {
           this.props.history.push('gamedetails' + gid);
         }} data={this.state.data.gameList} />
       </ChosenGame>
+      <UserButton onClick={() => {
+        this.props.history.push('user');
+      }} />
     </Container>;
   }
   getData () {

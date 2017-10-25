@@ -8,6 +8,9 @@ export default class Input extends Component {
   render () {
     return (
       <input
+        ref={this.props.name}
+        onChange={this.props.onChange}
+        value={this.props.value}
         placeholder={this.props.placeholder}
         autoFocus={this.props.autoFocus}
         style={styles.inputstyle}

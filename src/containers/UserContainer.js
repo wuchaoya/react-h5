@@ -24,10 +24,14 @@ class User extends Component {
     this.state = {};
   }
   render () {
-    const { isLogin, login } = this.props;
-    console.log(this.props)
+    const { isLogin } = this.props;
     return (
-      <Container onClick={() => login()} background='#fff' marginBottom={0.56}>
+      <Container onClick={() => {
+        if (isLogin) {
+          return;
+        }
+        this.props.history.push('/signin');
+      }} background='#fff' marginBottom={0.56}>
         <UserTop>
           <UserInfoTop  login={isLogin} />
         </UserTop>
@@ -59,6 +63,9 @@ class User extends Component {
         </UserEquity>
       </Container>
     );
+  }
+  componentDidMount () {
+    document.title = '我的';
   }
 };
 const getLogin = state => {
