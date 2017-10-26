@@ -172,4 +172,43 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static getMyService (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/user/my_service', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+  static getTimeLength (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/user/time_length', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+  static ygPay (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/pay/yg_pay', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 };

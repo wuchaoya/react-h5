@@ -5,3 +5,4 @@
 export const LOGIN = 'LOGIN';
 export const LOGINOUT = 'LOGINOUT';
 export const SERVICELISTDATA = 'SERVICELISTDATA';
+export const GETMYSERVICELIS = 'GETMYSERVICELIS';

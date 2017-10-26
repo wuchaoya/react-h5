@@ -17,18 +17,23 @@ export default class PurchaseItem extends Component {
           荐
         </div> : null}
         <div style={styles.nameStyle}>
-          咪咕娱乐云游戏
+          {this.props.data.prodect_title}
         </div>
         <div style={styles.rightStyle}>
           <div>
-            <span style={styles.numberStyle}>15</span>
+            <span style={styles.numberStyle}>{this.props.data.prize / 100}</span>
             <span style={styles.textStyle}>元/月</span>
           </div>
-          <div style={Object.assign(
+          <div id={this.props.data.service_id} style={Object.assign(
             {}, styles.buttonStyle, {
-              backgroundColor: this.props.isRecommend? '#ff8800' : '#83b233'
+              backgroundColor:
+              this.props.MyServiceId !== this.props.data.service_id ? (
+                this.props.isRecommend ? '#ff8800' : '#83b233'
+              ) : 'rgb(234,230,224)',
+              color: this.props.MyServiceId === this.props.data.service_id ? 'rgb(189,183,177)' : '#fff'
             }
-          )}>
+          )} onClick={this.props.onClick}
+          >
             <span>开通</span>
           </div>
         </div>

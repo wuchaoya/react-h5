@@ -16,70 +16,138 @@ import EquityItem from '../components/EquityItem';
 import EquityIcon from '../components/EquityIcon';
 import EquityText from '../components/EquityText';
 import HttpRequest from '../utils/HttpRequest';
+import WebView from '../components/WebView';
 
-import { login, loginOut, getServiceData } from '../actions/actions';
+import { login, loginOut, getServiceData, getMyService } from '../actions/actions';
 
 class User extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      renovate: false,
+      openView: false,
+      src: ''
+    };
   }
   render () {
-    const { isLogin } = this.props;
-    console.log('data')
-    console.log(this.props.data);
-    return (
-      <Container onClick={() => {
-        if (isLogin) {
-          return;
-        }
-        this.props.history.push('/signin');
-      }} background='#fff' marginBottom={0.56}>
-        <UserTop>
-          <UserInfoTop  login={isLogin} />
-        </UserTop>
-        <PurchaseContainer>
-          <UserTitle margin='0.52rem 0 0.18rem 0.24rem'>会员购买</UserTitle>
-          <PurChaseItem isRecommend={true} />
-          <PurChaseItem />
-        </PurchaseContainer>
-        <UserEquity>
-          <UserTitle margin='0.52rem 0 0.48rem 0.24rem'>会员权益</UserTitle>
-          <EquityItem>
-            <EquityIcon name='尊享包' />
+    const { isLogin, data, MyServiceId, userInfo } = this.props;
+    return data ? <Container background='#fff' marginBottom={0.56}>
+      <UserTop>
+        <UserInfoTop name={userInfo.name} click={() => {
+          if (isLogin) {
+            return;
+          }
+          this.props.history.push('/signin');
+        }}  login={isLogin} />
+      </UserTop>
+      <PurchaseContainer>
+        <UserTitle margin='0.52rem 0 0.18rem 0.24rem'>会员购买</UserTitle>
+        {data.map((item, index) => {
+          if (Number(item.prize) === 0) {
+            return null;
+          }
+          return <PurChaseItem
+            MyServiceId={MyServiceId}
+            isRecommend={index === 1}
+            data={item} key={index}
+            onClick={() => {
+              this.ypPay(data[index]);
+            }}
+          />;
+        })}
+      </PurchaseContainer>
+      <UserEquity>
+        <UserTitle margin='0.52rem 0 0.48rem 0.24rem'>会员权益</UserTitle>
+        {data.map((item, index) => {
+          return <EquityItem key={index}>
+            <EquityIcon name={data[data.length - index - 1].prodect_title} />
             <EquityText>
-              欢迎使用React Native！这篇文档会帮助你搭建基本的React Native开发环境。如果你已经搭好了环境，那么可以尝试一下编写Hello World。
+              {data[data.length - index - 1].prodect_describe}
             </EquityText>
-          </EquityItem>
-          <EquityItem>
-            <EquityIcon name='精选包' />
-            <EquityText>
-              欢迎使用React Native！这篇文档会帮助你搭建基本的React Native开发环境。如果你已经搭好了环境，那么可以尝试一下编写Hello World。
-            </EquityText>
-          </EquityItem>
-          <EquityItem>
-            <EquityIcon name='体验' />
-            <EquityText>
-              欢迎使用React Native！这篇文档会帮助你搭建基本的React Native开发环境。如果你已经搭好了环境，那么可以尝试一下编写Hello World。
-            </EquityText>
-          </EquityItem>
-        </UserEquity>
-      </Container>
-    );
+          </EquityItem>;
+        })}
+      </UserEquity>
+      {this.state.openView ? <WebView src={this.state.src} /> : null}
+    </Container> : null;
   }
   componentDidMount () {
     document.title = '我的';
     this.getData();
   }
+  componentWillReceiveProps () {
+    if (this.props.isLogin && !this.state.renovate) {
+      this.setState({
+        renovate: true
+      }, () => {
+        this.getMyService();
+      });
+    }
+  }
   getData () {
     HttpRequest.serviceList(
       {
-        user_id:''
+        user_id: this.props.isLogin ? this.props.userInfo.id : ''
       },
       (res) => {
-        console.log('包月信息');
-        console.log(res);
         this.props.getServiceData(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getMyService () {
+    HttpRequest.getMyService(
+      {
+        user_id: this.props.isLogin ? this.props.userInfo.id : ''
+      },
+      (res) => {
+        this.props.getMyService(res.service[0].service_id);
+        this.getTimeLength(res.service[0].service_id);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getTimeLength (id) {
+    HttpRequest.getTimeLength(
+      {
+        user_id: this.props.userInfo.id,
+        service_id:id,
+        pkg:'air.jp.ne.hap.mom2'
+      },
+      (res) => {
+        console.log('游戏时长');
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  ypPay (obj) {
+    HttpRequest.ygPay(
+      {
+        uId: this.props.userInfo.id,
+        channelCode: obj.channel_code,
+        monthStatus: '1',
+        productDescribe: obj.prodect_describe,
+        serviceID: obj.service_id,
+        spCode: obj.sp_code,
+        etel: this.props.userInfo.name,
+        cloudgame: '1'
+      },
+      (res) => {
+        console.log('开通包月');
+        console.log(res);
+        this.setState(
+          {
+            src: res.yg_url,
+            openView: true
+          }
+        );
+        // window.location.href = res.yg_url;
       },
       (err) => {
         console.log(err);
@@ -89,8 +157,11 @@ class User extends Component {
 };
 const getLogin = state => {
   return {
-    data: state.update.data
+    data: state.update.serviceData,
+    isLogin: state.update.login,
+    userInfo: state.update.userInfo,
+    MyServiceId: state.update.MyServiceId
   };
 };
 
-export default connect(getLogin, { login, loginOut, getServiceData })(User);
+export default connect(getLogin, { login, loginOut, getServiceData, getMyService })(User);

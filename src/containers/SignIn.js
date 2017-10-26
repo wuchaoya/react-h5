@@ -84,7 +84,10 @@ class SignIn extends Component {
       (res) => {
         console.log(res);
         if (Number(res.resultCode) === 0) {
-          this.props.login();
+          this.props.login({
+            id:res.authenticateRsp.userInfo.identityID,
+            name:res.authenticateRsp.loginAccountName
+          });
           this.props.history.replace('/user');
         }
       },

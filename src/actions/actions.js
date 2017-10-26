@@ -2,13 +2,14 @@
  * Created by chao on 2017/10/23.
  */
 
-import { LOGIN, LOGINOUT, SERVICELISTDATA } from '../constants/constants';
+import { LOGIN, LOGINOUT, SERVICELISTDATA, GETMYSERVICELIS } from '../constants/constants';
 
-export const login = () => {
+export const login = (res) => {
   console.log('点击了');
   return {
     type: LOGIN,
-    state: true
+    state: true,
+    userInfo:{ id: res.id, name: res.name }
   };
 };
 
@@ -22,6 +23,12 @@ export const getServiceData = (data) => {
   return {
     type: SERVICELISTDATA,
     data: data
+  };
+};
+export const getMyService = (id) => {
+  return {
+    type: GETMYSERVICELIS,
+    id: id
   };
 };
 

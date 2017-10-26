@@ -8,7 +8,7 @@ import loginIcon from '../assets/user_login_icon.png';
 export default class UserIcon extends Component {
   render () {
     return (
-      <div onClick={() => this.props.click} >
+      <div onClick={this.props.click} >
         <img style={Object.assign(
           {},
           styles.iconStyle,

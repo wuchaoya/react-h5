@@ -13,7 +13,7 @@ export default class UserName extends Component {
           styles.textStyle,
           this.props.login ? styles.loginStyle : {}
         )
-      }>{this.props.login ? '10086' : '未登录'}</span>
+      }>{this.props.name}</span>
     );
   }
 };

@@ -56,7 +56,8 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '3rem'
+    marginLeft: '0.4rem',
+    marginRight:'0.3rem'
   },
   icon: {
     width: '0.66rem',

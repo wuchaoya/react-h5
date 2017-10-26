@@ -349,8 +349,8 @@ export default class PlayGameContainer extends Component {
     HttpRequest.exitBattleGroup(
       {
         appId:1,
-        battleId:Number(this.state.id),
-        roomId:Number(this.state.roomId)
+        battleId:this.state.id,
+        roomId:this.state.roomId
       },
       (res) => {
         console.log('退出约战');
