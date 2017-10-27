@@ -7,6 +7,7 @@ import HttpRequest from '../utils/HttpRequest';
 import Transition from '../utils/Transition';
 import base64 from 'base-64';
 import WeChat from '../utils/WeChat';
+import ShareTipsModal from '../components/ShareTipsModal';
 
 const Box = styled.div`
   height: ${(props) => props.h / 100}rem;
@@ -30,7 +31,10 @@ export default class PlayGameContainer extends Component {
   render () {
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
-      <Box id='playGameBox' h={height} />
+      <div>
+        <Box id='playGameBox' h={height} />
+        <ShareTipsModal />
+      </div>
     );
   }
 
