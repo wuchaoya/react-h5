@@ -14,7 +14,7 @@ export default class UserInfoTop extends Component {
       <div style={styles.container} >
         <UserIcon click={this.props.click} login={this.props.login} />
         <UserName name={this.props.name} login={this.props.login} />
-        {this.props.login ? <UserTime login={this.props.login} /> : null}
+        {this.props.login ? <UserTime time={this.props.time} login={this.props.login} /> : null}
       </div>
     );
   }

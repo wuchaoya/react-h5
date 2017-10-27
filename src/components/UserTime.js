@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 
 export default class UserTime extends Component {
   render () {
+    console.log(this.props);
     return (
       <div style={Object.assign(
         {},
@@ -13,10 +14,18 @@ export default class UserTime extends Component {
         this.props.login ? styles.loginStyle : {}
       )}>
         <span style={styles.textStyle} >剩余时间：</span>
-        <span style={styles.numberStyle} >102</span>
-        <span style={styles.textStyle} >小时</span>
-        <span style={styles.numberStyle} >22</span>
-        <span style={styles.textStyle} >分钟</span>
+        {
+          this.props.time === null ? <span style={styles.textStyle} >正在获取...</span> : <span>
+          <span style={styles.numberStyle} >
+            {parseInt(this.props.time / 1000 / 60 / 60 < 0 ? 0 : this.props.time / 1000 / 60 / 60)}
+          </span>
+          <span style={styles.textStyle} >小时</span>
+          <span style={styles.numberStyle} >
+            {parseInt(this.props.time / 1000 / 60 % 60) < 0 ? 0 : parseInt(this.props.time / 1000 / 60 % 60)}
+          </span>
+          <span style={styles.textStyle} >分钟</span>
+        </span>
+        }
       </div>
     );
   }

@@ -17,8 +17,9 @@ import EquityIcon from '../components/EquityIcon';
 import EquityText from '../components/EquityText';
 import HttpRequest from '../utils/HttpRequest';
 import WebView from '../components/WebView';
+import ErrModal from '../components/ErrModal';
 
-import { login, loginOut, getServiceData, getMyService } from '../actions/actions';
+import { login, loginOut, getServiceData, getMyService, getTimeLength } from '../actions/actions';
 
 class User extends Component {
   constructor(props) {
@@ -26,14 +27,15 @@ class User extends Component {
     this.state = {
       renovate: false,
       openView: false,
-      src: ''
+      src: '',
+      loginModal: false
     };
   }
   render () {
     const { isLogin, data, MyServiceId, userInfo } = this.props;
     return data ? <Container background='#fff' marginBottom={0.56}>
       <UserTop>
-        <UserInfoTop name={userInfo.name} click={() => {
+        <UserInfoTop time={this.props.timeLength} name={userInfo.name} click={() => {
           if (isLogin) {
             return;
           }
@@ -51,6 +53,15 @@ class User extends Component {
             isRecommend={index === 1}
             data={item} key={index}
             onClick={() => {
+              if (item.service_id === MyServiceId) {
+                return;
+              }
+              if (!isLogin) {
+                this.setState({
+                  loginModal: true
+                });
+                return;
+              }
               this.ypPay(data[index]);
             }}
           />;
@@ -68,11 +79,26 @@ class User extends Component {
         })}
       </UserEquity>
       {this.state.openView ? <WebView src={this.state.src} /> : null}
+      {this.state.loginModal ? <ErrModal
+        title='您尚未登陆，是否登陆'
+        onConfirm={() => {
+          this.props.history.push('/signin');
+        }}
+        onCancel={() => {
+          this.setState({
+            loginModal: false
+          });
+        }} /> : null}
     </Container> : null;
   }
   componentDidMount () {
     document.title = '我的';
     this.getData();
+    window.addEventListener('message', () => {
+      this.setState({
+        openView: false
+      });
+    });
   }
   componentWillReceiveProps () {
     if (this.props.isLogin && !this.state.renovate) {
@@ -114,12 +140,13 @@ class User extends Component {
     HttpRequest.getTimeLength(
       {
         user_id: this.props.userInfo.id,
-        service_id:id,
-        pkg:'air.jp.ne.hap.mom2'
+        service_id:[id],
+        pkg:''
       },
       (res) => {
         console.log('游戏时长');
         console.log(res);
+        this.props.getTimeLength(Number(res.result_time));
       },
       (err) => {
         console.log(err);
@@ -160,8 +187,9 @@ const getLogin = state => {
     data: state.update.serviceData,
     isLogin: state.update.login,
     userInfo: state.update.userInfo,
-    MyServiceId: state.update.MyServiceId
+    MyServiceId: state.update.MyServiceId,
+    timeLength: state.update.timeLength
   };
 };
 
-export default connect(getLogin, { login, loginOut, getServiceData, getMyService })(User);
+export default connect(getLogin, { login, loginOut, getServiceData, getMyService, getTimeLength })(User);
