@@ -14,6 +14,7 @@ import MGPlay from '../containers/MGPlay';
 import User from '../containers/UserContainer';
 import SignIn from '../containers/SignIn';
 import SignInSMS from '../containers/SignInSMS';
+import Setting from '../containers/SettingContainer';
 
 class Base extends Component {
   render () {
@@ -29,6 +30,7 @@ class Base extends Component {
           <Route exact path='/user' component={User} />
           <Route exact path='/signin' component={SignIn} />
           <Route exact path='/signinsms' component={SignInSMS} />
+          <Route exact path='/setting' component={Setting} />
         </div>
       </Router>
     );

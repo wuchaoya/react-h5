@@ -25,7 +25,7 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     display: flex;
     justify-content: center;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     background: url('../assets/radius_icon.png') no-repeat 100%;
     position: relative;
     position: absolute;

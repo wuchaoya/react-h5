@@ -34,8 +34,10 @@ class User extends Component {
   render () {
     const { isLogin, data, MyServiceId, userInfo } = this.props;
     return data ? <Container background='#fff' marginBottom={0.56}>
-      <UserTop>
-        <UserInfoTop time={this.props.timeLength} name={userInfo.name} click={() => {
+      <UserTop >
+        <UserInfoTop setting={() => {
+          this.props.history.push('/setting');
+        }} time={this.props.timeLength} name={userInfo.name} click={() => {
           if (isLogin) {
             return;
           }
