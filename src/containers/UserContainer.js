@@ -144,8 +144,6 @@ class User extends Component {
         pkg:''
       },
       (res) => {
-        console.log('游戏时长');
-        console.log(res);
         this.props.getTimeLength(Number(res.result_time));
       },
       (err) => {
@@ -166,8 +164,6 @@ class User extends Component {
         cloudgame: '1'
       },
       (res) => {
-        console.log('开通包月');
-        console.log(res);
         this.setState(
           {
             src: res.yg_url,

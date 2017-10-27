@@ -13,6 +13,8 @@ import '../styles/inputStyle.css';
 import Button from '../components/SignButton';
 import InputButton from '../components/InputCode';
 import HttpRequest from '../utils/HttpRequest';
+import Toast from '../components/Toast';
+import LoginModal from '../components/LoginModal';
 import { login, loginOut } from '../actions/actions';
 
 class SignInSMS extends Component {
@@ -22,7 +24,11 @@ class SignInSMS extends Component {
       codeDisabled : true,
       buttonDisabled : true,
       phone:'',
-      code: ''
+      code: '',
+      getCodeToast: false,
+      errText:'验证码已失效',
+      showErrModal: false,
+      loginErr: false
     };
     this.setStateDisabled = this.setStateDisabled.bind(this);
     this.getCode = this.getCode.bind(this);
@@ -69,31 +75,53 @@ class SignInSMS extends Component {
           }}
         />
         <Button onClick={this.siginSMS} disabled={this.state.buttonDisabled} />
+        {this.state.getCodeToast ? <Toast text='短信已发送...' /> : null}
+        {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
+          this.setState({
+            showErrModal: false
+          });
+        }} title={this.state.errText} /> : null}
       </Container>
     );
   }
   siginSMS () {
-    HttpRequest.signinSMS(
-      {
-        phone: this.state.phone,
-        smsValidate:this.state.code,
-        userIP:'',
-        position:'',
-        DeviceType: ''
-      },
-      (res) => {
-        this.props.login(
-          {
-            id:res.authenticateRsp.userInfo.identityID,
-            name:res.authenticateRsp.loginAccountName
+    this.setState({
+      showErrModal: true,
+      loginErr: false
+    }, () => {
+      HttpRequest.signinSMS(
+        {
+          phone: this.state.phone,
+          smsValidate:this.state.code,
+          userIP:'',
+          position:'',
+          DeviceType: ''
+        },
+        (res) => {
+          console.log(res);
+          if (res.resultCode === '0') {
+            this.setState({
+              showErrModal: false
+            }, () => {
+              this.props.login(
+                {
+                  id:res.authenticateRsp.userInfo.identityID,
+                  name:res.authenticateRsp.loginAccountName
+                }
+              );
+              this.props.history.go(-2);
+            });
+          } else {
+            this.setState({
+              loginErr: true
+            });
           }
-        );
-        this.props.history.go(-2);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    });
   }
   getCode () {
     HttpRequest.getCode(
@@ -103,6 +131,15 @@ class SignInSMS extends Component {
       },
       (res) => {
         console.log(res);
+        this.setState({
+          getCodeToast: true
+        }, () => {
+          window.setTimeout(() => {
+            this.setState({
+              getCodeToast: false
+            });
+          }, 2500);
+        });
       },
       (err) => {
         console.log(err);

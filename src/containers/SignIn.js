@@ -14,6 +14,7 @@ import Button from '../components/SignButton';
 import TextButton from '../components/SignTextButton';
 import HttpRequst from '../utils/HttpRequest';
 import { login, loginOut } from '../actions/actions';
+import LoginModal from '../components/LoginModal';
 
 class SignIn extends Component {
   constructor(props) {
@@ -21,12 +22,14 @@ class SignIn extends Component {
     this.state = {
       phone: '',
       password:'',
-      disabled:true
+      disabled:true,
+      errText:'账号或密码不正确',
+      showErrModal: false,
+      loginErr: false
     };
     this.sigin = this.sigin.bind(this);
   }
   render () {
-    console.log(this.props)
     return (
       <Container background='#f5f5f5'>
         <GoBack onClick={() => {
@@ -45,7 +48,6 @@ class SignIn extends Component {
               phone:this.refs.phoneInput.refs.phone.value
             }, () => {
               this.checkOnChange();
-              console.log(this.state.phone);
             });
           }}
         />
@@ -61,7 +63,6 @@ class SignIn extends Component {
               password:this.refs.passwordInput.refs.password.value
             }, () => {
               this.checkOnChange();
-              console.log(this.state.password);
             });
           }}
         />
@@ -69,32 +70,49 @@ class SignIn extends Component {
         <TextButton onClick={() => {
           this.props.history.push('/signinsms', { key:this.props.location.state.key });
         }}>短信登录</TextButton>
+        {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
+          this.setState({
+            showErrModal: false
+          });
+        }} title={this.state.errText} /> : null}
       </Container>
     );
   }
   sigin () {
-    HttpRequst.signin(
-      {
-        phone: this.state.phone,
-        password: this.state.password,
-        ip: '',
-        position:'',
-        DeviceType:''
-      },
-      (res) => {
-        console.log(res);
-        if (Number(res.resultCode) === 0) {
-          this.props.login({
-            id:res.authenticateRsp.userInfo.identityID,
-            name:res.authenticateRsp.loginAccountName
-          });
-          this.props.history.goBack();
-        }
-      },
-      (err) => {
+    this.setState({
+      showErrModal: true,
+      loginErr: false
+    }, () =>  {
+      HttpRequst.signin(
+        {
+          phone: this.state.phone,
+          password: this.state.password,
+          ip: '',
+          position:'',
+          DeviceType:''
+        },
+        (res) => {
+          if (Number(res.resultCode) === 0) {
+            this.setState({
+              showErrModal: false
+            }, () => {
+              this.props.login({
+                id:res.authenticateRsp.userInfo.identityID,
+                name:res.authenticateRsp.loginAccountName
+              });
+              this.props.history.goBack();
+            });
+          } else {
+            this.setState({
+              loginErr: true
+            });
+          }
+        },
+        (err) => {
 
-      }
-    );
+        }
+      );
+    });
   }
   checkOnChange () {
     this.setState({

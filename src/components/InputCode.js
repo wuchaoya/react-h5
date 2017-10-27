@@ -42,14 +42,14 @@ export default class InputCode extends Component {
     );
   }
   setTime () {
-    let time = setInterval(() => {
+    this.time = setInterval(() => {
       if (this.state.time !== 1) {
         this.setState({
           time: this.state.time - 1,
           buttonText:'(' + (this.state.time - 1) + 'S)重新获取'
         });
       } else {
-        clearInterval(time);
+        clearInterval(this.time);
         this.props.func(false);
         this.setState({
           time: 60,
@@ -57,6 +57,9 @@ export default class InputCode extends Component {
         });
       }
     }, 1000);
+  }
+  componentWillUnmount () {
+    window.clearInterval(this.time);
   }
 };
 
