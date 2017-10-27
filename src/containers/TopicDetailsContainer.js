@@ -2,6 +2,7 @@
   游戏专题
  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Container from './Container';
 import HttpRequest from '../utils/HttpRequest';
@@ -17,23 +18,26 @@ import Star from '../components/Star';
 import GameDetaillImg from '../components/GameDetailImg';
 import GameIntro from '../components/GameIntro';
 import TopIntro from '../components/TopIntro';
-/* import HeadNav from '../components/HeadNav'; */
 import PlayGameButton from '../components/PlayGameButton';
 import LoadingContainer from './LoadingContainer';
 import WeChat from '../utils/WeChat';
+import ErrModal from '../components/ErrModal';
+
+import { getTimeLength } from '../actions/actions';
 
 class PlayGameContainer extends Component {
   constructor (props) {
     super(props);
     this.state = {
       data: null,
-      err: false
+      err: false,
+      loginModal: false,
+      noTime: false
     };
   }
   render () {
     return this.state.data === null ? <LoadingContainer name='游戏专题'clickButton={() => this.getData()} err={this.state.err} /> : <Container
       marginBottom={0.24}>
-      {/* <HeadNav opacity={1}>{this.state.data.title}</HeadNav> */}
       <TopIme uri={this.state.data.cover} />
       <TopIntro>{this.state.data.summary}</TopIntro>
       {this.state.data.game.map((item, index) => {
@@ -51,18 +55,43 @@ class PlayGameContainer extends Component {
                 </HeadLeftBottomContainer>
               </HeadLeftContainer>
               <PlayGameButton onClick={() => {
-                this.props.history.push('playgame', { pkg:item.pkg });
+                if (!this.props.isLogin) {
+                  this.setState({
+                    loginModal: true
+                  });
+                  return;
+                }
+                this.getTimeLength(item.pkg);
               }}>立即玩</PlayGameButton>
             </HeadContainer>
             <GameDetaillImg width='100%' height='100%' src={item.cover}
                             onClick={() => {
-                              console.log(item.pkg)
                               this.props.history.push('gamedetails' + item.gid);
                             }}/>
             <GameIntro>{item.game_summary}</GameIntro>
           </TopicContainer>
         );
       })}
+      {this.state.loginModal ? <ErrModal
+        title='您尚未登陆，是否登陆'
+        onConfirm={() => {
+          this.props.history.push('/signin', { key: this.props.location.key });
+        }}
+        onCancel={() => {
+          this.setState({
+            loginModal: false
+          });
+        }} /> : null}
+      {this.state.noTime ? <ErrModal
+        title='剩余时间不足，是否购买'
+        onConfirm={() => {
+          this.props.history.push('/user', { key: this.props.location.key });
+        }}
+        onCancel={() => {
+          this.setState({
+            noTime: false
+          });
+        }} /> : null}
     </Container>;
   }
   GetQueryString (name) {
@@ -80,7 +109,6 @@ class PlayGameContainer extends Component {
     });
     HttpRequest.getGameDissertationData({ did:this.GetQueryString('did') }, (res) => {
       document.title = res.title;
-      console.log(res)
       this.setState({
         data: res
       });
@@ -99,7 +127,6 @@ class PlayGameContainer extends Component {
         url: window.location.href.split('#')[0]
       },
       (res) => {
-        console.log(res);
         WeChat.init({
           debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
@@ -127,6 +154,40 @@ class PlayGameContainer extends Component {
     WeChat.ready();
     WeChat.error();
   }
-}
+  getTimeLength (pkg) {
+    HttpRequest.getTimeLength(
+      {
+        user_id: this.props.userInfo.id,
+        service_id:[this.props.MyServiceId],
+        pkg:pkg
+      },
+      (res) => {
+        console.log('游戏时长');
+        console.log(res);
+        this.props.getTimeLength(Number(res.result_time));
+        if (Number(res.result_time === 0)) {
+          this.setState({
+            noTime: true
+          });
+        } else {
+          this.props.history.push('playgame', { pkg:pkg });
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.props.history.push('playgame', { pkg:pkg });
+      }
+    );
+  }
 
-export default PlayGameContainer;
+}
+const getState = state => {
+  return {
+    isLogin: state.update.login,
+    timeLength: state.update.timeLength,
+    userInfo: state.update.userInfo
+  };
+};
+
+export default connect(getState, { getTimeLength })(PlayGameContainer);
+

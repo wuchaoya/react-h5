@@ -32,7 +32,7 @@ class SignInSMS extends Component {
     return (
       <Container background='#f5f5f5'>
         <GoBack onClick={() => {
-          this.props.history.replace('signin');
+          this.props.history.goBack();
         }} />
         <Title title='短信登陆' />
         <Input
@@ -62,8 +62,9 @@ class SignInSMS extends Component {
             this.setState({
               code:this.refs.codeInput.refs.code.value
             }, () => {
-              this.checkOnChange();
-              console.log(this.refs.codeInput.refs.code.value);
+              this.setState({
+                buttonDisabled:!(/^1[34578]\d{9}$/.test(this.state.phone) && this.state.code.length === 6)
+              });
             });
           }}
         />
@@ -81,9 +82,13 @@ class SignInSMS extends Component {
         DeviceType: ''
       },
       (res) => {
-        console.log(res);
-        this.props.login();
-        this.props.history.push('/user');
+        this.props.login(
+          {
+            id:res.authenticateRsp.userInfo.identityID,
+            name:res.authenticateRsp.loginAccountName
+          }
+        );
+        this.props.history.go(-2);
       },
       (err) => {
         console.log(err);

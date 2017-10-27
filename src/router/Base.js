@@ -34,7 +34,6 @@ class Base extends Component {
     );
   }
   componentWillMount () {
-    console.log(this);
   }
 }
 export default connect()(Base);

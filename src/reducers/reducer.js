@@ -22,7 +22,6 @@ const initialState = {
 };
 
 export default function update (state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case LOGIN:
       return Object.assign({}, state, { login: action.state, userInfo: action.userInfo });

@@ -35,14 +35,12 @@ export default class PlayGameContainer extends Component {
   }
 
   Wxinit () {
-    console.log('url', encodeURI(window.location.href.split('#')[0]));
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
         url: encodeURI(window.location.href.split('#')[0])
       },
       (res) => {
-        console.log(res);
         WeChat.init({
           debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
@@ -56,7 +54,6 @@ export default class PlayGameContainer extends Component {
         });
       },
       (err) => {
-        console.log(err);
       }
     );
   }
@@ -66,7 +63,6 @@ export default class PlayGameContainer extends Component {
   }
 
   componentDidMount () {
-    console.log(this.state.code);
     document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
@@ -76,7 +72,6 @@ export default class PlayGameContainer extends Component {
       this.start(pkg);
     }
     this.props.history.listen((location, action) => {
-      console.log(location);
       this.Wxinit();
     });
     this.Wxinit();
@@ -86,15 +81,11 @@ export default class PlayGameContainer extends Component {
 
   componentWillUnmount () {
     window.Cloudplay.stopGame();
-    console.log('清楚sdk');
-    console.log(window.location.href)
-    console.log(this.GetQueryString('roomId'));
     this.exitBattle();
   }
 
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
-    console.log(ua);
     // eslint-disable-next-line
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return true;
@@ -128,7 +119,6 @@ export default class PlayGameContainer extends Component {
             headUrl: this.state.headUrl
           }
         });
-        console.log(xml);
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -145,14 +135,11 @@ export default class PlayGameContainer extends Component {
           payStr: base64.encode(xml)
         };
         window.Cloudplay.startGame(gameOptions);
-        console.log('参数：' + gameOptions.payStr);
         window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
         window.localStorage.setItem('MyId', res.resultData.id);
         window.localStorage.setItem('MyUserId', userId);
       });
     }, (err) => {
-      console.log(err);
-      console.log('请求失败');
     });
   };
 
@@ -167,17 +154,16 @@ export default class PlayGameContainer extends Component {
   }
 
   init (pkg) {
-    console.log(pkg);
     window.Cloudplay.initSDK({
       accessKeyID: 'D4F92FE4CFC',
       channelId: 100001,
       dontLoadJQuery: false,
       onSceneChanged: function (sceneId, extraInfo) {
-        console.log('sceneId & extraInfo', sceneId, extraInfo);
+        // console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
 
       MessageHandler: function (message) {
-        console.log(message);
+        // console.log(message);
       }
     });
   };
@@ -186,7 +172,6 @@ export default class PlayGameContainer extends Component {
     if (pkg === 'com.migu.game.cloudddz') {
       document.title = '咪咕斗地主';
       if (this.GetQueryString('roomId') === null) {
-        console.log('1. 地址中没有roomId场景');
         if (window.localStorage.getItem('MyRoomId') &&
           // eslint-disable-next-line
           'null' !== window.localStorage.getItem('MyRoomId') && window.localStorage.getItem('MyId') && 'null' !== window.localStorage.getItem('MyId')) {
@@ -204,7 +189,6 @@ export default class PlayGameContainer extends Component {
           this.getRoomId(pkg);
         }
       } else {
-        console.log('2. 地址中含有roomId场景');
         if ('null' !== this.GetQueryString('roomId') &&
           'null' !== this.GetQueryString('id')) {
           this.setState({
@@ -260,7 +244,6 @@ export default class PlayGameContainer extends Component {
 
   checkRoomId(id, pkg) {
     HttpRequest.checkRoomId({battleId: id}, (res) => {
-        console.log(res);
         if (res.returnCode !== '001') {
           console.log('不可加入约战组!')
           window.localStorage.setItem('MyRoomId', null);
@@ -277,7 +260,6 @@ export default class PlayGameContainer extends Component {
               headUrl: this.state.headUrl
             }
           });
-          console.log(xml);
           let gameOptions = {
             appid: 123,
             userinfo: {
@@ -301,7 +283,6 @@ export default class PlayGameContainer extends Component {
           WeChat.ready();
         }
       }, (err) => {
-        console.log(err);
       }
     );
   }
@@ -328,8 +309,6 @@ export default class PlayGameContainer extends Component {
     HttpRequest.getWxUserInfo(
       { code: code },
       (res) => {
-        console.log('微信用户信息');
-        console.log(res);
         this.setState({
           nickName: res.nickname,
           headUrl: res.headimgurl,
@@ -338,14 +317,11 @@ export default class PlayGameContainer extends Component {
         })
       },
       (err) => {
-        console.log(err);
       }
     );
   }
 
   exitBattle () {
-    console.log('约站id');
-    console.log(this.GetQueryString('id'));
     HttpRequest.exitBattleGroup(
       {
         appId:1,
@@ -357,7 +333,6 @@ export default class PlayGameContainer extends Component {
         console.log(res);
       },
       (err) => {
-        console.log(err);
       }
     );
   }

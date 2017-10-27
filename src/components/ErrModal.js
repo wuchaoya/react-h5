@@ -45,7 +45,6 @@ export default class ErrModal extends Component {
   }
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
-    console.log(ua);
     // eslint-disable-next-line
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return true;
@@ -70,7 +69,8 @@ const styles = {
     alignItems: 'center',
     position: 'fixed',
     top:'0',
-    left:'0'
+    left:'0',
+    zIndex:'99'
   },
   container: {
     height:'2.64rem',

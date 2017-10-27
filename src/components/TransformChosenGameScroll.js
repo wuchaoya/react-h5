@@ -46,7 +46,6 @@ export default class TransformChosenGameScroll extends Component {
   render () {
     return (
       <Gesture
-        onPanMove={(gestureStatus) => { console.log(gestureStatus,'onPanMove'); }}
         onSwipeLeft={(gestureStatus) => {
           if (!(Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24) * (this.props.data.length - 1))) {
             return;
@@ -57,9 +56,7 @@ export default class TransformChosenGameScroll extends Component {
           this.setState({
             translateX: this.state.translateX - (this.state.width / 100 + 0.24)
           });
-          console.log(gestureStatus, 'onSwipeLeft');
         }}
-        onPress={(gestureStatus) => { console.log(gestureStatus,'onPress'); }}
         onSwipeRight={(gestureStatus) => {
           if (Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24)) {
             return;

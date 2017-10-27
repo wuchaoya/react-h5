@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import Gesture from 'rc-gesture';
 
 import icon from '../assets/button-user@2x.png';
+import icon2 from '../assets/user_login_icon.png';
 
 export default class UserButton extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class UserButton extends Component {
         >
           <img
             style={styles.icon}
-            src={icon} alt='我的' />
+            src={this.props.login ? icon2 : icon} alt='我的' />
         </Gesture>
       </div>
     );

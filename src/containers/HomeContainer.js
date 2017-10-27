@@ -30,7 +30,6 @@ class PlayGameContainer extends Component {
     };
   }
   render () {
-    console.log(this.props.login);
     // eslint-disable-next-line
     return this.state.data === null ? <LoadingContainer name='首页'clickButton={() => this.getData()} err={this.state.err} /> : <Container marginBottom={0.24}>
       <HomeFours click={(gid) => {
@@ -40,7 +39,6 @@ class PlayGameContainer extends Component {
         <Title margin='0.24rem 0 0 0.24rem' color='#000' fontSize='0.3rem'>游戏专题</Title>
         <Title margin='0.08rem 0 0.1rem 0.24rem' color='#999' fontSize='0.26rem'>ACT ACT 我们为你挑好了</Title>
         <TransformHomeScrollView click={(did) => {
-          console.log('点击了');
           this.props.history.push('/topic?did=' + did);
         }} data={this.state.data.dissertation} />
       </HomeTopic>
@@ -61,7 +59,7 @@ class PlayGameContainer extends Component {
           this.props.history.push('gamedetails' + gid);
         }} data={this.state.data.gameList} />
       </ChosenGame>
-      <UserButton onClick={() => {
+      <UserButton login={this.props.login} onClick={() => {
         this.props.history.push('user');
       }} />
     </Container>;
@@ -72,13 +70,11 @@ class PlayGameContainer extends Component {
     });
     HttpRequest.getHomeData({}, (res) => {
       document.title = '首页';
-      console.log(res);
       this.setState({
         data: res
       });
     }, (err) => {
       document.title = '首页';
-      console.log(document.title);
       this.setState({
         data: null,
         err: true
@@ -92,7 +88,6 @@ class PlayGameContainer extends Component {
         url: window.location.href.split('#')[0]
       },
       (res) => {
-        console.log(res);
         WeChat.init({
           debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
@@ -106,13 +101,11 @@ class PlayGameContainer extends Component {
         });
       },
       (err) => {
-        console.log(err);
       }
     );
   }
   componentDidMount () {
     this.props.history.listen((location, action) => {
-      console.log(location);
       this.init();
     });
     this.init();

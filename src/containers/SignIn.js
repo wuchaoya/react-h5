@@ -67,7 +67,7 @@ class SignIn extends Component {
         />
         <Button onClick={this.sigin} disabled={this.state.disabled} />
         <TextButton onClick={() => {
-          this.props.history.push('/signinsms');
+          this.props.history.push('/signinsms', { key:this.props.location.state.key });
         }}>短信登录</TextButton>
       </Container>
     );
@@ -88,7 +88,7 @@ class SignIn extends Component {
             id:res.authenticateRsp.userInfo.identityID,
             name:res.authenticateRsp.loginAccountName
           });
-          this.props.history.replace('/user');
+          this.props.history.goBack();
         }
       },
       (err) => {

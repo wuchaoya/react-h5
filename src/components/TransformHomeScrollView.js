@@ -45,10 +45,8 @@ export default class TransformHomeScrollView extends Component {
   render () {
     return (
       <Gesture
-        onPanMove={(gestureStatus) => { console.log(gestureStatus,'onPanMove'); }}
         onSwipeLeft={(gestureStatus) => {
           if (!(Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24) * (this.props.data.length - 1))) {
-            console.log('不滑动');
             return;
           }
           if (Math.abs(this.state.translateX) > ((this.state.width / 100 + 0.24) * (this.props.data.length) - 7.2)) {
@@ -57,15 +55,11 @@ export default class TransformHomeScrollView extends Component {
           this.setState({
             translateX: this.state.translateX - (this.state.width / 100 + 0.24)
           });
-          console.log(gestureStatus, 'onSwipeLeft');
         }}
-        onPress={(gestureStatus) => { console.log(gestureStatus,'onPress'); }}
         onSwipeRight={(gestureStatus) => {
-          console.log(this.state.translateX,(this.state.width / 100 + 0.24) * (this.props.data.length - 1))
           if (Math.abs(this.state.translateX) < (this.state.width / 100 + 0.24)) {
             return;
           }
-          console.log(this.state.width)
           this.setState({
             translateX: this.state.translateX + (this.state.width / 100 + 0.24)
           });

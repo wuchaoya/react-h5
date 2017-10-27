@@ -39,7 +39,7 @@ class User extends Component {
           if (isLogin) {
             return;
           }
-          this.props.history.push('/signin');
+          this.props.history.push('/signin', { key: this.props.location.key });
         }}  login={isLogin} />
       </UserTop>
       <PurchaseContainer>
@@ -82,7 +82,7 @@ class User extends Component {
       {this.state.loginModal ? <ErrModal
         title='您尚未登陆，是否登陆'
         onConfirm={() => {
-          this.props.history.push('/signin');
+          this.props.history.push('/signin', { key: this.props.location.key });
         }}
         onCancel={() => {
           this.setState({
