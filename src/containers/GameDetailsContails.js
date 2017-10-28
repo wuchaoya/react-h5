@@ -41,8 +41,10 @@ class LogdingContainer extends Component {
       imgdisable:true,
       index:0,
       loginModal: false,
-      noTime: false
+      noTime: false,
+      score:0
     };
+    this.score = this.score.bind(this);
   }
   render () {
     return this.state.data === null ? null : <Container marginBottom={0}>
@@ -76,7 +78,9 @@ class LogdingContainer extends Component {
         </GameInfoTopContainer>
         <GameInfoStartContainer>
           <GameDetailsStartText />
-          <MyStart length={1} />
+          <MyStart score={this.score} onClick={() => this.setState({
+            loginModal: true
+          })} login={this.props.isLogin} length={this.state.score} />
           <AverageScore score={this.state.data.score} />
         </GameInfoStartContainer>
       </GameInfoContail>
@@ -125,9 +129,13 @@ class LogdingContainer extends Component {
     this.setState({
       err: false
     });
-    HttpRequest.getGameDetailsData({ gid:gid, user_id:null }, (res) => {
+    HttpRequest.getGameDetailsData({
+      gid:gid, user_id: this.props.isLogin ? this.props.userInfo.id : null
+    }, (res) => {
+      console.log(res);
       this.setState({
-        data: res
+        data: res,
+        score: res.my_score
       });
     }, (err) => {
       document.title = '专题详情';
@@ -192,6 +200,23 @@ class LogdingContainer extends Component {
       },
       (err) => {
         this.props.history.push('playgame', { pkg:this.state.data.pkg });
+      }
+    );
+  }
+  score (number) {
+    HttpRequest.score(
+      {
+        user_id: this.props.userInfo.id,
+        score: number,
+        gid: this.state.data.gid
+      },
+      (res) => {
+        this.setState({
+          score: number
+        });
+      },
+      (err) => {
+        console.log(err);
       }
     );
   }

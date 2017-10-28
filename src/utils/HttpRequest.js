@@ -211,5 +211,18 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static score (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/game/score', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
 
 };

@@ -7,6 +7,7 @@ import ReactScrollbar from 'react-scrollbar-js';
 import '../styles/cssStyle.css';
 import ChosenGameItem from '../components/ChosenGameItem';
 import Tappable from 'react-tappable/lib/Tappable';
+
 const Contaner = styled.div`
   width:${(props) => (props.length * 1.84)}rem;
   display: flex; 
