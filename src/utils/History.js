@@ -24,4 +24,7 @@ export default class History {
     }
     return url;
   }
+  static replaceUrl (parameter) {
+    return parameter.url.replace(parameter.str, parameter.replaceStr);
+  }
 };

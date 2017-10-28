@@ -2,11 +2,11 @@
  * Created by chao on 2017/10/27.
  */
 
-import React,{ Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Icon from '../assets/back.png';
-import { login, loginOut } from '../actions/actions';
+import { loginOut } from '../actions/actions';
 
 class SettingContainer extends Component {
   constructor(props) {
@@ -98,5 +98,5 @@ const getState = state => {
   };
 };
 
-export default connect(getState, {loginOut})(SettingContainer);
+export default connect(getState, { loginOut })(SettingContainer);
 

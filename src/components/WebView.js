@@ -4,20 +4,21 @@
 
 import React, { Component } from 'react';
 
-import Iframe from 'react-iframe';
-
 export default class WebView extends Component {
   render () {
     return (
-      <div style={styles.viewStyle}>
-        <Iframe
-          url={this.props.src}
+      <div ref='div' style={styles.viewStyle}>
+        <iframe
+          title='开通包月'
+          src={this.props.src}
+          name='iframe'
+          ref='iframe'
           width='100%' height='100%'
-          display='initial'
-          position='relative'
-          allowFullScreen />
+           />
       </div>
     );
+  }
+  componentDidMount () {
   }
 };
 

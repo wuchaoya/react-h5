@@ -80,7 +80,11 @@ class User extends Component {
           </EquityItem>;
         })}
       </UserEquity>
-      {this.state.openView ? <WebView src={this.state.src} /> : null}
+      {this.state.openView ? <WebView func={() => {
+        this.setState({
+          openView: false
+        });
+      }} src={this.state.src} /> : null}
       {this.state.loginModal ? <ErrModal
         title='您尚未登陆，是否登陆'
         onConfirm={() => {
@@ -96,7 +100,8 @@ class User extends Component {
   componentDidMount () {
     document.title = '我的';
     this.getData();
-    window.addEventListener('message', () => {
+    window.addEventListener('message', (event) => {
+      console.log(event);
       this.setState({
         openView: false
       });
@@ -166,9 +171,20 @@ class User extends Component {
         cloudgame: '1'
       },
       (res) => {
+        let url = res.yg_url;
+        // let url = History.replaceUrl({
+        //   url:res.yg_url,
+        //   str:'redirectURL=http://pcloud.haimawan.com/html/success.html',
+        //   replaceStr:'redirectURL=http://localhost:3000/ygerr'
+        // });
+        // url = History.replaceUrl({
+        //   url:url,
+        //   str:'failRedirectURL=http://pcloud.haimawan.com/html/fail.html',
+        //   replaceStr:'redirectURL=http://localhost:3000/ygerr'
+        // });
         this.setState(
           {
-            src: res.yg_url,
+            src: url,
             openView: true
           }
         );

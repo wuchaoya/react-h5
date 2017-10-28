@@ -15,6 +15,7 @@ import User from '../containers/UserContainer';
 import SignIn from '../containers/SignIn';
 import SignInSMS from '../containers/SignInSMS';
 import Setting from '../containers/SettingContainer';
+import YgErr from '../components/YgPayModal';
 
 class Base extends Component {
   render () {
@@ -31,6 +32,7 @@ class Base extends Component {
           <Route exact path='/signin' component={SignIn} />
           <Route exact path='/signinsms' component={SignInSMS} />
           <Route exact path='/setting' component={Setting} />
+          <Route exact path='/ygerr' component={YgErr} />
         </div>
       </Router>
     );
