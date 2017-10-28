@@ -101,7 +101,6 @@ class User extends Component {
     document.title = '我的';
     this.getData();
     window.addEventListener('message', (event) => {
-      console.log(event);
       this.setState({
         openView: false
       });

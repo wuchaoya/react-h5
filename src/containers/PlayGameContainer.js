@@ -24,7 +24,8 @@ export default class PlayGameContainer extends Component {
       id:null,
       xml: null,
       nickName: null,
-      headUrl: null
+      headUrl: null,
+      show: false
     };
   }
 
@@ -33,7 +34,7 @@ export default class PlayGameContainer extends Component {
     return (
       <div>
         <Box id='playGameBox' h={height} />
-        <ShareTipsModal />
+        {this.state.show ? <ShareTipsModal /> : null}
       </div>
     );
   }
@@ -46,7 +47,7 @@ export default class PlayGameContainer extends Component {
       },
       (res) => {
         WeChat.init({
-          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
           timestamp: res.timestamp, // 必填，生成签名的时间戳
           nonceStr: res.nonceStr, // 必填，生成签名的随机串
@@ -71,6 +72,15 @@ export default class PlayGameContainer extends Component {
     let pkg = this.getPkg();
     this.init(pkg);
     if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz'){
+      this.setState({
+        show: true
+      }, () => {
+        window.setTimeout(() => {
+          this.setState({
+            show: false
+          });
+        }, 3000);
+      });
       this.getWxUserInfo(this.GetQueryString('code'),pkg);
     } else {
       this.start(pkg);
