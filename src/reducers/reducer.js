@@ -26,7 +26,7 @@ export default function update (state = initialState, action) {
     case LOGIN:
       return Object.assign({}, state, { login: action.state, userInfo: action.userInfo });
     case LOGINOUT:
-      return Object.assign({}, state, { login: action.state });
+      return Object.assign({}, state, { login: action.state,userInfo: action.userInfo });
     case SERVICELISTDATA:
       return Object.assign({}, state, { serviceData: action.data });
     case GETMYSERVICELIS:

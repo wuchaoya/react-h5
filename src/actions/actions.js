@@ -16,7 +16,6 @@ import {
  * @returns {{type, state: boolean, userInfo: {id, name}}}
  */
 export const login = (res) => {
-  console.log('点击了');
   return {
     type: LOGIN,
     state: true,
@@ -30,7 +29,11 @@ export const login = (res) => {
 export const loginOut = () => {
   return {
     type: LOGINOUT,
-    state: false
+    state: false,
+    userInfo:{
+      id:'',
+      name:'未登陆'
+    }
   };
 };
 /**

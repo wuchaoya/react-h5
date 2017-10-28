@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import UserIcon from '../components/UserIcon';
 import UserName from '../components/UserName';
 import UserTime from '../components/UserTime';
-import icon from '../assets/icon-setting.png'
+import icon from '../assets/icon-setting.png';
+import goback from '../assets/back.png';
 
 export default class UserInfoTop extends Component {
   render () {
@@ -18,6 +19,9 @@ export default class UserInfoTop extends Component {
         {this.props.login ? <UserTime time={this.props.time} login={this.props.login} /> : null}
         <div onClick={this.props.setting} style={styles.iconC}>
           <img style={styles.icon} src={icon} alt='' />
+        </div>
+        <div onClick={this.props.goback} style={styles.goback}>
+          <img style={styles.gobacksize} src={goback} alt='' />
         </div>
       </div>
     );
@@ -31,12 +35,21 @@ const styles = {
     flexDirection: 'column',
   },
   icon:{
-    width:'0.6rem',
-    height:'0.6rem'
+    width:'0.5rem',
+    height:'0.5rem'
   },
   iconC: {
     position: 'absolute',
-    right:'0.12rem',
-    top:'0.12rem'
+    right:'0.24rem',
+    top:'0.24rem'
+  },
+  goback: {
+    position: 'absolute',
+    left:'0.24rem',
+    top:'0.24rem'
+  },
+  gobacksize: {
+    width:'0.66rem',
+    height:'0.66rem'
   }
 };

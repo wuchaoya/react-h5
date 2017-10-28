@@ -42,7 +42,7 @@ class User extends Component {
             return;
           }
           this.props.history.push('/signin', { key: this.props.location.key });
-        }}  login={isLogin} />
+        }} goback={() => { this.props.history.goBack(); }} login={isLogin} />
       </UserTop>
       <PurchaseContainer>
         <UserTitle margin='0.52rem 0 0.18rem 0.24rem'>会员购买</UserTitle>

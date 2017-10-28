@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Icon from '../assets/back.png';
+import next from '../assets/next.png';
 import { loginOut } from '../actions/actions';
 
 class SettingContainer extends Component {
@@ -27,11 +28,11 @@ class SettingContainer extends Component {
         </div>
         <div style={styles.itme}>
           <span>用户服务协议</span>
-          <span>></span>
+          <img style={styles.next} src={next} alt='next' />
         </div>
         <div style={Object.assign({}, styles.itme, styles.line)}>
           <span>联系客服</span>
-          <span>></span>
+          <img style={styles.next} src={next} alt='next' />
         </div>
         <div onClick={() => {
           this.props.loginOut();
@@ -89,6 +90,10 @@ const styles = {
   iconStyle: {
     width: '0.66rem',
     height: '0.66rem'
+  },
+  next: {
+    width:'0.1rem',
+    height:'0.17rem'
   }
 };
 
