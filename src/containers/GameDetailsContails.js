@@ -132,7 +132,6 @@ class LogdingContainer extends Component {
     HttpRequest.getGameDetailsData({
       gid:gid, user_id: this.props.isLogin ? this.props.userInfo.id : null
     }, (res) => {
-      console.log(res);
       this.setState({
         data: res,
         score: res.my_score

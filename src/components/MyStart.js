@@ -48,7 +48,6 @@ export default class MyStart extends Component {
     });
   }
   render () {
-    console.log(this.props.length)
     // eslint-disable-next-line
     const { length } = this.props;
     // eslint-disable-next-line
