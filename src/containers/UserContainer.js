@@ -98,15 +98,13 @@ class User extends Component {
     </Container> : null;
   }
   componentDidMount () {
-    window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', (event) => {
-      console.log(window.orientation,event,window)
-    }, false)
     window.addEventListener('orientationchange', function() {
-      console.log(window.orientation);
+      console.log(window.screen.orientation);
     }, false);
     document.title = '我的';
     this.getData();
     window.addEventListener('message', (event) => {
+      this.getMyService();
       this.setState({
         openView: false
       });

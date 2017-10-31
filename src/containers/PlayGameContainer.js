@@ -27,6 +27,7 @@ export default class PlayGameContainer extends Component {
       headUrl: null,
       show: false
     };
+    this.shareTips = this.shareTips.bind(this);
   }
 
   render () {
@@ -34,7 +35,11 @@ export default class PlayGameContainer extends Component {
     return (
       <div>
         <Box id='playGameBox' h={height} />
-        {this.state.show ? <ShareTipsModal /> : null}
+        {this.state.show ? <ShareTipsModal onClick={() => {
+          this.setState({
+            show: false
+          });
+        }} /> : null}
       </div>
     );
   }
@@ -72,15 +77,6 @@ export default class PlayGameContainer extends Component {
     let pkg = this.getPkg();
     this.init(pkg);
     if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz'){
-      this.setState({
-        show: true
-      }, () => {
-        window.setTimeout(() => {
-          this.setState({
-            show: false
-          });
-        }, 3000);
-      });
       this.getWxUserInfo(this.GetQueryString('code'),pkg);
     } else {
       this.start(pkg);
@@ -172,12 +168,17 @@ export default class PlayGameContainer extends Component {
       accessKeyID: 'D4F92FE4CFC',
       channelId: 100001,
       dontLoadJQuery: false,
-      onSceneChanged: function (sceneId, extraInfo) {
-        // console.log('sceneId & extraInfo', sceneId, extraInfo);
+      onSceneChanged: (sceneId, extraInfo) => {
+        console.log(sceneId)
+        if (sceneId === 'play') {
+          console.log('开始云玩')
+          this.shareTips();
+        }
+         console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
 
       MessageHandler: function (message) {
-        // console.log(message);
+         console.log(message);
       }
     });
   };
@@ -312,6 +313,9 @@ export default class PlayGameContainer extends Component {
               url = url + '?pkg=' + this.props.location.state.pkg;
             }
           }
+          console.log('获取code');
+          console.log('http://migugame.cmgame.com/gulu/' +
+            'wechat/capacity/getWxCodeInfo?redirectUrl=' + url);
           window.location.href = 'http://migugame.cmgame.com/gulu/' +
             'wechat/capacity/getWxCodeInfo?redirectUrl=' + url;
         }
@@ -349,5 +353,15 @@ export default class PlayGameContainer extends Component {
       (err) => {
       }
     );
+  }
+
+  shareTips () {
+    let pkg = this.getPkg();
+    this.init(pkg);
+    if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz') {
+      this.setState({
+        show: true
+      });
+    }
   }
 };

@@ -9,7 +9,7 @@ import icon2 from '../assets/frame2@2x.png';
 export default class ShareTipsModal extends Component {
   render () {
     return (
-      <div style={styles.modal}>
+      <div onClick={this.props.onClick} style={styles.modal}>
         <img style={styles.imgStyle} src={icon2} alt='shareTips' />
         <div style={styles.container} >
           <span>分享给好友</span>
