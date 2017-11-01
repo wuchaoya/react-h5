@@ -14,6 +14,7 @@ export default class WebView extends Component {
           name='iframe'
           ref='iframe'
           width='100%' height='100%'
+          frameBorder='0'
            />
       </div>
     );

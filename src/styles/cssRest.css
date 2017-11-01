@@ -31,4 +31,5 @@ input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
     position: absolute;
     border-left: 1px solid #000;
     position: fixed;
+    font-family: "Microsoft YaHei";
 }
