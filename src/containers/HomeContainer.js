@@ -112,6 +112,17 @@ class PlayGameContainer extends Component {
     WeChat.ready();
     WeChat.error();
     this.getData();
+    console.log('channelID: ' + this.GetQueryString('channelID'))
+    this.GetQueryString('channelID');
+  }
+
+  GetQueryString (name) {
+    let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+    let r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+      return unescape(r[2]);
+    }
+    return null;
   }
 }
 const getLogin = state => {
