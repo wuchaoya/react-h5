@@ -13,7 +13,7 @@ import '../styles/inputStyle.css';
 import Button from '../components/SignButton';
 import TextButton from '../components/SignTextButton';
 import HttpRequst from '../utils/HttpRequest';
-import { login, loginOut } from '../actions/actions';
+import { login, loginOut, getMyService, getTimeLength } from '../actions/actions';
 import LoginModal from '../components/LoginModal';
 
 class SignIn extends Component {
@@ -93,15 +93,11 @@ class SignIn extends Component {
         },
         (res) => {
           if (Number(res.resultCode) === 0) {
-            this.setState({
-              showErrModal: false
-            }, () => {
-              this.props.login({
-                id:res.authenticateRsp.userInfo.identityID,
-                name:res.authenticateRsp.loginAccountName
-              });
-              this.props.history.goBack();
+            this.props.login({
+              id:res.authenticateRsp.userInfo.identityID,
+              name:res.authenticateRsp.loginAccountName
             });
+            this.getMyService(res.authenticateRsp.userInfo.identityID);
           } else {
             this.setState({
               loginErr: true
@@ -123,10 +119,45 @@ class SignIn extends Component {
     document.getElementsByTagName('html')[0].style.background = '#f5f5f5';
     document.getElementsByTagName('body')[0].style.background = '#f5f5f5';
   }
+  getMyService (id) {
+    HttpRequst.getMyService(
+      {
+        user_id: id
+      },
+      (res) => {
+        this.props.getMyService(res.service[0].service_id);
+        this.getTimeLength(id, res.service[0].service_id);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getTimeLength (userId, id) {
+    HttpRequst.getTimeLength(
+      {
+        user_id: userId,
+        service_id:[id],
+        pkg:''
+      },
+      (res) => {
+        this.props.getTimeLength(Number(res.result_time));
+        this.setState({
+          showErrModal: false
+        }, () => {
+          this.props.history.goBack();
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
 };
 const getLogin = state => {
   return {
     login: state.update.login
   };
 };
-export default connect(getLogin, { login, loginOut })(SignIn);
+export default connect(getLogin, { login, loginOut, getMyService, getTimeLength })(SignIn);

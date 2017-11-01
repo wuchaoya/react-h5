@@ -110,32 +110,10 @@ class User extends Component {
       });
     });
   }
-  componentWillReceiveProps () {
-    if (this.props.isLogin && !this.state.renovate) {
-      this.setState({
-        renovate: true
-      }, () => {
-        this.getMyService();
-      });
-    }
-  }
-  getData () {
-    HttpRequest.serviceList(
-      {
-        user_id: this.props.isLogin ? this.props.userInfo.id : ''
-      },
-      (res) => {
-        this.props.getServiceData(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
   getMyService () {
     HttpRequest.getMyService(
       {
-        user_id: this.props.isLogin ? this.props.userInfo.id : ''
+        user_id: this.props.userInfo.id
       },
       (res) => {
         this.props.getMyService(res.service[0].service_id);
@@ -155,6 +133,19 @@ class User extends Component {
       },
       (res) => {
         this.props.getTimeLength(Number(res.result_time));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getData () {
+    HttpRequest.serviceList(
+      {
+        user_id: this.props.isLogin ? this.props.userInfo.id : ''
+      },
+      (res) => {
+        this.props.getServiceData(res);
       },
       (err) => {
         console.log(err);

@@ -185,7 +185,8 @@ const getState = state => {
   return {
     isLogin: state.update.login,
     timeLength: state.update.timeLength,
-    userInfo: state.update.userInfo
+    userInfo: state.update.userInfo,
+    MyServiceId: state.update.MyServiceId
   };
 };
 

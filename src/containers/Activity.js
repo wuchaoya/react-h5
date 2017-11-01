@@ -4,6 +4,8 @@
 
 import React, { Component } from 'react';
 import ActFours from '../components/ActFours';
+import rule from '../assets/rule.png';
+import vip from '../assets/vip.png';
 
 export default class Activity extends Component {
   render () {
@@ -12,11 +14,11 @@ export default class Activity extends Component {
         <ActFours />
         <div style={styles.textContainer}>
           <div style={styles.line}>
-            <h2 style={styles.title}>产品规则:</h2>
+            <h2 style={styles.title}><img style={styles.icon} src={rule} alt='' />产品规则 :</h2>
             <p style={styles.text}>每个用户同个周期(5天内)只能办理一次，不能重复办理。</p>
           </div>
           <div>
-            <h2 style={styles.title}>权益:</h2>
+            <h2 style={styles.title}><img style={styles.icon} src={vip} alt='' />权益 :</h2>
             <p style={styles.text}>1、订购用户享受20GB省内流量(有效期5天)</p>
             <p style={styles.text}>2、订购即送咪咕斗地主5000乐豆、100张兑换券、10张参赛券尊享礼包。
               (备注：订购后页面领取，权益即刻到账；非页面领取10个工作日内到账，道具有效期以游戏内为准。)
@@ -63,7 +65,9 @@ const styles = {
     lineHeight:'0.4rem',
     margin:'0',
     padding:'0',
-    marginBottom:'0.32rem'
+    marginBottom:'0.32rem',
+    display:'flex',
+    alignItems:'center'
   },
   button: {
     width: '4.36rem',
@@ -87,5 +91,11 @@ const styles = {
   },
   line: {
     borderBottom:'0.01rem solid #ededed'
+  },
+  icon: {
+    height:'0.4rem',
+    width:'0.4rem',
+    marginBottom:'-0.1rem',
+    marginRight:'0.04rem'
   }
 };

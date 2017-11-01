@@ -15,7 +15,7 @@ import InputButton from '../components/InputCode';
 import HttpRequest from '../utils/HttpRequest';
 import Toast from '../components/Toast';
 import LoginModal from '../components/LoginModal';
-import { login, loginOut } from '../actions/actions';
+import { login, loginOut, getTimeLength, getMyService } from '../actions/actions';
 
 class SignInSMS extends Component {
   constructor(props) {
@@ -100,17 +100,13 @@ class SignInSMS extends Component {
         (res) => {
           console.log(res);
           if (res.resultCode === '0') {
-            this.setState({
-              showErrModal: false
-            }, () => {
-              this.props.login(
-                {
-                  id:res.authenticateRsp.userInfo.identityID,
-                  name:res.authenticateRsp.loginAccountName
-                }
-              );
-              this.props.history.go(-2);
-            });
+            this.props.login(
+              {
+                id:res.authenticateRsp.userInfo.identityID,
+                name:res.authenticateRsp.loginAccountName
+              }
+            );
+            this.getMyService(res.authenticateRsp.userInfo.identityID);
           } else {
             this.setState({
               loginErr: true
@@ -161,10 +157,44 @@ class SignInSMS extends Component {
     document.getElementsByTagName('html')[0].style.background = '#f5f5f5';
     document.getElementsByTagName('body')[0].style.background = '#f5f5f5';
   }
+  getMyService (id) {
+    HttpRequest.getMyService(
+      {
+        user_id: id
+      },
+      (res) => {
+        this.props.getMyService(res.service[0].service_id);
+        this.getTimeLength(id, res.service[0].service_id);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getTimeLength (userId, id) {
+    HttpRequest.getTimeLength(
+      {
+        user_id: userId,
+        service_id:[id],
+        pkg:''
+      },
+      (res) => {
+        this.props.getTimeLength(Number(res.result_time));
+        this.setState({
+          showErrModal: false
+        }, () => {
+          this.props.history.go(-2);
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 };
 const getLogin = state => {
   return {
     login: state.update.login
   };
 };
-export default connect(getLogin, { login, loginOut })(SignInSMS);
+export default connect(getLogin, { login, loginOut, getTimeLength, getMyService })(SignInSMS);
