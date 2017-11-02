@@ -9,7 +9,7 @@ export default class IconRight extends Component {
   render () {
     return (
       // eslint-disable-next-line
-      <Iconright fontSize={this.props.fontSize} style={{marginLeft:'-0.04rem',marginTop:'0.13rem'}} color={this.props.color} />
+      <Iconright fontSize={this.props.fontSize} style={{marginLeft:'-0.04rem',marginTop:'0.2rem'}} color={this.props.color} />
     );
   }
 };

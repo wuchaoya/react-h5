@@ -3,8 +3,9 @@
  * 游戏详情页
  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import HttpRequest from '../utils/HttpRequest';
-// import GameTopImg from '../components/GameTopImg';
 import Container from './Container';
 import GameInfoContail from './GameInfoContailer';
 import GameInfoTopContainer from './GameInfoTopContainer';
@@ -17,7 +18,6 @@ import GameDetailsButton from '../components/GameDetailsButton';
 import GameInfoStartContainer from './GameInfoStartContainer';
 import GameDetailsStartText from '../components/GameDetailsStartText';
 import AverageScore from '../components/AverageScore';
-import ScrollView from '../components/ScrollView';
 import GameDetailSummary from './GameDetailSummaryContainer';
 import GameDetailSummaryTitle from '../components/GameDetailsSummaryTitle';
 import GameDetailsText from '../components/GameDetailsText';
@@ -27,16 +27,24 @@ import MyModal from '../components/Modal';
 import MyStart from '../components/MyStart';
 import MyVideo from '../components/Video';
 import WeChat from '../utils/WeChat';
+import TransformScrollView from '../components/TransformScrollView';
+import ErrModal from '../components/ErrModal';
 
-export default class LogdingContainer extends Component {
+import { getTimeLength } from '../actions/actions';
+
+class LogdingContainer extends Component {
   constructor (props) {
     super(props);
     this.state = {
       data: null,
       err: false,
       imgdisable:true,
-      index:0
+      index:0,
+      loginModal: false,
+      noTime: false,
+      score:0
     };
+    this.score = this.score.bind(this);
   }
   render () {
     return this.state.data === null ? null : <Container marginBottom={0}>
@@ -59,16 +67,24 @@ export default class LogdingContainer extends Component {
           </GameDetailsTopTextContainer>
           <GameDetailsButton
             onClick={() => {
-              this.props.history.push('playgame', { pkg:this.state.data.pkg });
+              if (!this.props.isLogin) {
+                this.setState({
+                  loginModal: true
+                });
+                return;
+              }
+              this.getTimeLength();
             }} />
         </GameInfoTopContainer>
         <GameInfoStartContainer>
           <GameDetailsStartText />
-          <MyStart length={1} />
+          <MyStart score={this.score} onClick={() => this.setState({
+            loginModal: true
+          })} login={this.props.isLogin} length={this.state.score} />
           <AverageScore score={this.state.data.score} />
         </GameInfoStartContainer>
       </GameInfoContail>
-      <ScrollView click={(index) => {
+      <TransformScrollView click={(index) => {
         this.setState({
           index:index
         }, () => {
@@ -87,20 +103,40 @@ export default class LogdingContainer extends Component {
         {this.state.data.update_time ? <GameDetailsOtherInfo name='更新日期' text={this.state.data.update_time} /> : null}
         {this.state.data.version ? <GameDetailsOtherInfo name='版本' text={this.state.data.version} /> : null}
       </GameDetailsOtherContainer>
-
+      {this.state.loginModal ? <ErrModal
+        title='您尚未登陆，是否登陆'
+        onConfirm={() => {
+          this.props.history.push('/signin', { key: this.props.location.key });
+        }}
+        onCancel={() => {
+          this.setState({
+            loginModal: false
+          });
+        }} /> : null}
+      {this.state.noTime ? <ErrModal
+        title='剩余时间不足，是否购买'
+        onConfirm={() => {
+          this.props.history.push('/user', { key: this.props.location.key });
+        }}
+        onCancel={() => {
+          this.setState({
+            noTime: false
+          });
+        }} /> : null}
     </Container>;
   };
   getGameDetailsData (gid) {
     this.setState({
       err: false
     });
-    HttpRequest.getGameDetailsData({ gid:gid, user_id:null }, (res) => {
-      console.log(res);
+    HttpRequest.getGameDetailsData({
+      gid:gid, user_id: this.props.isLogin ? this.props.userInfo.id : null
+    }, (res) => {
       this.setState({
-        data: res
+        data: res,
+        score: res.my_score
       });
     }, (err) => {
-      console.log(err);
       document.title = '专题详情';
       this.setState({
         data: null,
@@ -117,7 +153,6 @@ export default class LogdingContainer extends Component {
         url: window.location.href.split('#')[0]
       },
       (res) => {
-        console.log(res);
         WeChat.init({
           debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
@@ -131,7 +166,6 @@ export default class LogdingContainer extends Component {
         });
       },
       (err) => {
-        console.log(err);
       }
     );
   }
@@ -140,12 +174,60 @@ export default class LogdingContainer extends Component {
     this.getGameDetailsData(this.props.match.params.gid);
     this.getTextHeight();
     this.props.history.listen((location, action) => {
-      console.log(location);
       this.init();
     });
     this.init();
     WeChat.ready();
     WeChat.error();
   }
+  getTimeLength () {
+    HttpRequest.getTimeLength(
+      {
+        user_id: this.props.userInfo.id,
+        service_id:[this.props.MyServiceId],
+        pkg:this.state.data.pkg
+      },
+      (res) => {
+        this.props.getTimeLength(Number(res.result_time));
+        if (Number(res.result_time === 0)) {
+          this.setState({
+            noTime: true
+          });
+        } else {
+          this.props.history.push('playgame', { pkg:this.state.data.pkg });
+        }
+      },
+      (err) => {
+        this.props.history.push('playgame', { pkg:this.state.data.pkg });
+      }
+    );
+  }
+  score (number) {
+    HttpRequest.score(
+      {
+        user_id: this.props.userInfo.id,
+        score: number,
+        gid: this.state.data.gid
+      },
+      (res) => {
+        this.setState({
+          score: number
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 };
 
+const getState = state => {
+  return {
+    isLogin: state.update.login,
+    timeLength: state.update.timeLength,
+    userInfo: state.update.userInfo,
+    MyServiceId: state.update.MyServiceId
+  };
+};
+
+export default connect(getState, { getTimeLength })(LogdingContainer);

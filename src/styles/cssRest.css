@@ -17,5 +17,19 @@ a img { border: none; }
 input,button,textarea,select,optgroup,option{ font-size: 100%; font: inherit;}
 ::-webkit-scrollbar{
     display: none;
-
+}
+.a {
+    border-radius: inherit;
+    border: 0.06rem solid #fff;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url('../assets/radius_icon.png') no-repeat 100%;
+    position: relative;
+    position: absolute;
+    border-left: 1px solid #000;
+    position: fixed;
+    font-family: "Microsoft YaHei";
 }

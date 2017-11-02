@@ -4,6 +4,8 @@
 
 import React, { Component, PureComponent } from 'react';
 import ReactPullLoad, { STATS } from 'react-pullload';
+import { connect } from 'react-redux';
+
 import GameListHead from '../components/GameListHead';
 import HttpRequest from '../utils/HttpRequest';
 import GameListItem from './GameListItemContainer';
@@ -17,31 +19,9 @@ import loading from '../assets/loading.gif';
 import res from '../assets/emoji_res.png';
 import loadermore from '../assets/emoji_loadermore.png';
 import WeChat from '../utils/WeChat';
+import { getTimeLength } from '../actions/actions';
+import ErrModal from '../components/ErrModal';
 
-const defaultStyle = {
-  width: '100%',
-  height: '0.86rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-};
-const loadingIconStyle = {
-  width:0.54 * 0.7 + 'rem',
-  height:0.58 * 0.7 + 'rem'
-}
-const resIconStyle = {
-  width: '1.02rem',
-  height: '0.25rem'
-}
-const line = {
-  flex: '1',
-  borderTop: '0.01rem solid #e5e5e5'
-}
-const textStyle = {
-  marginLeft:'0.1rem',
-  fontSize: '0.26rem',
-  color: '#666'
-}
 class HeadNode extends PureComponent{
   _render (loaderState) {
     if (loaderState === STATS.pulling) {
@@ -83,16 +63,20 @@ class FooterNode extends PureComponent{
   }
 }
 
-export default class Pull extends Component{
+class Pull extends Component{
+
   constructor () {
     super();
     this.state = {
       hasMore: true,
       data: null,
       action: STATS.init,
-      index: 0
+      index: 0,
+      loginModal: false,
+      noTime: false
     };
   }
+
   handleAction = (action) => {
     // eslint-disable-next-line
     if (action === this.state.action || action === STATS.refreshing && this.state.action === STATS.loading || action === STATS.loading && this.state.action === STATS.refreshing) {
@@ -144,6 +128,7 @@ export default class Pull extends Component{
       action: action
     });
   }
+
   render () {
     const {
       hasMore
@@ -172,24 +157,49 @@ export default class Pull extends Component{
                   <GameClass data={item.label = ['好玩', '不错']} />
                 </GameListItemInfoContainer>
                 <GameListButton onClick={(e) => {
-                  console.log(e.nativeEvent);
                   e.stopPropagation();
-                  this.props.history.push('playgame',{pkg:item.pkg});
+                  if (!this.props.isLogin) {
+                    this.setState({
+                      loginModal: true
+                    });
+                    return;
+                  }
+                  this.getTimeLength(item.pkg)
                 }
                 } />
               </GameListItem>;
             })
             }
         </ReactPullLoad>
+        {this.state.loginModal ? <ErrModal
+          title='您尚未登陆，是否登陆'
+          onConfirm={() => {
+            this.props.history.push('/signin', { key: this.props.location.key });
+          }}
+          onCancel={() => {
+            this.setState({
+              loginModal: false
+            });
+          }} /> : null}
+        {this.state.noTime ? <ErrModal
+          title='剩余时间不足，是否购买'
+          onConfirm={() => {
+            this.props.history.push('/user', { key: this.props.location.key });
+          }}
+          onCancel={() => {
+            this.setState({
+              noTime: false
+            });
+          }} /> : null}
       </div>
     );
   }
+
   getData () {
     this.setState({
       err: false
     });
     HttpRequest.getGameListData({ page: this.state.index }, (res) => {
-     console.log(res);
       this.setState({
         data: res
       });
@@ -200,6 +210,7 @@ export default class Pull extends Component{
       });
     });
   }
+
   init () {
     HttpRequest.getWxConfig(
       {
@@ -207,9 +218,8 @@ export default class Pull extends Component{
         url: window.location.href.split('#')[0]
       },
       (res) => {
-        console.log(res);
         WeChat.init({
-          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
           timestamp: res.timestamp, // 必填，生成签名的时间戳
           nonceStr: res.nonceStr, // 必填，生成签名的随机串
@@ -221,19 +231,77 @@ export default class Pull extends Component{
         });
       },
       (err) => {
-        console.log(err);
       }
     );
   }
+
   componentDidMount () {
     document.title = '游戏列表';
     this.getData();
     this.props.history.listen((location, action) => {
-      console.log(location);
       this.init();
     });
     this.init();
     WeChat.ready();
     WeChat.error();
   }
+
+  getTimeLength (pkg) {
+    HttpRequest.getTimeLength(
+      {
+        user_id: this.props.userInfo.id,
+        service_id:[this.props.MyServiceId],
+        pkg:pkg
+      },
+      (res) => {
+        this.props.getTimeLength(Number(res.result_time));
+        if (Number(res.result_time === 0)) {
+          this.setState({
+            noTime: true
+          });
+        } else {
+          this.props.history.push('playgame', { pkg:pkg });
+        }
+      },
+      (err) => {
+        this.props.history.push('playgame', { pkg:pkg });
+      }
+    );
+  }
+
 }
+
+const defaultStyle = {
+  width: '100%',
+  height: '0.86rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+};
+const loadingIconStyle = {
+  width:0.54 * 0.7 + 'rem',
+  height:0.58 * 0.7 + 'rem'
+}
+const resIconStyle = {
+  width: '1.02rem',
+  height: '0.25rem'
+}
+const line = {
+  flex: '1',
+  borderTop: '0.01rem solid #e5e5e5'
+}
+const textStyle = {
+  marginLeft:'0.1rem',
+  fontSize: '0.26rem',
+  color: '#666'
+}
+
+const getState = state => {
+  return {
+    isLogin: state.update.login,
+    timeLength: state.update.timeLength,
+    userInfo: state.update.userInfo,
+    MyServiceId: state.update.MyServiceId
+  };
+};
+export default connect(getState, { getTimeLength })(Pull);

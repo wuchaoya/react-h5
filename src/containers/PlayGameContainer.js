@@ -5,41 +5,54 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import HttpRequest from '../utils/HttpRequest';
 import Transition from '../utils/Transition';
-import base64 from 'base-64';
+import Base64 from '../utils/Base64';
 import WeChat from '../utils/WeChat';
+import ShareTipsModal from '../components/ShareTipsModal';
 
 const Box = styled.div`
   height: ${(props) => props.h / 100}rem;
 `;
 
 export default class PlayGameContainer extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       data: null,
       err: false,
       roomId: null,
-      xml: null
+      id:null,
+      xml: null,
+      userName: null,
+      userHead: null,
+      show: false
     };
+    this.shareTips = this.shareTips.bind(this);
   }
 
   render () {
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
-      <Box id='playGameBox' h={height} />
+      <div>
+        <Box id='playGameBox' h={height} />
+        {this.state.show ? <ShareTipsModal onClick={() => {
+          this.setState({
+            show: false
+          });
+        }} /> : null}
+      </div>
     );
   }
+
   Wxinit () {
-    console.log('url', encodeURI(window.location.href.split('#')[0]))
     HttpRequest.getWxConfig(
       {
         activityCode:'123',
         url: encodeURI(window.location.href.split('#')[0])
       },
       (res) => {
-        console.log(res);
         WeChat.init({
-          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appId, // 必填，公众号的唯一标识
           timestamp: res.timestamp, // 必填，生成签名的时间戳
           nonceStr: res.nonceStr, // 必填，生成签名的随机串
@@ -51,57 +64,81 @@ export default class PlayGameContainer extends Component {
         });
       },
       (err) => {
-        console.log(err);
       }
     );
   }
+
+  componentWillMount () {
+    this.authorize();
+  }
+
   componentDidMount () {
     document.title = '游戏免下载，即点即玩';
     let pkg = this.getPkg();
     this.init(pkg);
-    this.start(pkg);
     this.props.history.listen((location, action) => {
-      console.log(location);
       this.Wxinit();
     });
     this.Wxinit();
     WeChat.ready();
     WeChat.error();
+    if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz'){
+      this.getWxUserInfo(this.GetQueryString('code'),pkg);
+    } else {
+      this.start(pkg);
+    }
   }
 
   componentWillUnmount () {
-    window.location.reload();
-    window.Cloudplay.stopSDK();
-    console.log('清楚sdk');
+    window.Cloudplay.stopGame();
+    let pkg = this.getPkg();
+    if (pkg === 'com.migu.game.cloudddz') {
+      this.exitBattle();
+    }
   }
 
-  /**
-   * 获取房间号,只针对咪咕棋牌游戏有效
-   * atob
-   */
+  isWeiXin () {
+    let ua = window.navigator.userAgent.toLowerCase();
+    // eslint-disable-next-line
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getRoomId (pkg) {
     HttpRequest.getRoomId({}, (res) => {
       console.log('新申请房间,清空所有浏览器缓存数据');
       window.localStorage.setItem('MyRoomId', null);
       window.localStorage.setItem('MyId', null);
       window.localStorage.setItem('MyUserId', null);
-      this.props.history.replace(
-        'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
-      );
+      if (this.isWeiXin()){
+        this.props.history.replace(
+          'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id + '&&code=' + this.GetQueryString('code')
+        );
+      } else {
+        this.props.history.replace(
+          'playgame?pkg=' + pkg + '&&roomId=' + res.resultData.battleCode + '&&id=' + res.resultData.id
+        );
+      }
       this.Wxinit();
       WeChat.ready();
       this.setState({
-        roomId: res.resultData.battleCode
+        roomId: res.resultData.battleCode,
+        id:res.resultData.id
       }, () => {
         let userId;
         userId = Number(Math.random().toString(10).substring(2));
         let xml = Transition.JsonToXml({
           root: {
             battle: res.resultData.battleCode,
-            user_id: userId
+            user_id: userId,
+            nickName: this.state.userName == null ? '斗地主小王子': this.state.userName,
+            headUrl: this.state.userHead
           }
         });
-        console.log(xml);
+        console.log('传递参数：' + xml)
         let gameOptions = {
           appid: 123,
           userinfo: {
@@ -115,17 +152,15 @@ export default class PlayGameContainer extends Component {
           configinfo: 'miguh5',
           c_token: 'abcd',
           isPortrait: false,
-          payStr: base64.encode(xml)
+          payStr: Base64.encode(xml)
         };
-        window.Cloudplay.startSDK(gameOptions);
-        console.log('参数：' + gameOptions.payStr);
+        console.log('传递参数Base64编码：' + gameOptions.payStr)
+        window.Cloudplay.startGame(gameOptions);
         window.localStorage.setItem('MyRoomId', res.resultData.battleCode);
         window.localStorage.setItem('MyId', res.resultData.id);
         window.localStorage.setItem('MyUserId', userId);
       });
     }, (err) => {
-      console.log(err);
-      console.log('请求失败');
     });
   };
 
@@ -140,18 +175,21 @@ export default class PlayGameContainer extends Component {
   }
 
   init (pkg) {
-    console.log(pkg);
     window.Cloudplay.initSDK({
       accessKeyID: 'D4F92FE4CFC',
-      accesskey: '625a706566676a397432573238557444',
       channelId: 100001,
-      pkg_name: pkg,
-      onSceneChanged: function (sceneId, extraInfo) {
-        console.log('sceneId & extraInfo', sceneId, extraInfo);
+      dontLoadJQuery: false,
+      onSceneChanged: (sceneId, extraInfo) => {
+        console.log(sceneId)
+        if (sceneId === 'play') {
+          console.log('开始云玩')
+          this.shareTips();
+        }
+         console.log('sceneId & extraInfo', sceneId, extraInfo);
       },
 
       MessageHandler: function (message) {
-        console.log(message);
+         console.log(message);
       }
     });
   };
@@ -160,16 +198,13 @@ export default class PlayGameContainer extends Component {
     if (pkg === 'com.migu.game.cloudddz') {
       document.title = '咪咕斗地主';
       if (this.GetQueryString('roomId') === null) {
-        console.log('1. 地址中没有roomId场景');
         if (window.localStorage.getItem('MyRoomId') &&
-          // eslint-disable-next-line
-          'null' !== window.localStorage.getItem('MyRoomId') && window.localStorage.getItem('MyId') && 'null' !== window.localStorage.getItem('MyId')) {
+          'null' !== window.localStorage.getItem('MyRoomId') && window.localStorage.getItem('MyId')
+          && 'null' !== window.localStorage.getItem('MyId')) {
           this.setState({
-            roomId: window.localStorage.getItem('MyRoomId')
+            roomId: window.localStorage.getItem('MyRoomId'),
+            id:window.localStorage.getItem('MyId')
           }, () => {
-            // eslint-disable-next-line
-            console.log('读取浏览器缓存信息 ' + 'MyRoomId: ' + this.state.roomId +
-              ', MyId: ' + window.localStorage.getItem('MyId'));
             this.checkRoomId(window.localStorage.getItem('MyId'), pkg);
           });
         } else {
@@ -177,11 +212,11 @@ export default class PlayGameContainer extends Component {
           this.getRoomId(pkg);
         }
       } else {
-        console.log('2. 地址中含有roomId场景');
         if ('null' !== this.GetQueryString('roomId') &&
           'null' !== this.GetQueryString('id')) {
           this.setState({
-            roomId: this.GetQueryString('roomId')
+            roomId: this.GetQueryString('roomId'),
+            id:this.GetQueryString('id')
           }, () => {
             // eslint-disable-next-line
             console.log('读取地址中的房间信息和id信息 ' + 'roomId: ' + this.state.roomId +
@@ -217,7 +252,7 @@ export default class PlayGameContainer extends Component {
         c_token: 'abcd',
         isPortrait: false
       };
-      window.Cloudplay.startSDK(gameOptions);
+      window.Cloudplay.startGame(gameOptions);
     }
   };
 
@@ -232,7 +267,6 @@ export default class PlayGameContainer extends Component {
 
   checkRoomId(id, pkg) {
     HttpRequest.checkRoomId({battleId: id}, (res) => {
-        console.log(res);
         if (res.returnCode !== '001') {
           console.log('不可加入约战组!')
           window.localStorage.setItem('MyRoomId', null);
@@ -244,10 +278,13 @@ export default class PlayGameContainer extends Component {
           let xml = Transition.JsonToXml({
             root: {
               battle: this.state.roomId,
-              user_id: window.localStorage.getItem('MyUserId') || Number(Math.random().toString(10).substring(2))
+              user_id: window.localStorage.getItem('MyUserId') == null ?
+                Number(Math.random().toString(10).substring(2)) : window.localStorage.getItem('MyUserId'),
+              nickName: this.state.userName == null ? '斗地主小王子' : this.state.userName,
+              headUrl: this.state.userHead
             }
           });
-          console.log(xml);
+          console.log('传递参数：' + xml)
           let gameOptions = {
             appid: 123,
             userinfo: {
@@ -261,18 +298,86 @@ export default class PlayGameContainer extends Component {
             configinfo: 'miguh5',
             c_token: 'abcd',
             isPortrait: false,
-            payStr: base64.encode(xml)
+            payStr: Base64.encode(xml)
           };
-          window.Cloudplay.startSDK(gameOptions);
-          this.props.history.replace(
-            'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id
-          );
+          console.log('传递参数Base64编码：' + gameOptions.payStr)
+          window.Cloudplay.startGame(gameOptions);
+          if (this.isWeiXin()) {
+            this.props.history.replace(
+              'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id + '&&code=' + this.GetQueryString('code')
+            );
+          } else {
+            this.props.history.replace(
+              'playgame?pkg=' + pkg + '&&roomId=' + this.state.roomId + '&&id=' + id
+            );
+          }
           this.Wxinit();
           WeChat.ready();
         }
       }, (err) => {
-        console.log(err);
       }
     );
+  }
+
+  authorize () {
+    if (this.isWeiXin()) {
+      let pkg = this.getPkg();
+      if (pkg === 'com.migu.game.cloudddz') {
+        if (!this.GetQueryString('code')) {
+          let url = window.location.href;
+          if (this.props.location.state) {
+            if (this.props.location.state.pkg) {
+              url = url + '?pkg=' + this.props.location.state.pkg;
+            }
+          }
+          console.log('获取code');
+          console.log('http://migugame.cmgame.com/gulu/' +
+            'wechat/capacity/getWxCodeInfo?redirectUrl=' + url);
+          window.location.href = 'http://migugame.cmgame.com/gulu/' +
+            'wechat/capacity/getWxCodeInfo?redirectUrl=' + url;
+        }
+      }
+    }
+  }
+
+  getWxUserInfo (code, pkg) {
+    HttpRequest.getWxUserInfo(
+      { code: code },
+      (res) => {
+        this.setState({
+          userName: res.nickname,
+          userHead: res.headimgurl,
+        }, () => {
+          this.start(pkg)
+        })
+      },
+      (err) => {
+      }
+    );
+  }
+
+  exitBattle () {
+    HttpRequest.exitBattleGroup(
+      {
+        appId:1,
+        battleId:this.state.id,
+        roomId:this.state.roomId
+      },
+      (res) => {
+        console.log('退出约战');
+        console.log(res);
+      },
+      (err) => {
+      }
+    );
+  }
+
+  shareTips () {
+    let pkg = this.getPkg();
+    if (this.isWeiXin() && pkg === 'com.migu.game.cloudddz') {
+      this.setState({
+        show: true
+      });
+    }
   }
 };

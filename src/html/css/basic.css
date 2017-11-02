@@ -1,0 +1,85 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-size: 0.5rem;
+  font-family: Arial, Helvetica, STHeiTi, sans-serif;
+}
+a {
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+}
+input {
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+}
+ul {
+  list-style-type: none;
+}
+.clearfix :after {
+  content: '';
+  display: block;
+  clear: both;
+}
+section#purchase-modal-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section#purchase-modal-container .purchase-modal {
+  width: 73.7%;
+  height: 7.25rem;
+  padding: 0px 44px;
+  background-color: #f2f2f2;
+  text-align: center;
+  border-radius: 0.3rem;
+  position: relative;
+}
+section#purchase-modal-container .purchase-modal .img-set {
+  display: inline-block;
+  margin-top: -1.525rem;
+  width: 3.05rem;
+  height: 3.05rem;
+  background-size: cover!important;
+  background-repeat: no-repeat !important;
+}
+section#purchase-modal-container .purchase-modal .img-set-success {
+  background-image: url(../img/success.png);
+}
+section#purchase-modal-container .purchase-modal .img-set-failure {
+  background-image: url(../img/flunk.png);
+}
+section#purchase-modal-container .purchase-modal h5 {
+  text-align: center;
+  margin-top: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.65rem;
+  color: #666666;
+}
+section#purchase-modal-container .purchase-modal .purchase-btn {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 2.65rem;
+  border-top: 0.025rem solid #dddddd;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #83b233;
+  line-height: 2.65rem;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+}

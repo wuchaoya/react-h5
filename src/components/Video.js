@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { DefaultPlayer as Video } from 'react-html5video';
-import 'react-html5video/dist/styles.css';
+import '../styles/videoStyle.css';
 
 class MyVideo extends Component {
   render () {

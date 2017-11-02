@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import React, { Component } from 'react';
 
 let icon = require('../assets/game_grade_icon.png');
+
 const Text = styled.span`
   color: #999;
   font-size: 0.24rem;

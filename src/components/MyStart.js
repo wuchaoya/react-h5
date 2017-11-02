@@ -18,7 +18,7 @@ export default class MyStart extends Component {
     super(props);
     this.state = {
       data: null,
-      number: 0
+      number: this.props.length
     };
   }
   _renderStar (number) {
@@ -32,9 +32,17 @@ export default class MyStart extends Component {
         return <FaStar style={{marginRight: '0.08rem'}} size={20}color='#ff8800' key={'star' + index} />;
       } else {
         return <FaStar onClick={() => {
-          this.setState({
-            number:(index + 1) * 2
-          });
+          if (this.props.length !== 0) {
+            return;
+          }
+          if (!this.props.login) {
+            this.props.onClick();
+            return;
+          }
+          this.props.score((index + 1) * 2);
+          // this.setState({
+          //   number:(index + 1) * 2
+          // });
         }} size={20}color='#ddd' style={{marginRight: '0.08rem'}} key={'star' + index} />;
       }
     });
@@ -44,7 +52,7 @@ export default class MyStart extends Component {
     const { length } = this.props;
     // eslint-disable-next-line
     return <Container marginBottom={this.props.marginBottom}>
-      {this._renderStar(this.state.number)}
+      {this._renderStar(this.props.length)}
     </Container>
       ;
   }

@@ -8,5 +8,5 @@ export default styled.div`
   flex-direction: row;
   align-items: center;
   justify-content:space-between;
-  margin-bottom: 0.24rem;
+  margin-bottom: 0.18rem;
 `;
