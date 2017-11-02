@@ -67,7 +67,7 @@ class PlayGameContainer extends Component {
             <GameDetaillImg width='100%' height='100%' src={item.cover}
                             onClick={() => {
                               this.props.history.push('gamedetails' + item.gid);
-                            }}/>
+                            }} />
             <GameIntro>{item.game_summary}</GameIntro>
           </TopicContainer>
         );

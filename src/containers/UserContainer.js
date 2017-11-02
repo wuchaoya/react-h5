@@ -18,9 +18,7 @@ import EquityText from '../components/EquityText';
 import HttpRequest from '../utils/HttpRequest';
 import WebView from '../components/WebView';
 import ErrModal from '../components/ErrModal';
-
 import { login, loginOut, getServiceData, getMyService, getTimeLength } from '../actions/actions';
-
 class User extends Component {
   constructor(props) {
     super(props);
@@ -70,7 +68,7 @@ class User extends Component {
         })}
       </PurchaseContainer>
       <UserEquity>
-        <UserTitle margin='0.52rem 0 0.48rem 0.24rem'>会员权益</UserTitle>
+        <UserTitle margin='0.52rem 0 0.12rem 0.24rem'>会员权益</UserTitle>
         {data.map((item, index) => {
           return <EquityItem key={index}>
             <EquityIcon name={data[data.length - index - 1].prodect_title} />

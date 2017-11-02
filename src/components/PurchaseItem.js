@@ -10,7 +10,8 @@ export default class PurchaseItem extends Component {
       <div style={
         Object.assign(
           {}, styles.container, {
-            backgroundColor: this.props.isRecommend? '#fff8f0' : '#fff'
+            backgroundColor: this.props.isRecommend? '#fff8f0' : '#fff',
+            border: this.props.isRecommend ? '0.01rem solid #f9dec5' : '0.01rem solid #ccc'
           }
           )}>
         {this.props.isRecommend ? <div style={styles.icon}>
@@ -48,7 +49,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     border: '0.01rem solid #ccc',
-    borderRadius: '0.12rem',
+    borderRadius: '0.14rem',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0 0.2rem 0 0.2rem',

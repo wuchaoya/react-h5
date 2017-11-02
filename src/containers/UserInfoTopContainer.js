@@ -18,7 +18,7 @@ export default class UserInfoTop extends Component {
         <UserName name={this.props.name} login={this.props.login} />
         {this.props.login ? <UserTime time={this.props.time} login={this.props.login} /> : null}
         <div onClick={this.props.setting} style={styles.iconC}>
-          <img style={styles.icon} src={icon} alt='' />
+          <img style={styles.icon2} src={icon} alt='' />
         </div>
         <div onClick={this.props.goback} style={styles.goback}>
           <img style={styles.gobacksize} src={goback} alt='' />
@@ -38,14 +38,18 @@ const styles = {
     width:'0.5rem',
     height:'0.5rem'
   },
+  icon2:{
+    width:'0.4rem',
+    height:'0.4rem'
+  },
   iconC: {
     position: 'absolute',
-    right:'0.24rem',
-    top:'0.24rem'
+    right:'0.3rem',
+    top:'0.3rem'
   },
   goback: {
     position: 'absolute',
-    left:'0.24rem',
+    left:'0rem',
     top:'0.24rem'
   },
   gobacksize: {

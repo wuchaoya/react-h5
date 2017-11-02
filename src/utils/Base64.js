@@ -32,6 +32,7 @@ export default class Base64 {
     let chr1, chr2, chr3;
     let enc1, enc2, enc3, enc4;
     let i = 0;
+    // eslint-disable-next-line
     input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
     while (i < input.length) {
       enc1 = _keyStr.indexOf(input.charAt(i++));
@@ -42,9 +43,11 @@ export default class Base64 {
       chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
       chr3 = ((enc3 & 3) << 6) | enc4;
       output = output + String.fromCharCode(chr1);
+      // eslint-disable-next-line
       if (enc3 != 64) {
         output = output + String.fromCharCode(chr2);
       }
+      // eslint-disable-next-line
       if (enc4 != 64) {
         output = output + String.fromCharCode(chr3);
       }

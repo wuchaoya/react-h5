@@ -31,6 +31,7 @@ export default class PlayGameContainer extends Component {
   }
 
   render () {
+    console.log(encodeURI((window.location.href.split('#')[0]).split('&code=')[0]));
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
       <div>
@@ -99,6 +100,7 @@ export default class PlayGameContainer extends Component {
 
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
+    // eslint-disable-next-line
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return true;
     } else {
@@ -204,8 +206,6 @@ export default class PlayGameContainer extends Component {
             roomId: window.localStorage.getItem('MyRoomId'),
             id:window.localStorage.getItem('MyId')
           }, () => {
-            console.log('读取浏览器缓存信息 ' + 'MyRoomId: ' + this.state.roomId +
-              ', MyId: ' + window.localStorage.getItem('MyId'));
             this.checkRoomId(window.localStorage.getItem('MyId'), pkg);
           });
         } else {

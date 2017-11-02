@@ -21,13 +21,14 @@ export default class UserIcon extends Component {
 
 const styles = {
   iconStyle: {
-    height: '1.2rem',
-    width: '1.2rem',
-    border: '0.06rem solid #fff',
-    borderRadius: '0.66rem',
     overflow: 'hidden',
     margin: '0',
-    padding: '0'
+    padding: '0',
+    height: '1.2rem',
+    width: '1.2rem',
+    border: '0.04rem solid #aaa',
+    borderRadius: '50%',
+    backgroundColor:'#fff'
   },
   loginIcon: {
     position: 'absolute',

@@ -11,4 +11,5 @@ export default styled.div`
   border-bottom: 0.01rem solid #ededed;
   padding-bottom: 0.4rem;
   padding-top: 0.24rem;
+  margin: 0 0.24rem 0 0.24rem;
 `;
