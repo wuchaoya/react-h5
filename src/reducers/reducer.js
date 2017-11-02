@@ -16,7 +16,7 @@ const initialState = {
   MyServiceId: '', // 已开通包月id
   userInfo:{
     id:'',
-    name:'未登陆'
+    name:'未登录'
   }, // 已登陆的用户信息
   timeLength: null
 };

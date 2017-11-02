@@ -31,7 +31,6 @@ export default class PlayGameContainer extends Component {
   }
 
   render () {
-    console.log(encodeURI((window.location.href.split('#')[0]).split('&code=')[0]));
     let height = document.getElementsByTagName('html')[0].clientHeight;
     return (
       <div>
