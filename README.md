@@ -23,6 +23,9 @@ npm run build 或者 yarn run build
 ```
 ### 其他
 
+以下修改node包都以找到对应实现方法
+无需修改包源码即可
+
 在游戏详情 游戏图片滑动时候 chrome 监听touch类事件报错
 
 ```
