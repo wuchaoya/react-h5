@@ -10,7 +10,7 @@ import Transition from '../utils/Transition';
 import Base64 from '../utils/Base64';
 import WeChat from '../utils/WeChat';
 import wx from 'weixin-js-sdk';
-import goBack from '../assets/ddzgoback.png';
+import goBack from '../assets/img/ddzgoback.png';
 // 微信默认显示title
 let wxTitle = '游戏免下载，即点即玩';
 // accessKeyID
@@ -200,6 +200,7 @@ export default class QPCloudPlayContainer extends Component {
    */
   isWeiXin () {
     let ua = window.navigator.userAgent.toLowerCase();
+	  // eslint-disable-next-line
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return true;
     } else {

@@ -5,8 +5,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Icon from '../assets/back.png';
-import next from '../assets/next.png';
+import Icon from '../assets/img/back.png';
+import next from '../assets/img/next.png';
 import { loginOut } from '../actions/actions';
 
 class SettingContainer extends Component {

@@ -10,7 +10,7 @@ import Base64 from '../utils/Base64';
 import WeChat from '../utils/WeChat';
 import ShareTipsModal from '../components/ShareTipsModal';
 import wx from 'weixin-js-sdk';
-import goBack from '../assets/ddzgoback.png';
+import goBack from '../assets/img/ddzgoback.png';
 
 import { login, getMyService, getTimeLength, getExtraId } from '../actions/actions';
 

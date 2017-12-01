@@ -4,8 +4,8 @@
 
 import React, { Component } from 'react';
 import ActFours from '../components/ActFours';
-import rule from '../assets/rule.png';
-import vip from '../assets/vip.png';
+import rule from '../assets/img/rule.png';
+import vip from '../assets/img/vip.png';
 
 export default class Activity extends Component {
   render () {

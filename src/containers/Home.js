@@ -47,7 +47,7 @@ class Home extends Component {
 					autoplay={false}
 					dataList={this.props.stateData.homeData.gameList} />
 				
-				<UserButton />
+				<UserButton onClick={() => this.historyPush('user')} />
 			</div>;
 	}
 	

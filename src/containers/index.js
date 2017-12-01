@@ -13,7 +13,9 @@ export {default as SignIn} from './SignIn';
 export {default as SignInSMS} from './SignInSMS';
 export {default as Topic} from './SignInSMS';
 export {default as User} from './User';
-export {default as SignInSMS} from './SignInSMS';
+export {default as Home} from './Home';
+
+
 
 
 

@@ -5,9 +5,12 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Home from '../containers/Home';
-import Gamedetails from '../containers/GameDetails';
-import Topic from '../containers/Topic';
+import {
+  Home,
+	GameDetails,
+	Topic,
+  User
+} from '../containers';
 
 class Base extends Component {
   render () {
@@ -15,8 +18,10 @@ class Base extends Component {
       <Router>
         <div>
           <Route exact path='/' component={Home} />
-          <Route exact path='/gamedetails' component={Gamedetails} />
+          <Route exact path='/gamedetails' component={GameDetails} />
           <Route exact path='/topic' component={Topic} />
+          <Route exact path='/user' component={User} />
+
         </div>
       </Router>
     );

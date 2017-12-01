@@ -24,15 +24,17 @@ class User extends React.Component {
 			</div>
 	}
 	
-	componentWillMount () {
+	componentDidMount () {
 		SwissArmyKnife.setTitle('我的').setColor('#fff');
+		this.getData();
 	}
 	
 	getData () {
+		console.log('获取数据')
 		let { setUserData } = this.props;
 		HttpRequest.serviceList(
 			{
-				user_id: this.props.isLogin ? this.props.userInfo.id : ''
+				user_id: this.props.stateData.isLogin ? this.props.stateData.userInfo.id : ''
 			},
 			(res) => {
 				setUserData(res, 0);

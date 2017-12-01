@@ -10,8 +10,8 @@ import {
 	UserTime
 } from '../components';
 
-import icon from '../assets/icon-setting.png';
-import goback from '../assets/back.png';
+import icon from '../assets/img/icon-setting.png';
+import goback from '../assets/img/back.png';
 
 export default class UserTop extends React.Component {
 	
