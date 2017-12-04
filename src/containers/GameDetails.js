@@ -18,19 +18,33 @@ import DetailsOther from '../components/DetailsOther';
 
 class GameDetails extends Component {
 	
+	constructor (props) {
+		super (props);
+		SwissArmyKnife.historyPush.bind(this);
+	}
+	
 	render () {
 		return this.props.stateData.gameDetailsData === null ?
 			<Loading
 				onClick={() => this.getData()}
 				state={this.props.stateData.gameDetailsDataState} /> :
 			<div>
+				
 				<Video
 					img={this.props.stateData.gameDetailsData.cover}
 					video={this.props.stateData.gameDetailsData.video_url} />
-				<GameInfo data={this.props.stateData.gameDetailsData} />
+				
+				<GameInfo
+					onClick={() => SwissArmyKnife.historyPush('playgame',
+						{pkg:this.props.stateData.gameDetailsData.pkg}, this)}
+					data={this.props.stateData.gameDetailsData} />
+				
 				<TransformScrollView data={this.props.stateData.gameDetailsData.images} />
+				
 				<DetailSummary data={this.props.stateData.gameDetailsData} />
+				
 				<DetailsOther data={this.props.stateData.gameDetailsData} />
+				
 			</div>
 	}
 	

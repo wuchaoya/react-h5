@@ -18,7 +18,6 @@ let icon = require('../assets/img/game_grade_icon.png');
 export default class GameInfo extends Component {
 	
 	render () {
-		console.log(this.props.data);
 		return (
 			<div style={styles.container}>
 				<div style={styles.topContainer}>
@@ -28,7 +27,7 @@ export default class GameInfo extends Component {
 						<GameSize size={this.props.data.size} />
 						<GameClass data={this.props.data.label} />
 					</div>
-					<Button buttonText='立即玩' />
+					<Button onClick={this.props.onClick} buttonText='立即玩' />
 				</div>
 				<div style={styles.bottomContainer}>
 					<div style={styles.starText}>

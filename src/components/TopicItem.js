@@ -15,7 +15,8 @@ export default class TopicItem extends Component{
 	
 	render () {
 		return (
-			<div style={styles.container}>
+			<div onClick={() => this.historyPush('gamedetails', {gid: this.props.data.gid })}
+			     style={styles.container}>
 				<div style={styles.containerTop}>
 					<img style={styles.icon} src={this.props.data.icon} alt='' />
 					<div style={styles.CTLeft}>
@@ -25,7 +26,9 @@ export default class TopicItem extends Component{
 							<Star length={this.props.data.score} />
 						</div>
 					</div>
-					<Button onClick={() => this.historyPush('gamedetails', {gid: this.props.data.gid })}  buttonText='立即玩' />
+					<Button onClick={(e) => {
+						e.stopPropagation();
+						this.historyPush('playgame', {pkg: this.props.data.pkg })}}  buttonText='立即玩' />
 				</div>
 				<img width='100%' src={this.props.data.cover} alt='' />
 				<div style={styles.text}>{this.props.data.game_summary}</div>
@@ -37,7 +40,6 @@ export default class TopicItem extends Component{
 	}
 	
 	componentWillMount () {
-		console.log(this.props)
 	}
 };
 

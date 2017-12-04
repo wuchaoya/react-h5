@@ -9,7 +9,6 @@ import {GameDetailsOtherInfo} from '../components';
 export default class DetailsOther extends Component {
 	
 	render () {
-		console.log(this.props.data)
 		return (
 			<div style={styles.container}>
 				{this.props.data.company ? <GameDetailsOtherInfo name='开发商' text={this.props.data.company} /> : null}

@@ -89,4 +89,8 @@ export default class SwissArmyKnife {
 			}
 		);
 	}
+	static historyPush (path,data,obj) {
+		console.log(1)
+		obj.props.history.push(path, data);
+	}
 }
