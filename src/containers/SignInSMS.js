@@ -1,5 +1,6 @@
 /**
  * Created by chao on 2017/10/24.
+ * 短信登陆
  */
 
 import React, { Component } from 'react';

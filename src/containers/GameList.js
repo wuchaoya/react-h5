@@ -8,13 +8,7 @@ import { connect } from 'react-redux';
 
 import GameListHead from '../components/GameListHead';
 import HttpRequest from '../utils/HttpRequest';
-import GameListItem from './GameListItemContainer';
-import GameListIcon from '../components/GameListIcon';
-import GameListItemInfoContainer from './GameListItemInfoContainer';
-import GameListItemName from '../components/GameListItemName';
-import Start from '../components/Star';
-import GameClass from '../components/GameDetailsClass';
-import GameListButton from '../components/GamelistButton';
+import {GameListItem} from '../components';
 import loading from '../assets/img/loading.gif';
 import res from '../assets/img/emoji_res.png';
 import loadermore from '../assets/img/emoji_loadermore.png';
@@ -148,27 +142,7 @@ class Pull extends Component{
           distanceBottom={1000}>
           {
             this.state.data == null ? null : this.state.data.map((item, index) => {
-              return <GameListItem key={index} onClick={() => {
-                this.props.history.push('gamedetails' + item.gid);
-              }}>
-                <GameListIcon src={item.icon} />
-                <GameListItemInfoContainer>
-                  <GameListItemName>{item.name}</GameListItemName>
-                  <Start marginBottom={0.14} length={item.score} />
-                  <GameClass data={item.label = ['好玩', '不错']} />
-                </GameListItemInfoContainer>
-                <GameListButton onClick={(e) => {
-                  e.stopPropagation();
-                  if (!this.props.isLogin) {
-                    this.setState({
-                      loginModal: true
-                    });
-                    return;
-                  }
-                  this.getTimeLength(item.pkg)
-                }
-                } />
-              </GameListItem>;
+              return <GameListItem key={index} data={item} />
             })
             }
         </ReactPullLoad>

@@ -5,7 +5,8 @@
 import * as React from 'react';
 
 import {
-	Text
+	Text,
+	PurchaseItem
 } from '../components';
 
 export default class Purchase extends React.Component {
@@ -13,12 +14,13 @@ export default class Purchase extends React.Component {
 	render () {
 		return (
 			<div style={styles.container}>
-				<Text margin='0.52rem 0 0.18rem 0.24rem' color='#000' size={0.3} text='会员购买' />
-				{this.props.data.map(() => {
+				<Text margin='0.52rem 0 0.12rem 0.24rem' color='#000' size={0.3} text='会员购买' />
+				{this.props.data.map((item, index) => {
 					return (
-						<div style={styles.item}>
-						
-						</div>
+						<PurchaseItem
+							isRecommend={index === 1}
+							data={item}
+							key={index} />
 					)
 				})}
 			</div>
@@ -30,7 +32,7 @@ export default class Purchase extends React.Component {
 const styles = {
 	container: {
 		background: '#fff',
-		padding: '0.52rem 3rem 0 0.3rem'
+		padding: '0.52rem 0.3rem 0 0.3rem'
 	},
 	item: {
 		display: 'flex',

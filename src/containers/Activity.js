@@ -1,5 +1,6 @@
 /**
  * Created by chao on 2017/10/31.
+ * 活动专题
  */
 
 import React, { Component } from 'react';

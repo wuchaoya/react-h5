@@ -6,8 +6,7 @@ import React, { Component } from 'react';
 import icon from '../assets/img/radius_icon.png';
 export default class PurchaseItem extends Component {
   render () {
-    return (
-      <div style={
+    return Number(this.props.data.prize) === 0 ? null : <div style={
         Object.assign(
           {}, styles.container, {
             backgroundColor: this.props.isRecommend? '#fff8f0' : '#fff',
@@ -39,7 +38,6 @@ export default class PurchaseItem extends Component {
           </div>
         </div>
       </div>
-    );
   }
 };
 

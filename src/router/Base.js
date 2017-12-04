@@ -9,7 +9,8 @@ import {
   Home,
 	GameDetails,
 	Topic,
-  User
+  User,
+  GameList
 } from '../containers';
 
 class Base extends Component {
@@ -21,7 +22,7 @@ class Base extends Component {
           <Route exact path='/gamedetails' component={GameDetails} />
           <Route exact path='/topic' component={Topic} />
           <Route exact path='/user' component={User} />
-
+          <Route exact path='/gamelist' component={GameList} />
         </div>
       </Router>
     );

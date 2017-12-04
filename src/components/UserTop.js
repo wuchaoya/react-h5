@@ -20,7 +20,7 @@ export default class UserTop extends React.Component {
 			<div style={styles.topContainer}>
 				<div style={styles.container} >
 					<UserIcon click={this.props.click} login={this.props.login} />
-					<UserName click={this.props.click} name={this.props.name} login={this.props.login} />
+					<UserName click={this.props.click} name={this.props.name || '未登录'} login={this.props.login} />
 					{this.props.login ? <UserTime time={this.props.time} login={this.props.login} /> : null}
 					<div onClick={this.props.setting} style={styles.iconC}>
 						<img style={styles.icon2} src={icon} alt='' />
@@ -37,10 +37,10 @@ export default class UserTop extends React.Component {
 const styles = {
 	topContainer: {
 		height: '2.7rem',
-		backgrounde: '#000',
+		background: '#000',
 		display: 'flex',
 		justifyContent: 'center',
-		position: 'relative'
+		position: 'relative',
 	},
 	container: {
 		display: 'flex',

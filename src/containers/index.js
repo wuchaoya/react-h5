@@ -5,9 +5,9 @@
 export {default as Activity} from './Activity';
 export {default as ChessCardGame} from './ChessCardGame';
 export {default as GameDetails} from './GameDetails';
-export {default as GameList} from './GameListContainer';
-export {default as PlayGame} from './PlayGameContainer';
-export {default as QPCloudPlay} from './QPCloudPlayContainer';
+export {default as GameList} from './GameList';
+export {default as PlayGame} from './PlayGame';
+export {default as QPCloudPlay} from './QPCloudPlay';
 export {default as Setting} from './SettingContainer';
 export {default as SignIn} from './SignIn';
 export {default as SignInSMS} from './SignInSMS';

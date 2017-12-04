@@ -11,7 +11,9 @@ import SwissArmyKnife from '../utils/SwissArmyKnife';
 
 import {
 	Loading,
-	UserTop
+	UserTop,
+	Purchase,
+	Equity
 } from '../components';
 
 class User extends React.Component {
@@ -21,6 +23,8 @@ class User extends React.Component {
 			<Loading onClick={() => this.getData()} state={this.props.stateData.userDataState} /> :
 			<div>
 				<UserTop />
+				<Purchase data={this.props.stateData.userData} />
+				<Equity data={this.props.stateData.userData} />
 			</div>
 	}
 	

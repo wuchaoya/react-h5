@@ -11,7 +11,6 @@ export default class GameClasss extends Component {
 		return (
 			<div style={styles.container}>
 				{this.props.data.map((item, index) => {
-					console.log(item)
 					return (
 						<div key={index} style={styles.classContainer}>
 							<span style={styles.text}>

@@ -39,6 +39,8 @@ export default function update (state = initialState, action) {
 		  return Object.assign({}, state, {topicData: action.data, topicDataState: action.state});
 	  case actionTypes.SETGAMEDETAILSDATA:
 		  return Object.assign({}, state, {gameDetailsData: action.data, gameDetailsDataState: action.state});
+	  case actionTypes.SETUSERDATA:
+		  return Object.assign({}, state, {userData: action.data, userDataState: action.state});
 	  case LOGIN:
       return Object.assign({}, state, { login: action.state, userInfo: action.userInfo });
     case LOGINOUT:
