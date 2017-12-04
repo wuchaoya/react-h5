@@ -8,10 +8,10 @@ export {default as GameDetails} from './GameDetails';
 export {default as GameList} from './GameList';
 export {default as PlayGame} from './PlayGame';
 export {default as QPCloudPlay} from './QPCloudPlay';
-export {default as Setting} from './SettingContainer';
+export {default as Setting} from './Setting';
 export {default as SignIn} from './SignIn';
 export {default as SignInSMS} from './SignInSMS';
-export {default as Topic} from './SignInSMS';
+export {default as Topic} from './Topic';
 export {default as User} from './User';
 export {default as Home} from './Home';
 

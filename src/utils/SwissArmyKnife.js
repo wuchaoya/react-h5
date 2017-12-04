@@ -21,4 +21,13 @@ export default class SwissArmyKnife {
 		}
 		return null;
 	}
+	static isWeiXin () {
+		let ua = window.navigator.userAgent.toLowerCase();
+		// eslint-disable-next-line
+		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
