@@ -142,8 +142,14 @@ class Pull extends Component{
           distanceBottom={1000}>
           {
             this.state.data == null ? null : this.state.data.map((item, index) => {
-              return <GameListItem key={index} data={item} />
-            })
+              return <GameListItem
+                onClick={() => {this.props.history.push('gamedetails',{gid:item.gid});}}
+                onClickButton={(e) => {
+	                e.stopPropagation();
+	                this.getTimeLength(item.pkg, item.screen)
+                }
+                }
+                key={index} data={item} />})
             }
         </ReactPullLoad>
         {this.state.loginModal ? <ErrModal

@@ -45,6 +45,7 @@ class Home extends Component {
 				<FeaturedGames
 					onClick={(index) => this.historyPush('gamedetails', {gid: this.props.stateData.homeData.banner[index].gid})}
 					autoplay={false}
+					onClickButton={() => this.historyPush('gamelist')}
 					dataList={this.props.stateData.homeData.gameList} />
 				
 				<UserButton onClick={() => this.historyPush('user')} />
@@ -56,6 +57,7 @@ class Home extends Component {
 	 */
 	componentDidMount () {
 		SwissArmyKnife.setTitle('首页').setColor('#fff');
+		SwissArmyKnife.initWeChat();
 		this.getData();
 	}
 	
@@ -78,6 +80,52 @@ class Home extends Component {
 		}, (err) => {
 			setHomeData(null, 1)
 		});
+	}
+	
+	/**
+	 * 校验token
+	 */
+	checkToken () {
+		if (SwissArmyKnife.GetQueryString('channelID') !== '40129731334') {
+			return;
+		}
+		HttpRequest.validateToken(
+			{
+				token: encodeURIComponent(SwissArmyKnife.GetQueryString('uToken')),
+				channelId: '40129731334'
+			},
+			(res) => {
+				// 自登录相关逻辑
+				this.loginQuick(res.msisdn);
+			},
+			(err) => {
+				console.log('token实效了');
+			}
+		);
+	}
+	
+	/**
+	 * token免登
+	 */
+	loginQuick (phone) {
+		HttpRequest.loginQuick(
+			{ phone: phone,
+				channelId: '40129731334'
+			},
+			(res) => {
+				console.log(res);
+				if (res.resultCode === 0) {
+					this.props.login({
+						id:res.implicitLoginRsp.userInfo.identityID,
+						name:res.phone
+					});
+					SwissArmyKnife.getMyService(res.implicitLoginRsp.userInfo.identityID,this);
+				}
+			},
+			(err) => {
+				console.log(err);
+			}
+		);
 	}
 	
 }

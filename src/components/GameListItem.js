@@ -14,13 +14,13 @@ export default class GameListItem extends React.Component {
 	
 	render () {
 		return (
-			<div style={styles.container}>
+			<div onClick={this.props.onClick} style={styles.container}>
 				<img style={styles.icon} src={this.props.data.icon} alt='' />
 				<div style={styles.info}>
 					<Star marginBottom={0.14} length={this.props.data.score} />
 					<GameClass data={this.props.data.label = ['好玩', '不错']} />
 				</div>
-				<Button buttonText='立即玩' />
+				<Button onClick={this.props.onClickButton} buttonText='立即玩' />
 			</div>
 		);
 	}

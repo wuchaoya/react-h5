@@ -26,7 +26,7 @@ export default class FeaturedGames extends React.Component {
 			<div style={styles.container}>
 				<div style={styles.topStyle}>
 					<Text padding='0' color='#000' size={0.3} text='精选游戏' />
-					<Button width='auto' height='auto' size='0.24rem' border='none' margin='0' buttonText='更多' />
+					<Button onClick={this.props.onClickButton} width='auto' height='auto' size='0.24rem' border='none' margin='0' buttonText='更多' />
 				</div>
 				<Swiper width={1.96} component={this.renderSlide} showIndex={false} autoplay={false} dataList={props.dataList} />
 			</div>
