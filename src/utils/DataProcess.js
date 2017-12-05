@@ -28,21 +28,3 @@ export default class DataProcess {
   }
 };
 
-var DataProcess = {
-  Filter: function (data, key, arr) {
-    var Arrs = [];
-    arr.map((item, index) => {
-      Arrs[key + index] = [];
-    });
-    data.map((obj, i) => {
-      arr.map((item, index) => {
-        if (obj[key] === item) {
-          Arrs[key + index].push(obj);
-        }
-      });
-    });
-    return Arrs;
-  }
-};
-module.exports = DataProcess;
-

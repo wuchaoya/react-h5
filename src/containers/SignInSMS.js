@@ -1,5 +1,6 @@
 /**
  * Created by chao on 2017/10/24.
+ * 短信登陆
  */
 
 import React, { Component } from 'react';
@@ -15,7 +16,7 @@ import InputButton from '../components/InputCode';
 import HttpRequest from '../utils/HttpRequest';
 import Toast from '../components/Toast';
 import LoginModal from '../components/LoginModal';
-import { login, loginOut, getTimeLength, getMyService } from '../actions/actions';
+import { login, loginOut, getTimeLength, getMyService, getExtraId } from '../actions/actions';
 
 class SignInSMS extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class SignInSMS extends Component {
         <GoBack onClick={() => {
           this.props.history.goBack();
         }} />
-        <Title title='短信登陆' />
+        <Title title='短信登录' />
         <Input
           placeholder='请输入手机号'
           autoFocus
@@ -180,6 +181,7 @@ class SignInSMS extends Component {
       },
       (res) => {
         this.props.getTimeLength(Number(res.result_time));
+        this.props.getExtraId(res.trace_unique_id);
         this.setState({
           showErrModal: false
         }, () => {
@@ -197,4 +199,4 @@ const getLogin = state => {
     login: state.update.login
   };
 };
-export default connect(getLogin, { login, loginOut, getTimeLength, getMyService })(SignInSMS);
+export default connect(getLogin, { login, loginOut, getTimeLength, getMyService, getExtraId })(SignInSMS);

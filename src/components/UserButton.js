@@ -5,8 +5,8 @@
 import React, { Component } from 'react';
 import Gesture from 'rc-gesture';
 
-import icon from '../assets/button-user@2x.png';
-import icon2 from '../assets/user_login_icon.png';
+import icon from '../assets/img/button-user@2x.png';
+import icon2 from '../assets/img/user_login_icon.png';
 
 export default class UserButton extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ export default class UserButton extends Component {
     };
   }
   render () {
+    console.log(this.props.login);
     return (
       <div style={Object.assign({}, styles.container, {
         top:this.state.y / 100 + 'rem',
@@ -56,7 +57,10 @@ export default class UserButton extends Component {
 const styles = {
   icon: {
     height:'0.9rem',
-    width:'0.9rem'
+    width:'0.9rem',
+    borderRadius:'50%',
+    border:'0.02rem solid #eee',
+    backgroundColor:'#fff'
   },
   container: {
     position:'fixed'

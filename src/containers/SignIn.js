@@ -1,5 +1,6 @@
 /**
  * Created by chao on 2017/10/24.
+ * 账号登陆
  */
 
 import React, { Component } from 'react';
@@ -13,7 +14,7 @@ import '../styles/inputStyle.css';
 import Button from '../components/SignButton';
 import TextButton from '../components/SignTextButton';
 import HttpRequst from '../utils/HttpRequest';
-import { login, loginOut, getMyService, getTimeLength } from '../actions/actions';
+import { login, loginOut, getMyService, getTimeLength, getExtraId } from '../actions/actions';
 import LoginModal from '../components/LoginModal';
 
 class SignIn extends Component {
@@ -35,7 +36,7 @@ class SignIn extends Component {
         <GoBack onClick={() => {
           this.props.history.goBack();
         }} />
-        <Title title='账号登陆' />
+        <Title title='账号登录' />
         <Input
           name='phone'
           ref='phoneInput'
@@ -68,7 +69,7 @@ class SignIn extends Component {
         />
         <Button onClick={this.sigin} disabled={this.state.disabled} />
         <TextButton onClick={() => {
-          this.props.history.push('/signinsms', { key:this.props.location.state.key });
+          this.props.history.push('/signinsms');
         }}>短信登录</TextButton>
         {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
           this.setState({
@@ -142,6 +143,7 @@ class SignIn extends Component {
       },
       (res) => {
         this.props.getTimeLength(Number(res.result_time));
+        this.props.getExtraId(res.trace_unique_id);
         this.setState({
           showErrModal: false
         }, () => {
@@ -160,4 +162,4 @@ const getLogin = state => {
     login: state.update.login
   };
 };
-export default connect(getLogin, { login, loginOut, getMyService, getTimeLength })(SignIn);
+export default connect(getLogin, { login, loginOut, getMyService, getTimeLength, getExtraId })(SignIn);

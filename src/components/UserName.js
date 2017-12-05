@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 export default class UserName extends Component {
   render () {
     return (
-      <span style={
+      <span onClick={this.props.onClick} style={
         Object.assign(
           {},
           styles.textStyle,
@@ -24,7 +24,7 @@ const styles = {
     fontSize: '0.3rem',
     display: 'flex',
     justifyContent: 'center',
-    marginTop:'0.18rem'
+    marginTop:'0.1rem'
   },
   loginStyle: {
     position: 'absolute',

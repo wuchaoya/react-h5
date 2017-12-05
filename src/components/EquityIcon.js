@@ -4,9 +4,9 @@
 
 import React, { Component } from 'react';
 
-import icon1 from '../assets/giftBag1_icon.png';
-import icon2 from '../assets/giftBag2_icon.png';
-import icon3 from '../assets/giftBag3_icon.png';
+import icon1 from '../assets/img/giftBag1_icon.png';
+import icon2 from '../assets/img/giftBag2_icon.png';
+import icon3 from '../assets/img/giftBag3_icon.png';
 
 export default class EquityIcon extends Component {
   constructor(props) {
@@ -37,13 +37,13 @@ export default class EquityIcon extends Component {
     } else if (this.props.name === '精选包') {
       this.setState({
         icon: icon2,
-        fontSize: 0.24,
+        fontSize: 0.28,
         color: '#ea8e4a'
       });
     } else {
       this.setState({
         icon: icon3,
-        fontSize: 0.24,
+        fontSize: 0.28,
         color: '#999'
       });
     }
@@ -53,14 +53,12 @@ export default class EquityIcon extends Component {
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    marginLeft: '0.4rem',
+    marginLeft: '0.16rem',
     marginRight:'0.3rem'
   },
   icon: {
-    width: '0.66rem',
     height:'0.66rem'
   }
 };

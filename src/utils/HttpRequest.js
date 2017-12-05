@@ -81,6 +81,63 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+
+  static checkUserBattleId (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/check_user_room', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static checkUserRoomCard (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/check_user_room', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static openMonthly (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/check_user_room', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static consumptionRoomCard (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/mpweixin/check_user_room', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
   static getWxConfig (parameter, callbackSuccess, callbackError) {
     HttpUitl.Post('v2/mpweixin/wechat-share-config', parameter,
       (response) => {
@@ -225,4 +282,72 @@ export default class HttpRequest {
       });
   }
 
+  static validateToken (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/sso/pcloud-token-validate', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static getToken (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/sso/token', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static loginQuick (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/login/quick_login', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+
+  static userBehaviorLogReport (parameter, callbackSuccess, callbackError) {
+    HttpUitl.Post('/v2/log/user-behavior-log', parameter,
+      (response) => {
+        if (response.state === 200 && response.data) {
+          callbackSuccess(response.data);
+        } else {
+          callbackError(response.state);
+        }
+      },
+      (error) => {
+        callbackError(error);
+      });
+  }
+  static bindOpeniId (parameter, callbackSuccess, callbackError) {
+	  HttpUitl.Post('/v2/user/bind_openid', parameter,
+		  (response) => {
+			  if (response.state === 200 && response.data) {
+				  callbackSuccess(response.data);
+			  } else {
+				  callbackError(response.state);
+			  }
+		  },
+		  (error) => {
+			  callbackError(error);
+		  });
+  }
 };

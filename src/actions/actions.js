@@ -7,9 +7,64 @@ import {
   LOGINOUT,
   SERVICELISTDATA,
   GETMYSERVICELIS,
-  GETTIMELENGTH
+  GETTIMELENGTH,
+  GETEXTRAID
 } from '../constants/constants';
 
+import * as actionTypes from '../constants/constants'
+
+/**
+ * 首页数据
+ * @param data
+ * @param state
+ * @returns {{type, data: *, state: *}}
+ */
+export function setHomeData (data, state) {
+	return {
+		type: actionTypes.SETHOMEDATA,
+		data: data,
+		state: state
+	};
+}
+/**
+ * 专题数据
+ * @param data
+ * @param state
+ * @returns {{type, data: *, state: *}}
+ */
+export function setTopicData (data, state) {
+	return {
+		type: actionTypes.SETTOPICDATA,
+		data: data,
+		state: state
+	};
+}
+/**
+ * 游戏详情数据
+ * @param data
+ * @param state
+ * @returns {{type, data: *, state: *}}
+ */
+export function setGameDetailsData (data, state) {
+	return {
+		type: actionTypes.SETGAMEDETAILSDATA,
+		data: data,
+		state: state
+	};
+}
+/**
+ * 用户数据
+ * @param data
+ * @param state
+ * @returns {{type, data: *, state: *}}
+ */
+export function setUserData (data, state) {
+	return {
+		type: actionTypes.SETUSERDATA,
+		data: data,
+		state: state
+	};
+}
 /**
  * 获取登陆信息
  * @param res
@@ -67,5 +122,19 @@ export const getTimeLength = (time) => {
     type: GETTIMELENGTH,
     timeLength: time
   };
+};
+
+export const getExtraId = (id) => {
+  return {
+    type: GETEXTRAID,
+    extraId: id
+  };
+};
+
+
+export const getStateData = state => {
+	return {
+		stateData: state.update
+	};
 };
 

@@ -3,10 +3,12 @@
  */
 import React, { Component } from 'react';
 
+import Modal from './ModalC'
+
 export default class ErrModal extends Component {
   render () {
     return (
-      <div style={styles.modal}>
+      <Modal>
         <div style={
           Object.assign({}, styles.container, this.isWeiXin() ? { marginTop: '-2rem' } : {})}>
           <div style={styles.title}>
@@ -17,61 +19,12 @@ export default class ErrModal extends Component {
             <div onClick={this.props.onConfirm} style={Object.assign({}, styles.button, styles.green)}>确定</div>
           </div>
         </div>
-      </div>
+      </Modal>
     );
-  }
-  defaultEvent (event) {
-    event.preventDefault();
-  }
-  componentWillReceiveProps () {
-    if (this.props.disabled) {
-      document.addEventListener('touchmove', this.defaultEvent, false);
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.removeEventListener('touchmove', this.defaultEvent, false);
-      document.documentElement.style.overflow = 'visible';
-      document.body.style.overflow = 'visible;';
-    }
-  }
-  componentDidMount () {
-    document.addEventListener('touchmove', this.defaultEvent, false);
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    this.setState({
-      height: document.body.clientHeight / 100,
-      width: document.body.clientWidth / 100
-    });
-  }
-  isWeiXin () {
-    let ua = window.navigator.userAgent.toLowerCase();
-    // eslint-disable-next-line
-    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  componentWillUnmount () {
-    document.removeEventListener('touchmove', this.defaultEvent, false);
-    document.documentElement.style.overflow = 'visible';
-    document.body.style.overflow = 'visible';
   }
 };
 
 const styles = {
-  modal: {
-    width: '7.2rem',
-    height:'12.8rem',
-    backgroundColor:'rgba(0,0,0,0.7)',
-    display: 'flex',
-    justifyContent:'center',
-    alignItems: 'center',
-    position: 'fixed',
-    top:'0',
-    left:'0',
-    zIndex:'99'
-  },
   container: {
     height:'2.64rem',
     width: '5.3rem',

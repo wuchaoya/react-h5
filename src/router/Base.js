@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route,
+  Route
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import TopicDetailsContainer from '../containers/TopicDetailsContainer';
-import GameDetails from '../containers/GameDetailsContails';
-import PlayGame from '../containers/PlayGameContainer';
-import Pull from '../containers/GameListContainer';
-import Home from '../containers/HomeContainer';
-import MGPlay from '../containers/MGPlay';
-import User from '../containers/UserContainer';
-import SignIn from '../containers/SignIn';
-import SignInSMS from '../containers/SignInSMS';
-import Setting from '../containers/SettingContainer';
-import Activity from '../containers/Activity';
+import {
+  Home,
+	GameDetails,
+	Topic,
+  User,
+  GameList,
+	Activity,
+	PlayGame,
+	ChessCardGame,
+	QPCloudPlay,
+	Setting,
+	SignIn,
+	SignInSMS
+} from '../containers';
 
 class Base extends Component {
   render () {
@@ -23,17 +26,17 @@ class Base extends Component {
       <Router>
         <div>
           <Route exact path='/' component={Home} />
-          <Route exact path='/home' component={Home} />
-          <Route exact path='/topic' component={TopicDetailsContainer} />
-          <Route exact path='/gamedetails:gid' component={GameDetails} />
-          <Route exact path='/playgame' component={PlayGame} />
-          <Route exact path='/gamelist' component={Pull} />
-          <Route exact path='/mg' component={MGPlay} />
+          <Route exact path='/gamedetails' component={GameDetails} />
+          <Route exact path='/topic' component={Topic} />
           <Route exact path='/user' component={User} />
-          <Route exact path='/signin' component={SignIn} />
-          <Route exact path='/signinsms' component={SignInSMS} />
+          <Route exact path='/gamelist' component={GameList} />
+          <Route exact path='/playGame' component={PlayGame} />
+          <Route exact path='/QPCloudPlay' component={QPCloudPlay} />
+          <Route exact path='/chessCardGame' component={ChessCardGame} />
+          <Route exact path='/activity' component={Activity} />
           <Route exact path='/setting' component={Setting} />
-          <Route exact path='/act' component={Activity} />
+          <Route exact path='/signIn' component={SignIn} />
+          <Route exact path='/signinsms' component={SignInSMS} />
         </div>
       </Router>
     );

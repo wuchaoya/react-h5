@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 
-import icon2 from '../assets/frame2@2x.png';
+import icon2 from '../assets/img/frame2@2x.png';
 
 export default class ShareTipsModal extends Component {
   render () {

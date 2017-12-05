@@ -6,7 +6,7 @@
  * Created by chao on 2017/10/26.
  */
 import React, { Component } from 'react';
-import icon from '../assets/loading.gif';
+import icon from '../assets/img/loading.gif';
 export default class LoginModal extends Component {
   render () {
     return (
@@ -126,8 +126,8 @@ const styles = {
     fontSize: '0.26rem',
   },
   iconStyle: {
-    width:'0.45rem',
-    height:'0.45rem',
+    width:'0.54rem',
+    height:'0.58rem',
     marginBottom:'0.1rem'
   }
 };

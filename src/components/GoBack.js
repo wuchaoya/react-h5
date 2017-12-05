@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 
-import icon from '../assets/back-h5@2x.png';
+import icon from '../assets/img/back-h5@2x.png';
 
 export default class GoBack extends Component {
   render () {
@@ -28,7 +28,9 @@ const styles = {
   iconStyle: {
     width: '0.17rem',
     height: '0.31rem',
-    padding:'0.4rem'
+    padding:'0.4rem',
+    paddingTop:'0.5rem',
+    marginTop:'0.1rem'
   }
 };
 

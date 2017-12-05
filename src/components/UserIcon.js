@@ -3,12 +3,13 @@
  */
 
 import React, { Component } from 'react';
-import icon from '../assets/user.png';
-import loginIcon from '../assets/user_login_icon.png';
+import icon from '../assets/img/user.png';
+import loginIcon from '../assets/img/user_login_icon.png';
 export default class UserIcon extends Component {
   render () {
+    console.log(this.props.login)
     return (
-      <div onClick={this.props.click} >
+      <div onClick={this.props.onClick} >
         <img style={Object.assign(
           {},
           styles.iconStyle,
@@ -26,7 +27,7 @@ const styles = {
     padding: '0',
     height: '1.2rem',
     width: '1.2rem',
-    border: '0.04rem solid #aaa',
+    border: '0.04rem solid #fff',
     borderRadius: '50%',
     backgroundColor:'#fff'
   },

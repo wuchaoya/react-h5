@@ -55,6 +55,7 @@ export default class Base64 {
     output = this._utf8_decode(output);
     return output;
   }
+  // eslint-disable-next-line
   static _utf8_encode (string) {
     string = string.replace(/\r\n/g, '\n');
     let utftext = '';
@@ -73,6 +74,7 @@ export default class Base64 {
     }
     return utftext;
   }
+  // eslint-disable-next-line
   static _utf8_decode (utftext) {
     let string = '';
     let i = 0;

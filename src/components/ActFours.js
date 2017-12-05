@@ -5,15 +5,16 @@ import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay, virtualize, bindKeyboard } from 'react-swipeable-views-utils';
 
-import banner1 from '../assets/banner-庞然巨物.jpg';
-import banner2 from '../assets/banner-我的宠物Pou.jpg';
-import banner3 from '../assets/banner-逃离实验室.jpg';
-import banner4 from '../assets/banner-飞翔彩虹猫.jpg';
+import banner1 from '../assets/img/banner-庞然巨物.jpg';
+import banner2 from '../assets/img/banner-我的宠物Pou.jpg';
+import banner3 from '../assets/img/banner-逃离实验室.jpg';
+import banner4 from '../assets/img/banner-飞翔彩虹猫.jpg';
 
 const EnhancedSwipeableViews = bindKeyboard(autoPlay(virtualize(SwipeableViews)));
 const data = [banner1, banner2, banner3, banner4];
 
 export default class ActFours extends Component {
+  
   constructor (props) {
     super(props);
     this.state = {
@@ -21,6 +22,7 @@ export default class ActFours extends Component {
     };
     this.slideRenderer = this.slideRenderer.bind(this);
   }
+  
   slideRenderer (params) {
     const { index, key } = params;
     return (
@@ -33,6 +35,7 @@ export default class ActFours extends Component {
         style={styles.slide} key={key} />
     );
   }
+  
   indexRender (data) {
     return (
       <div style={styles.spanList}>
@@ -44,6 +47,7 @@ export default class ActFours extends Component {
       </div>
     );
   }
+  
   render () {
     return (
       <div style={styles.container}>
@@ -58,7 +62,9 @@ export default class ActFours extends Component {
       </div>
     );
   }
+  
 }
+
 const styles = {
   container: {
     position: 'relative'

@@ -3,15 +3,14 @@
  */
 import React, { Component } from 'react';
 
-import icon from '../assets/radius_icon.png';
+import icon from '../assets/img/radius_icon.png';
 export default class PurchaseItem extends Component {
   render () {
-    return (
-      <div style={
+    return Number(this.props.data.prize) === 0 ? null : <div style={
         Object.assign(
           {}, styles.container, {
             backgroundColor: this.props.isRecommend? '#fff8f0' : '#fff',
-            border: this.props.isRecommend ? '0.01rem solid #f9dec5' : '0.01rem solid #ccc'
+            border: this.props.isRecommend ? '0.01rem solid #f9dec5' : '0.01rem solid #ddd'
           }
           )}>
         {this.props.isRecommend ? <div style={styles.icon}>
@@ -39,7 +38,6 @@ export default class PurchaseItem extends Component {
           </div>
         </div>
       </div>
-    );
   }
 };
 
