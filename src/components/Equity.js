@@ -15,7 +15,7 @@ export default class Equity extends React.Component {
 	render () {
 		return (
 			<div style={styles.container}>
-				<Text margin='0.52rem 0 0.18rem 0.24rem' color='#000' size={0.3} text='会员购买' />
+				<Text margin='0.52rem 0 0.18rem 0.24rem' color='#000' size={0.3} text='会员权益' />
 				{this.props.data.reverse().map((item, index) => {
 					return <div style={styles.item} key={index}>
 						<EquityIcon name={item.prodect_title} />

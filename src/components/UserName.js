@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 export default class UserName extends Component {
   render () {
     return (
-      <span onClick={this.props.click} style={
+      <span onClick={this.props.onClick} style={
         Object.assign(
           {},
           styles.textStyle,

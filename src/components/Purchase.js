@@ -32,7 +32,6 @@ export default class Purchase extends React.Component {
 const styles = {
 	container: {
 		background: '#fff',
-		padding: '0.52rem 0.3rem 0 0.3rem'
 	},
 	item: {
 		display: 'flex',

@@ -69,7 +69,7 @@ class SignIn extends Component {
         />
         <Button onClick={this.sigin} disabled={this.state.disabled} />
         <TextButton onClick={() => {
-          this.props.history.push('/signinsms', { key:this.props.location.state.key });
+          this.props.history.push('/signinsms');
         }}>短信登录</TextButton>
         {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
           this.setState({

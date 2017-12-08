@@ -48,7 +48,7 @@ class Home extends Component {
 					onClickButton={() => this.historyPush('gamelist')}
 					dataList={this.props.stateData.homeData.gameList} />
 				
-				<UserButton onClick={() => this.historyPush('user')} />
+				<UserButton login={this.props.stateData.login} onClick={() => this.historyPush('user')} />
 			</div>;
 	}
 	

@@ -8,12 +8,12 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import HttpRequest from '../utils/HttpRequest';
 import SwissArmyKnife from '../utils/SwissArmyKnife';
-
 import {
 	Loading,
 	UserTop,
 	Purchase,
-	Equity
+	Equity,
+	LoginModal
 } from '../components';
 
 class User extends React.Component {
@@ -22,9 +22,14 @@ class User extends React.Component {
 		return this.props.stateData.userData === null ?
 			<Loading onClick={() => this.getData()} state={this.props.stateData.userDataState} /> :
 			<div>
-				<UserTop />
+				<UserTop
+					time={this.props.stateData.timeLength}
+					name={this.props.stateData.userInfo.name}
+					login={this.props.stateData.login}
+					history={this.props.history} />
 				<Purchase data={this.props.stateData.userData} />
 				<Equity data={this.props.stateData.userData} />
+				<LoginModal />
 			</div>
 	}
 	

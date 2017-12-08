@@ -36,7 +36,7 @@ class Base extends Component {
           <Route exact path='/activity' component={Activity} />
           <Route exact path='/setting' component={Setting} />
           <Route exact path='/signIn' component={SignIn} />
-          <Route exact path='/signInSMS' component={SignInSMS} />
+          <Route exact path='/signinsms' component={SignInSMS} />
         </div>
       </Router>
     );

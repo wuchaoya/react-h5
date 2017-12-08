@@ -337,4 +337,17 @@ export default class HttpRequest {
         callbackError(error);
       });
   }
+  static bindOpeniId (parameter, callbackSuccess, callbackError) {
+	  HttpUitl.Post('/v2/user/bind_openid', parameter,
+		  (response) => {
+			  if (response.state === 200 && response.data) {
+				  callbackSuccess(response.data);
+			  } else {
+				  callbackError(response.state);
+			  }
+		  },
+		  (error) => {
+			  callbackError(error);
+		  });
+  }
 };

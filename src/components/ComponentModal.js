@@ -3,23 +3,28 @@
  */
 import React, { Component } from 'react';
 
-import Modal from './ModalC'
+import Modal from './ModalC';
+import SwissArmyKnife from '../utils/SwissArmyKnife';
 
-export default class ErrModal extends Component {
+export default class ComponentModal extends Component {
   render () {
+    console.log(this.props)
     return (
-      <Modal>
-        <div style={
-          Object.assign({}, styles.container, this.isWeiXin() ? { marginTop: '-2rem' } : {})}>
-          <div style={styles.title}>
-            {this.props.title}
-          </div>
-          <div style={styles.containerBottom}>
-            <div onClick={this.props.onCancel} style={Object.assign({}, styles.button, styles.line)}>取消</div>
-            <div onClick={this.props.onConfirm} style={Object.assign({}, styles.button, styles.green)}>确定</div>
-          </div>
+      <Modal component={this._render(this.props)} />
+    );
+  }
+  _render (props) {
+    return (
+      <div style={
+		    Object.assign({}, styles.container, SwissArmyKnife.isWeiXin() ? { marginTop: '-2rem' } : {})}>
+        <div style={styles.title}>
+			    {props.title}
         </div>
-      </Modal>
+        <div style={styles.containerBottom}>
+          <div onClick={props.onCancel} style={Object.assign({}, styles.button, styles.line)}>取消</div>
+          <div onClick={props.onConfirm} style={Object.assign({}, styles.button, styles.green)}>确定</div>
+        </div>
+      </div>
     );
   }
 };

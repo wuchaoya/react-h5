@@ -60,5 +60,5 @@
     "redux-devtools-log-monitor": "^1.0.11"
   },
   "homepage": "./",
-  "proxy": "http://pcloud.haimawan.com"
+  "proxy": "http://migu-api.cmgame.com"
 }

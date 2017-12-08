@@ -9,7 +9,7 @@ export default class UserIcon extends Component {
   render () {
     console.log(this.props.login)
     return (
-      <div onClick={this.props.click} >
+      <div onClick={this.props.onClick} >
         <img style={Object.assign(
           {},
           styles.iconStyle,

@@ -14,7 +14,7 @@ import res from '../assets/img/emoji_res.png';
 import loadermore from '../assets/img/emoji_loadermore.png';
 import WeChat from '../utils/WeChat';
 import { getTimeLength, getExtraId } from '../actions/actions';
-import ErrModal from '../components/ErrModal';
+import ErrModal from '../components/ComponentModal';
 
 class HeadNode extends PureComponent{
   _render (loaderState) {
@@ -181,6 +181,7 @@ class Pull extends Component{
       err: false
     });
     HttpRequest.getGameListData({ page: this.state.index }, (res) => {
+      console.log(res);
       this.setState({
         data: res
       });

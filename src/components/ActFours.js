@@ -14,6 +14,7 @@ const EnhancedSwipeableViews = bindKeyboard(autoPlay(virtualize(SwipeableViews))
 const data = [banner1, banner2, banner3, banner4];
 
 export default class ActFours extends Component {
+  
   constructor (props) {
     super(props);
     this.state = {
@@ -21,6 +22,7 @@ export default class ActFours extends Component {
     };
     this.slideRenderer = this.slideRenderer.bind(this);
   }
+  
   slideRenderer (params) {
     const { index, key } = params;
     return (
@@ -33,6 +35,7 @@ export default class ActFours extends Component {
         style={styles.slide} key={key} />
     );
   }
+  
   indexRender (data) {
     return (
       <div style={styles.spanList}>
@@ -44,6 +47,7 @@ export default class ActFours extends Component {
       </div>
     );
   }
+  
   render () {
     return (
       <div style={styles.container}>
@@ -58,7 +62,9 @@ export default class ActFours extends Component {
       </div>
     );
   }
+  
 }
+
 const styles = {
   container: {
     position: 'relative'

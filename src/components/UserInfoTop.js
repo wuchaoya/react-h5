@@ -11,11 +11,16 @@ import icon from '../assets/icon-setting.png';
 import goback from '../assets/back.png';
 
 export default class UserInfoTop extends Component {
+  constructor (props) {
+    super (props);
+    this.historyPush = this.historyPush.bind(this);
+  }
   render () {
+    console.log(this.props);
     return (
       <div style={styles.container} >
-        <UserIcon click={this.props.click} login={this.props.login} />
-        <UserName click={this.props.click} name={this.props.name} login={this.props.login} />
+        <UserIcon onClick={this.historyPush} login={this.props.login} />
+        <UserName onClick={this.historyPush} name={this.props.name} login={this.props.login} />
         {this.props.login ? <UserTime time={this.props.time} login={this.props.login} /> : null}
         <div onClick={this.props.setting} style={styles.iconC}>
           <img style={styles.icon2} src={icon} alt='' />
@@ -26,7 +31,14 @@ export default class UserInfoTop extends Component {
       </div>
     );
   }
+	historyPush() {
+    if (this.props.isLogin) {
+      return
+    }
+    this.props.history.push('login')
+  }
 };
+
 
 const styles = {
   container: {
