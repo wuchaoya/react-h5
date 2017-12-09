@@ -1,6 +1,7 @@
 /**
  * Created by chao on 2017/10/26.
  */
+
 import React, { Component } from 'react';
 
 import Modal from './ModalC';
@@ -8,9 +9,8 @@ import SwissArmyKnife from '../utils/SwissArmyKnife';
 
 export default class ComponentModal extends Component {
   render () {
-    console.log(this.props)
     return (
-      <Modal component={this._render(this.props)} />
+      <Modal  component={this._render(this.props)} />
     );
   }
   _render (props) {

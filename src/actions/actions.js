@@ -2,15 +2,6 @@
  * Created by chao on 2017/10/23.
  */
 
-import {
-  LOGIN,
-  LOGINOUT,
-  SERVICELISTDATA,
-  GETMYSERVICELIS,
-  GETTIMELENGTH,
-  GETEXTRAID
-} from '../constants/constants';
-
 import * as actionTypes from '../constants/constants'
 
 /**
@@ -72,7 +63,7 @@ export function setUserData (data, state) {
  */
 export const login = (res) => {
   return {
-    type: LOGIN,
+    type: actionTypes.LOGIN,
     state: true,
     userInfo:{ id: res.id, name: res.name }
   };
@@ -83,7 +74,7 @@ export const login = (res) => {
  */
 export const loginOut = () => {
   return {
-    type: LOGINOUT,
+    type: actionTypes.LOGINOUT,
     state: false,
     userInfo:{
       id:'',
@@ -98,7 +89,7 @@ export const loginOut = () => {
  */
 export const getServiceData = (data) => {
   return {
-    type: SERVICELISTDATA,
+    type: actionTypes.SERVICELISTDATA,
     data: data
   };
 };
@@ -109,7 +100,7 @@ export const getServiceData = (data) => {
  */
 export const getMyService = (id) => {
   return {
-    type: GETMYSERVICELIS,
+    type: actionTypes.GETMYSERVICELIS,
     id: id
   };
 };
@@ -119,14 +110,20 @@ export const getMyService = (id) => {
  */
 export const getTimeLength = (time) => {
   return {
-    type: GETTIMELENGTH,
+    type: actionTypes.GETTIMELENGTH,
     timeLength: time
   };
 };
+export const showHidenLoginModal = (showOrhiden) => {
+	return {
+		type: actionTypes.SHOWLOGINMODAL,
+		state: showOrhiden
+	}
+}
 
 export const getExtraId = (id) => {
   return {
-    type: GETEXTRAID,
+    type: actionTypes.GETEXTRAID,
     extraId: id
   };
 };

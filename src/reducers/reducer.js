@@ -2,15 +2,8 @@
  * Created by chao on 2017/10/23.
  */
 
-import {
-  LOGIN,
-  LOGINOUT,
-  SERVICELISTDATA,
-  GETMYSERVICELIS,
-  GETTIMELENGTH,
-  GETEXTRAID
-} from '../constants/constants';
 import * as actionTypes from '../constants/constants';
+
 const initialState = {
 	homeData: null,
 	homeDataState: -1,
@@ -28,7 +21,8 @@ const initialState = {
     name:'未登录'
   }, // 已登陆的用户信息
   timeLength: null,
-  extraId: null // 时长id
+  extraId: null, // 时长id
+	showLoginModal: false
 };
 
 export default function update (state = initialState, action) {
@@ -41,18 +35,20 @@ export default function update (state = initialState, action) {
 		  return Object.assign({}, state, {gameDetailsData: action.data, gameDetailsDataState: action.state});
 	  case actionTypes.SETUSERDATA:
 		  return Object.assign({}, state, {userData: action.data, userDataState: action.state});
-	  case LOGIN:
+	  case actionTypes.LOGIN:
       return Object.assign({}, state, { login: action.state, userInfo: action.userInfo });
-    case LOGINOUT:
+    case actionTypes.LOGINOUT:
       return Object.assign({}, state, { login: action.state,userInfo: action.userInfo });
-    case SERVICELISTDATA:
+    case actionTypes.SERVICELISTDATA:
       return Object.assign({}, state, { serviceData: action.data });
-    case GETMYSERVICELIS:
+    case actionTypes.GETMYSERVICELIS:
       return Object.assign({}, state, { MyServiceId: action.id });
-    case GETTIMELENGTH:
+    case actionTypes.GETTIMELENGTH:
       return Object.assign({}, state, { timeLength: action.timeLength });
-    case GETEXTRAID:
+    case actionTypes.GETEXTRAID:
       return Object.assign({}, state, { extraId: action.extraId });
+	  case actionTypes.SHOWLOGINMODAL:
+	  	return Object.assign({}, state, { showLoginModal: action.state })
     default:
       return state;
   }

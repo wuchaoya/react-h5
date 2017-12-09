@@ -176,7 +176,6 @@ export default class WeChat {
         dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
         success: function () {
           console.log('分享成功');
-          console.log(encodeURI(('http://migugame.cmgame.com/gulu/wechat/capacity/getWxCodeInfo?redirectUrl=' + (window.location.href.split('#')[0]).split('&code=')[0]).replace(/&/g, '-')));
         },
         cancel: function () {
           // 用户取消分享后执行的回调函数
@@ -192,13 +191,10 @@ export default class WeChat {
         success: function () {
           // 用户确认分享后执行的回调函数
           console.log('分享成功');
-          console.log(encodeURI(('http://migugame.cmgame.com/gulu/wechat/capacity/getWxCodeInfo?redirectUrl=' + (window.location.href.split('#')[0]).split('&code=')[0]).replace(/&/g, '-')));
         },
         cancel: function () {
           // 用户取消分享后执行的回调函数
           console.log('分享取消');
-          console.log(encodeURI(('http://migugame.cmgame.com/gulu/wechat/capacity/getWxCodeInfo?redirectUrl=' +
-          (window.location.href.split('#')[0]).split('&code=')[0]).replace(/&/g, '-')));
         }
       });
     });
