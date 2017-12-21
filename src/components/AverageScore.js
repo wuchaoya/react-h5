@@ -27,7 +27,7 @@ const Container = styled.div`
  margin-top:0.2rem;
 `;
 
-export default class GameClass extends Component {
+export default class AverageScore extends Component {
   render () {
     return (
       <Container>

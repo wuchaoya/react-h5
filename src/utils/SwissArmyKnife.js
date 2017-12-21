@@ -6,16 +6,35 @@ import HttpRequest from './HttpRequest';
 import WeChat from './WeChat';
 
 export default class SwissArmyKnife {
+	
+	/**
+	 * 设置网页标题
+	 * @param title
+	 * @returns {SwissArmyKnife}
+	 */
 	static setTitle (title) {
 		document.title = title;
 		return this;
 	}
+	
+	/**
+	 * 设置页面背景颜色
+	 * @param color
+	 * @returns {SwissArmyKnife}
+	 */
 	static setColor (color) {
 		document.getElementsByTagName('body')[0].style.backgroundColor = color;
 		document.getElementsByTagName('body')[0].style.background = color;
 		document.getElementsByTagName('html')[0].style.background = color;
 		return this;
 	}
+	
+	/**
+	 * 获取url上的参数
+	 * @param name
+	 * @returns {null}
+	 * @constructor
+	 */
 	static GetQueryString (name) {
 		let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
 		let r = window.location.search.substr(1).match(reg);
@@ -24,6 +43,11 @@ export default class SwissArmyKnife {
 		}
 		return null;
 	}
+	
+	/**
+	 * 判断是否是微信
+	 * @returns {boolean}
+	 */
 	static isWeiXin () {
 		let ua = window.navigator.userAgent.toLowerCase();
 		// eslint-disable-next-line
@@ -33,6 +57,21 @@ export default class SwissArmyKnife {
 			return false;
 		}
 	}
+	
+	/**
+	 * 判断是否是ios
+	 * @returns {boolean}
+	 */
+	static isIos () {
+		if (navigator.userAgent.match(/iPad|iPhone/i)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 初始化微信jsSdk
+	 */
 	static initWeChat () {
 		if(!this.isWeiXin()) {return};
 		HttpRequest.getWxConfig(
@@ -57,22 +96,43 @@ export default class SwissArmyKnife {
 			}
 		);
 	}
-	static getMyService (id, obj) {
+	
+	/**
+	 * 获取我的包月信息
+	 * @param id
+	 * @param obj
+	 */
+	static getMyService (id, _this) {
 		HttpRequest.getMyService(
 			{
 				user_id: id,
 				channelId: '40129731334'
 			},
 			(res) => {
-				obj.props.getMyService(res.service[0].service_id);
-				this.getTimeLength(id, res.service[0].service_id, obj);
+				let services = [];
+				if (res.service.length !== 0) {
+					res.service.forEach((item) => {
+						services.push(item.service_id);
+					});
+					_this.props.stateData.MyServiceId(services);
+				} else {
+					_this.props.stateData.MyServiceId([]);
+				}
+				this.getTimeLength(id, services, _this);
 			},
 			(err) => {
-				console.log(err);
+				console.log('获取我的包月失败', err);
 			}
 		);
 	}
-	static getTimeLength (userId, id, obj) {
+	
+	/**
+	 * 获取剩余时长
+	 * @param userId
+	 * @param id
+	 * @param obj
+	 */
+	static getTimeLength (userId, id, _this) {
 		HttpRequest.getTimeLength(
 			{
 				user_id: userId,
@@ -81,16 +141,51 @@ export default class SwissArmyKnife {
 				channelId: '40129731334'
 			},
 			(res) => {
-				obj.props.getTimeLength(Number(res.result_time));
-				obj.props.getExtraId(res.trace_unique_id);
+				_this.props.stateData.timeLength(Number(res.result_time));
 			},
 			(err) => {
-				console.log(err);
+				console.log('获取时长失败', err);
 			}
 		);
 	}
-	static historyPush (path,data,obj) {
-		console.log(1)
-		obj.props.history.push(path, data);
+	
+	/**
+	 * 路由跳转
+	 * @param path
+	 * @param data
+	 * @param _this || this.func = this.func.bind(this)
+	 */
+	static historyPush (path,data,_this) {
+		_this || (_this = this);
+		_this.props.history.push(path, data);
 	}
-}
+	
+	/**
+	 * 拷贝一个对象或者数组
+	 * @param parameter
+	 * @returns {*}
+	 */
+	static clone (parameter) {
+		switch (Object.prototype.toString.call(parameter)) {
+			case '[object Array]':
+				return [].concat(parameter);
+			case '[object Object]':
+				return Object.assign({}, parameter);
+			default:
+				return parameter;
+		}
+	}
+	
+	/**
+	 *查询元素是否存在，返回所在位置
+	 */
+	static indexOf (item, arr) {
+		let i = -1;
+		arr.forEach((chart, index) => {
+			if (item === chart) {
+				i = index;
+			}
+		});
+		return i
+	}
+};

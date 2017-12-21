@@ -15,7 +15,7 @@ const initialState = {
 	userDataState: -1,
   login: false, // 登陆状态
   serviceData: null, // 开通包月数据
-  MyServiceId: '', // 已开通包月id
+  MyServiceId: [], // 已开通包月id
   userInfo:{
     id:'',
     name:'未登录'

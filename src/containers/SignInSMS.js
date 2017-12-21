@@ -6,17 +6,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Container from './Container';
-import Title from '../components/SignTitle';
-import GoBack from '../components/GoBack';
-import Input from '../components/Input';
-import '../styles/inputStyle.css';
-import Button from '../components/SignButton';
-import InputButton from '../components/InputCode';
-import HttpRequest from '../utils/HttpRequest';
-import Toast from '../components/Toast';
-import LoginModal from '../components/LoginModal';
-import { login, loginOut, getTimeLength, getMyService, getExtraId } from '../actions/actions';
+import {
+  SignTitle,
+	GoBack,
+	Input,
+	InputCode,
+	SignButton,
+	Toast,
+	SigninModal
+} from '../components';
+
+import HttpRequst from '../utils/HttpRequest';
+import * as actions from '../actions/actions';
+import SwissArmyKnife from '../utils/SwissArmyKnife';
 
 class SignInSMS extends Component {
   constructor(props) {
@@ -37,11 +39,11 @@ class SignInSMS extends Component {
   }
   render () {
     return (
-      <Container background='#f5f5f5'>
+      <div style={{ background: '#f5f5f5' }}>
         <GoBack onClick={() => {
           this.props.history.goBack();
         }} />
-        <Title title='短信登录' />
+        <SignTitle title='短信登录' />
         <Input
           placeholder='请输入手机号'
           autoFocus
@@ -57,7 +59,7 @@ class SignInSMS extends Component {
             });
           }}
         />
-        <InputButton
+        <InputCode
           name='code'
           ref='codeInput'
           value={this.state.code}
@@ -75,22 +77,26 @@ class SignInSMS extends Component {
             });
           }}
         />
-        <Button onClick={this.siginSMS} disabled={this.state.buttonDisabled} />
+        <SignButton onClick={this.siginSMS} disabled={this.state.buttonDisabled} />
         {this.state.getCodeToast ? <Toast text='短信已发送...' /> : null}
-        {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
+        {this.state.showErrModal ? <SigninModal err={this.state.loginErr} onConfirm={() => {
           this.setState({
             showErrModal: false
           });
         }} title={this.state.errText} /> : null}
-      </Container>
+      </div>
     );
   }
+	
+	/**
+   * 短信验证码登录
+	 */
   siginSMS () {
     this.setState({
       showErrModal: true,
       loginErr: false
     }, () => {
-      HttpRequest.signinSMS(
+	    HttpRequst.signinSMS(
         {
           phone: this.state.phone,
           smsValidate:this.state.code,
@@ -110,7 +116,8 @@ class SignInSMS extends Component {
             this.getMyService(res.authenticateRsp.userInfo.identityID);
           } else {
             this.setState({
-              loginErr: true
+              loginErr: true,
+	            errText:'验证码已失效'
             });
           }
         },
@@ -120,8 +127,12 @@ class SignInSMS extends Component {
       );
     });
   }
-  getCode () {
-    HttpRequest.getCode(
+	
+	/**
+   * 获取短信验证码
+	 */
+	getCode () {
+	  HttpRequst.getCode(
       {
         phone:this.state.phone,
         businessID:'2'
@@ -143,60 +154,86 @@ class SignInSMS extends Component {
       }
     );
   }
-  checkOnChange () {
+  
+	checkOnChange () {
     this.setState({
       codeDisabled:!(/^1[34578]\d{9}$/.test(this.state.phone)),
       buttonDisabled:!(/^1[34578]\d{9}$/.test(this.state.phone) && this.state.code.length === 6)
     });
   }
+  
   setStateDisabled (bool) {
     this.setState({
       codeDisabled: bool
     });
   }
+  
   componentWillMount () {
-    document.getElementsByTagName('html')[0].style.background = '#f5f5f5';
-    document.getElementsByTagName('body')[0].style.background = '#f5f5f5';
+	  SwissArmyKnife.setColor('#f5f5f5')
   }
-  getMyService (id) {
-    HttpRequest.getMyService(
-      {
-        user_id: id
-      },
-      (res) => {
-        this.props.getMyService(res.service[0].service_id);
-        this.getTimeLength(id, res.service[0].service_id);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-  getTimeLength (userId, id) {
-    HttpRequest.getTimeLength(
-      {
-        user_id: userId,
-        service_id:[id],
-        pkg:''
-      },
-      (res) => {
-        this.props.getTimeLength(Number(res.result_time));
-        this.props.getExtraId(res.trace_unique_id);
-        this.setState({
-          showErrModal: false
-        }, () => {
-          this.props.history.go(-2);
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
+  
+	/**
+	 * 获取用户包月信息
+	 * @param id
+	 */
+	getMyService (id) {
+		HttpRequst.getMyService(
+			{
+				user_id: id,
+				channelId: '40129731334'
+			},
+			(res) => {
+				let services = [];
+				if (res.service.length !== 0) {
+					res.service.forEach((item) => {
+						services.push(item.service_id);
+					});
+					this.props.getMyService(services);
+				} else {
+					this.props.getMyService([]);
+				}
+				this.getTimeLength(id, services);
+			},
+			(err) => {
+				console.log('获取我的包月失败', err);
+				this.setState({
+					loginErr: true,
+					errText: '获取用户订购信息失败'
+				});
+			}
+		);
+	}
+	
+	/**
+	 * 获取剩余时长
+	 * @param userId
+	 * @param id
+	 */
+	getTimeLength (userId, id) {
+		HttpRequst.getTimeLength(
+			{
+				user_id: userId,
+				service_id:id,
+				pkg:'',
+				channelId: '40129731334'
+			},
+			(res) => {
+				this.props.getTimeLength(Number(res.result_time));
+				this.setState({
+					showErrModal: false
+				}, () => {
+					this.props.history.go(-2);
+				});
+			},
+			(err) => {
+				console.log('获取时长失败', err);
+				this.setState({
+					loginErr: true,
+					errText: '获取用户剩余时长失败'
+				});
+			}
+		);
+	}
+	
 };
-const getLogin = state => {
-  return {
-    login: state.update.login
-  };
-};
-export default connect(getLogin, { login, loginOut, getTimeLength, getMyService, getExtraId })(SignInSMS);
+export default connect(actions.getStateData, actions)(SignInSMS);

@@ -6,16 +6,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Container from './Container';
-import Title from '../components/SignTitle';
-import GoBack from '../components/GoBack';
-import Input from '../components/Input';
-import '../styles/inputStyle.css';
-import Button from '../components/SignButton';
-import TextButton from '../components/SignTextButton';
+import {
+	SignTitle,
+	GoBack,
+	Input,
+	SignButton,
+	SignTextButton,
+	SigninModal
+} from '../components';
+
 import HttpRequst from '../utils/HttpRequest';
-import { login, loginOut, getMyService, getTimeLength, getExtraId } from '../actions/actions';
-import LoginModal from '../components/LoginModal';
+import * as actions from '../actions/actions';
+import SwissArmyKnife from '../utils/SwissArmyKnife';
+
 
 class SignIn extends Component {
   constructor(props) {
@@ -32,11 +35,14 @@ class SignIn extends Component {
   }
   render () {
     return (
-      <Container background='#f5f5f5'>
+      <div style={{ background: '#f5f5f5' }}>
+        
         <GoBack onClick={() => {
           this.props.history.goBack();
         }} />
-        <Title title='账号登录' />
+        
+        <SignTitle title='账号登录' />
+        
         <Input
           name='phone'
           ref='phoneInput'
@@ -52,6 +58,7 @@ class SignIn extends Component {
             });
           }}
         />
+        
         <Input
           name='password'
           ref='passwordInput'
@@ -67,18 +74,26 @@ class SignIn extends Component {
             });
           }}
         />
-        <Button onClick={this.sigin} disabled={this.state.disabled} />
-        <TextButton onClick={() => {
+        
+        <SignButton onClick={this.sigin} disabled={this.state.disabled} />
+        
+        <SignTextButton onClick={() => {
           this.props.history.push('/signinsms');
-        }}>短信登录</TextButton>
-        {this.state.showErrModal ? <LoginModal err={this.state.loginErr} onConfirm={() => {
+        }}>短信登录</SignTextButton>
+        
+        {this.state.showErrModal ? <SigninModal err={this.state.loginErr} onConfirm={() => {
           this.setState({
             showErrModal: false
           });
         }} title={this.state.errText} /> : null}
-      </Container>
+     
+      </div>
     );
   }
+	
+	/**
+   * 登录
+	 */
   sigin () {
     this.setState({
       showErrModal: true,
@@ -101,7 +116,8 @@ class SignIn extends Component {
             this.getMyService(res.authenticateRsp.userInfo.identityID);
           } else {
             this.setState({
-              loginErr: true
+              loginErr: true,
+	            errText:'账号或密码不正确'
             });
           }
         },
@@ -111,55 +127,84 @@ class SignIn extends Component {
       );
     });
   }
-  checkOnChange () {
+	
+	/**
+   * 获取用户包月信息
+	 * @param id
+	 */
+	getMyService (id) {
+		HttpRequst.getMyService(
+			{
+				user_id: id,
+				channelId: '40129731334'
+			},
+			(res) => {
+				let services = [];
+				if (res.service.length !== 0) {
+					res.service.forEach((item) => {
+						services.push(item.service_id);
+					});
+					this.props.getMyService(services);
+				} else {
+					this.props.getMyService([]);
+				}
+				this.getTimeLength(id, services);
+			},
+			(err) => {
+				console.log('获取我的包月失败', err);
+				this.setState({
+					loginErr: true,
+					errText: '获取用户订购信息失败'
+				});
+			}
+		);
+	}
+	
+	/**
+	 * 获取剩余时长
+	 * @param userId
+	 * @param id
+	 */
+	getTimeLength (userId, id) {
+		HttpRequst.getTimeLength(
+			{
+				user_id: userId,
+				service_id:id,
+				pkg:'',
+				channelId: '40129731334'
+			},
+			(res) => {
+				this.props.getTimeLength(Number(res.result_time));
+				this.setState({
+					showErrModal: false
+				}, () => {
+					this.props.history.goBack();
+				});
+			},
+			(err) => {
+				console.log('获取时长失败', err);
+				this.setState({
+					loginErr: true,
+					errText: '获取用户剩余时长失败'
+				});
+			}
+		);
+	}
+	
+	/**
+   * 输入框变化时检查
+	 */
+	checkOnChange () {
     this.setState({
       disabled:!(/^1[34578]\d{9}$/.test(this.state.phone) && this.state.password.length > 5)
     });
   }
+  
   componentWillMount () {
-    document.getElementsByTagName('html')[0].style.background = '#f5f5f5';
-    document.getElementsByTagName('body')[0].style.background = '#f5f5f5';
+    SwissArmyKnife.setColor('#f5f5f5');
   }
-  getMyService (id) {
-    HttpRequst.getMyService(
-      {
-        user_id: id
-      },
-      (res) => {
-        this.props.getMyService(res.service[0].service_id);
-        this.getTimeLength(id, res.service[0].service_id);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-  getTimeLength (userId, id) {
-    HttpRequst.getTimeLength(
-      {
-        user_id: userId,
-        service_id:[id],
-        pkg:''
-      },
-      (res) => {
-        this.props.getTimeLength(Number(res.result_time));
-        this.props.getExtraId(res.trace_unique_id);
-        this.setState({
-          showErrModal: false
-        }, () => {
-          this.props.history.goBack();
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
+  
 
 };
-const getLogin = state => {
-  return {
-    login: state.update.login
-  };
-};
-export default connect(getLogin, { login, loginOut, getMyService, getTimeLength, getExtraId })(SignIn);
+
+export default connect(actions.getStateData, actions)(SignIn);

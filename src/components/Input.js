@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 
+import '../styles/inputStyle.css';
 export default class Input extends Component {
   render () {
     return (

@@ -59,6 +59,7 @@ class Home extends Component {
 		SwissArmyKnife.setTitle('首页').setColor('#fff');
 		SwissArmyKnife.initWeChat();
 		this.getData();
+		this.checkToken();
 	}
 	
 	/**
@@ -86,12 +87,14 @@ class Home extends Component {
 	 * 校验token
 	 */
 	checkToken () {
-		if (SwissArmyKnife.GetQueryString('channelID') !== '40129731334') {
+		let channelID = SwissArmyKnife.GetQueryString('channelID');
+		if (channelID !== '40129731334') {
 			return;
 		}
+		let token = SwissArmyKnife.GetQueryString('uToken');
 		HttpRequest.validateToken(
 			{
-				token: encodeURIComponent(SwissArmyKnife.GetQueryString('uToken')),
+				token: encodeURIComponent(token),
 				channelId: '40129731334'
 			},
 			(res) => {
@@ -99,7 +102,7 @@ class Home extends Component {
 				this.loginQuick(res.msisdn);
 			},
 			(err) => {
-				console.log('token实效了');
+				console.log('token无效');
 			}
 		);
 	}
@@ -115,7 +118,7 @@ class Home extends Component {
 			(res) => {
 				console.log(res);
 				if (res.resultCode === 0) {
-					this.props.login({
+					this.props.stateData.login({
 						id:res.implicitLoginRsp.userInfo.identityID,
 						name:res.phone
 					});

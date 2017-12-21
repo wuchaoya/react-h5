@@ -34,7 +34,7 @@ export default class PurchaseItem extends Component {
             }
           )} onClick={this.props.onClick}
           >
-            <span>开通</span>
+            <span>{this.props.MyServiceId !== this.props.data.service_id ? '开通' : '已开通'}</span>
           </div>
         </div>
       </div>

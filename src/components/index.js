@@ -25,6 +25,8 @@ export {default as GameSize} from './GameSize';
 export {default as GoBack} from './GoBack';
 export {default as HomeFours} from './HomeFours';
 export {default as HomeTopic} from './HomeTopic';
+export {default as Input} from './Input';
+
 export {default as Purchase} from './Purchase';
 
 export {default as InputCode} from './InputCode';
@@ -36,6 +38,8 @@ export {default as PurchaseItem} from './PurchaseItem';
 export {default as ShareTipsModal} from './ShareTipsModal';
 export {default as SignButton} from './SignButton';
 export {default as SignTextButton} from './SignTextButton';
+export {default as SigninModal} from './SigninModal';
+
 export {default as SignTitle} from './SignTitle';
 export {default as Star} from './Star';
 export {default as Swiper} from './Swiper';

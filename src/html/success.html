@@ -11,6 +11,7 @@
 				var pageWidth = html.getBoundingClientRect().width
 				html.style.fontSize = pageWidth / 16 + 'px'
 		</script>
+		<script src="js/js.js"></script>
 	</head>
 	<body>
 		<section id="purchase-modal-container">
@@ -21,10 +22,6 @@
 			</section>
 		</section>
 	</body>
-	<script>
-        function closeHtml() {
-          window.parent.postMessage({ state:true }, '*');
-        }
-	</script>
+
 </html>
 

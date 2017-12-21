@@ -9,6 +9,8 @@ import {
 	PurchaseItem
 } from '../components';
 
+import SwissArmyKnife from '../utils/SwissArmyKnife'
+
 export default class Purchase extends React.Component {
 	
 	render () {
@@ -18,15 +20,27 @@ export default class Purchase extends React.Component {
 				{this.props.data.map((item, index) => {
 					return (
 						<PurchaseItem
+							MyServiceId={this.getServiceId(item.service_id)}
 							isRecommend={index === 1}
 							data={item}
-							key={index} />
+							key={index}
+							onClick={() => this.props.onClick(item)}
+						/>
 					)
 				})}
 			</div>
 		)
 	}
 	
+	/**
+	 * 获取已开通id
+	 * @returns {string}
+	 */
+	getServiceId (id) {
+		let index = SwissArmyKnife.indexOf(id, this.props.MyServiceId);
+		let serviceId = index === -1 ? '' : this.props.MyServiceId[index];
+		return serviceId;
+	}
 }
 
 const styles = {
