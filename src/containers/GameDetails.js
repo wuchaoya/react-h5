@@ -6,21 +6,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {
+	Loading,
+	Video,
+	GameInfo,
+	TransformScrollView,
+	DetailSummary,
+	DetailsOther,
+	ImgModal
+} from '../components';
+
 import * as actions from '../actions/actions';
-import Loading from '../components/Loading';
 import HttpRequest from '../utils/HttpRequest';
-import Video from '../components/Video';
 import SwissArmyKnife from '../utils/SwissArmyKnife';
-import GameInfo from '../components/GameInfo';
-import TransformScrollView from '../components/TransformScrollView';
-import DetailSummary from '../components/DetailSummary';
-import DetailsOther from '../components/DetailsOther';
 
 class GameDetails extends Component {
 	
 	constructor (props) {
 		super (props);
 		SwissArmyKnife.historyPush.bind(this);
+		this.setIndex = this.setIndex.bind(this);
+		this.state = {
+			showModal: false,
+			index: 0
+		}
 	}
 	
 	render () {
@@ -39,11 +48,22 @@ class GameDetails extends Component {
 						{pkg:this.props.stateData.gameDetailsData.pkg}, this)}
 					data={this.props.stateData.gameDetailsData} />
 				
-				<TransformScrollView data={this.props.stateData.gameDetailsData.images} />
+				<TransformScrollView
+					data={this.props.stateData.gameDetailsData.images}
+				  onClick={(index) => this.setIndex(index)}
+				/>
 				
 				<DetailSummary data={this.props.stateData.gameDetailsData} />
 				
 				<DetailsOther data={this.props.stateData.gameDetailsData} />
+				
+				{ this.state.showModal ?
+					<ImgModal
+						onClick={() => this.setShowModal(false)}
+						index={this.state.index}
+						data={this.props.stateData.gameDetailsData.images} />
+					: null
+				}
 				
 			</div>
 	}
@@ -68,6 +88,19 @@ class GameDetails extends Component {
 		}, (err) => {
 			setGameDetailsData(null, -1);
 		});
+	}
+	
+	setIndex (index) {
+		console.log(index);
+		this.setState({
+			index: index
+		}, this.setShowModal(true));
+	}
+	
+	setShowModal (bool) {
+		this.setState({
+			showModal: bool
+		})
 	}
 	
 }

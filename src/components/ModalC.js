@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 export default class Modal extends Component {
 	render () {
 		return (
-			<div style={styles.modal}>
+			<div onClick={this.props.onClick ? this.props.onClick : () => {}}
+			     style={Object.assign({}, styles.modal, this.props.style? this.props.style : {})}>
 				{this.props.component}
 			</div>
 		);

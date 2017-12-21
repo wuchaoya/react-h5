@@ -58,7 +58,7 @@ export default class TransformScrollView extends Component {
           <Contaner translateX={this.state.translateX} w={this.props.data.length * (this.state.width + 18) / 100}>
             {this.props.data.map((src, index) => {
               return (
-                <div key={index} onClick={() => this.props.click(index)}>
+                <div key={index} onClick={() => this.props.onClick(index)}>
                   <Img
                     height={'100%'} width={'100%'}
                     w={this.state.width / 100}

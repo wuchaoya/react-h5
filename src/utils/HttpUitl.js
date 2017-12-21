@@ -1,5 +1,5 @@
 import Encryption from './Encryption';
-
+let { fetch } = window;
 export default class HttpUitl {
   static Post (path, parameter, callbackSuccess, callbackError) {
     parameter.time = (new Date()).valueOf();

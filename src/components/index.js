@@ -25,6 +25,7 @@ export {default as GameSize} from './GameSize';
 export {default as GoBack} from './GoBack';
 export {default as HomeFours} from './HomeFours';
 export {default as HomeTopic} from './HomeTopic';
+export {default as ImgModal} from './ImgModal';
 export {default as Input} from './Input';
 
 export {default as Purchase} from './Purchase';
