@@ -31,7 +31,7 @@ class Base extends Component {
           <Route exact path='/user' component={User} />
           <Route exact path='/gamelist' component={GameList} />
           <Route exact path='/playGame' component={PlayGame} />
-          <Route exact path='/QPCloudPlay' component={QPCloudPlay} />
+          <Route exact path='/qpc' component={QPCloudPlay} />
           <Route exact path='/chessCardGame' component={ChessCardGame} />
           <Route exact path='/activity' component={Activity} />
           <Route exact path='/setting' component={Setting} />

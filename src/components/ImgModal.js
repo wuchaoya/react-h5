@@ -26,7 +26,7 @@ export default class ImgModal extends Component {
 		return (
 			<Slider initialSlide={this.props.index} {...settings}>
 				{this.props.data.map((url, index) => {
-					return <img  key={index} height='100%' width='100%' src={url} />;
+					return <image key={index} height='100%' width='100%' src={url} />;
 				})}
 			</Slider>
 		);
